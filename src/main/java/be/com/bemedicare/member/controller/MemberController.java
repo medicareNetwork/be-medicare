@@ -113,7 +113,7 @@ public class MemberController {
     @GetMapping("/mypage")
     public String myPage(HttpSession session, Model model) {
         // 세션에서 memberEmail 값을 가져옴
-        String memberEmail = (String) session.getAttribute("memberEmail");
+        String memberEmail = (String) session.getAttribute("member");
 
         // 세션에 이메일이 없으면 로그인 페이지로 이동
         if (memberEmail == null) {
