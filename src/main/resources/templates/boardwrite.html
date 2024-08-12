@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>게시물 작성</title>
+</head>
+<style>
+    .layout{
+        width: 500px;
+        margin: 0 auto;
+        margin-top: 40px;
+    }
+
+    .layout input,textarea{
+        width:100%;
+        box-sizing: border-box;
+        margin-top: 10px;
+    }
+
+    .layout textarea{
+        width: 100%;
+        margin-top: 10px;
+        min-height: 300px;
+    }
+</style>
+<body>
+<div th:insert="~{header}"></div>
+    <div class="layout">
+        <form action="/board/writepro" method="post" enctype="multipart/form-data">
+            <input name="title" type="text" placeholder="제목">
+            <textarea name="content" placeholder="내용"></textarea>
+            <input type="file" name="file">
+            <input type="text" name="price" placeholder="가격">
+            <button type="submit">작성</button>
+        </form>
+    </div>
+</body>
+</html>
