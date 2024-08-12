@@ -42,21 +42,20 @@ public class MemberController {
 
 
     @PostMapping("/login")
-    public String login(@ModelAttribute MemberDTO memberDTO, HttpSession session, Model model) {
-        try {
-            MemberDTO loginResult = memberService.login(memberDTO);
-            if (loginResult != null) {
-                session.setAttribute("loginEmail", loginResult.getMemberEmail());
-                return "main"; // 성공 시 메인 페이지로 이동
-            }
-        } catch (IllegalArgumentException e) {
-            // 서비스에서 발생한 예외를 잡아서 에러 메시지를 모델에 추가합니다.
-            model.addAttribute("errorMessage", e.getMessage());
-        }
-        // 로그인 실패 시 로그인 페이지로 돌아가면서 에러 메시지를 표시합니다.
-        return "login";
-    }
+    public String login(@ModelAttribute MemberDTO memberDTO, HttpSession session) {
+        MemberDTO loginResult = memberService.login(memberDTO);
 
+
+//            MemberDTO loginResult = memberService.login(memberDTO);
+        if (loginResult != null) {
+            session.setAttribute("member", loginResult);
+//                return "main"; // 성공 시 메인 페이지로 이동 <태립이가 만들어놓은곳으로 보낸것이 밑에>
+            return "redirect:/board/list";
+        } else {
+            // 로그인 실패 시 로그인 페이지로 돌아가면서 에러 메시지를 표시합니다.
+            return "login";
+        }
+    }
 
     @GetMapping("/member-email/{email}/exists")
     public ResponseEntity<Boolean> checkEmail(@PathVariable String email) {
@@ -85,6 +84,7 @@ public class MemberController {
             return "find-email";
         }
     }
+
     @GetMapping("/find-password")
     public String showFindPasswordPage() {
         return "find-password"; // find-password.html 파일로 이동
@@ -101,6 +101,27 @@ public class MemberController {
             model.addAttribute("errorMessage", "이메일 또는 답변이 일치하지 않습니다.");
             return "find-password"; // 비밀번호 찾기 페이지로 다시 이동
         }
+    }
+
+    // 로그아웃 메서드
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "login";
+    }
+
+    @GetMapping("/mypage")
+    public String myPage(HttpSession session, Model model) {
+        // 세션에서 memberEmail 값을 가져옴
+        String memberEmail = (String) session.getAttribute("memberEmail");
+
+        // 세션에 이메일이 없으면 로그인 페이지로 이동
+        if (memberEmail == null) {
+            return "login";  // 리다이렉트 방식으로 로그인 페이지로 이동
+        } else {
+            return "mypage";
+        }
+
     }
 }
 

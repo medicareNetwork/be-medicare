@@ -45,6 +45,9 @@ public class MemberEntity {
     @Column
     private String memberQnA;
 
+    @Column
+    private String memberQ;
+
     // 여기서 부터 카카오 로그인  관련
     @Column
     private String authId;
@@ -71,6 +74,7 @@ public class MemberEntity {
         memberEntity.setMemberNumber(memberDTO.getMemberNumber());
         memberEntity.setMemberAddress(memberDTO.getMemberAddress());
         memberEntity.setMemberQnA(memberDTO.getMemberQnA());
+        memberEntity.setMemberQ(memberDTO.getMemberQ());
         return memberEntity;
     }
 

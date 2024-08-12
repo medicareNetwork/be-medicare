@@ -33,6 +33,7 @@ public class MemberDTO {
     private int memberHeight;
     private String memberNumber;
     private String memberAddress;
+    private String memberQ;
     private String memberQnA;
 
 
@@ -50,6 +51,8 @@ public class MemberDTO {
         memberDTO.setMemberNumber(memberEntity.getMemberNumber());
         memberDTO.setMemberAddress(memberEntity.getMemberAddress());
         memberDTO.setMemberQnA(memberEntity.getMemberQnA());
+        memberDTO.setMemberQ(memberEntity.getMemberQ());
+
         return memberDTO;
     }
 }

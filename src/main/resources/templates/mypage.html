@@ -2,6 +2,7 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>로그인</title>
     <link rel="stylesheet" href="styles.css">
 </head>
@@ -55,6 +56,7 @@
         box-sizing: border-box;
     }
 
+
     .login-form .login-btn,
     .login-form .kakao-login,
     .login-form .google-login {
@@ -89,6 +91,7 @@
     .signup-btn {
         background-color: #666;
     }
+
 
     .login-options {
         display: flex;
@@ -132,30 +135,9 @@
 
 <main>
     <section class="login-container">
-        <form class="login-form" action="/member/save" name="saveForm" method="post" enctype="multipart/form-data" onsubmit="return checkFiled();">
-            <h2>회원가입</h2>
-            이메일  <input type="text" name="memberEmail" placeholder="필수 입력사항">
-            <div th:if="${errorMessage}" th:text="${errorMessage}" style="color: red"></div>
-            비밀번호 <input type="password" name="memberPassword" placeholder="필수 입력사항">
-            비밀번호 확인  <input type="password" name="confirmPassword" placeholder="필수 입력사항">
-            비밀번호 질문
-            <select name="memberQ">
-                <option value="select1">다녔던 초등학교의 이름은?(예 : 수정초등학교)</option>
-                <option value="select2">친한 친구</option>
-                <option value="select3">음식</option>
-            </select>
-                비밀번호 답변 <input type="text" name="memberQnA" placeholder="필수선택">
-            이름  <input type="text" name="memberName" placeholder="필수 입력사항">
-            나이  <input type="text" name="memberAge" placeholder="">
-            몸무게  <input type="text" name="memberWeight" placeholder="">
-            신장  <input type="text" name="memberHeight" placeholder="">
-            핸드폰번호  <input type="text" name="memberNumber" placeholder="필수 입력사항">
-            주소  <input type="text" name="memberAddress">
-            <button class="login-btn">회원가입</button>
-            <div>
-                <button type="button" class="kakao-login" onclick="window.location.href='/kakao/login';">카카오로 회원가입</button>
-                <button class="google-login">구글로 회원가입</button>
-            </div>
+        </div>
+        <form class="login-form" action="/member/mypage" >
+            <p>이름 : <span th:text="${memberInfo.getMemberName()}"></span></p>
         </form>
     </section>
 </main>
@@ -169,32 +151,4 @@
     </div>
 </footer>
 </body>
-<script>
-    function checkFiled(){
-        let inputs = document.saveForm;
-
-        if(!inputs.memberEmail.value){
-            alert("이메일을 입력하세요");
-            return false;
-        }
-        if(!inputs.memberPassword.value) {
-            alert("비밀번호를 입력하세요");
-            return false;
-        }
-        if(!inputs.confirmPassword.value) {
-            alert("비밀번호를 다시 한번 입력하세요");
-            return false;
-        }
-        if(inputs.memberPassword.value !== inputs.confirmPassword.value) {
-            alert("비밀번호가 일치하지 않습니다.");
-            return false;
-        }
-        if(!inputs.memberNumber.value) {
-            alert("전화번호를 입력하세요");
-            return false;
-        }
-
-        return true;
-    }
-</script>
 </html>
