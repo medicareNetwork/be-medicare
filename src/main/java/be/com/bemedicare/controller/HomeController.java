@@ -1,11 +1,11 @@
-package be.com.bemedicare.xodlq.controller;
+package be.com.bemedicare.controller;
 
+import be.com.bemedicare.member.dto.MemberDTO;
+import be.com.bemedicare.member.service.MemberService;
 import be.com.bemedicare.xodlq.entity.Board;
 import be.com.bemedicare.xodlq.entity.Cart;
-import be.com.bemedicare.xodlq.entity.Member;
 import be.com.bemedicare.xodlq.service.BoardService;
 import be.com.bemedicare.xodlq.service.CartService;
-import be.com.bemedicare.xodlq.service.MemberService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -24,6 +24,12 @@ import java.util.Optional;
 @Controller
 public class HomeController {
 
+    @GetMapping("/")
+    public String index(){
+        return "index";
+    }
+
+
     @Autowired
     private BoardService boardService;
     @Autowired
@@ -36,9 +42,10 @@ public class HomeController {
         return "boardwrite";
     }
 
+
     @PostMapping("/board/writepro")
     public String boardWritePro(Board board, @RequestParam(name="file") MultipartFile file, HttpSession session) throws IOException {
-        boardService.write(board,file, (Member) session.getAttribute("member"));
+        boardService.write(board,file, (MemberDTO) session.getAttribute("member"));
 
         return "redirect:/board/list";
     }
@@ -74,7 +81,7 @@ public class HomeController {
     }
 
     @GetMapping("/board/view")
-    public String boardView(Model model, @RequestParam(name="id") Integer id){
+    public String boardView(Model model, @RequestParam(name="id") Long id){
 
         model.addAttribute("board", boardService.boardView(id));
 
@@ -82,7 +89,7 @@ public class HomeController {
     }
 
     @GetMapping("/board/delete")
-    public String boardDelete(@RequestParam(name="id") Integer id){
+    public String boardDelete(@RequestParam(name="id") Long id){
 
         Board board = boardService.boardView(id);
 
@@ -92,7 +99,7 @@ public class HomeController {
     }
 
     @GetMapping("/board/modify/{id}")
-    public String boardModify(@PathVariable("id") Integer id, Model model) throws IOException{
+    public String boardModify(@PathVariable("id") Long id, Model model) throws IOException{
         Board board = boardService.boardView(id);
 
         if(board.getFilename()!=null){
@@ -106,7 +113,7 @@ public class HomeController {
     }
 
     @PostMapping("/board/update/{id}")
-    public String boardUpdate(@PathVariable("id") Integer id, Board board, @RequestParam(name="file") MultipartFile file, HttpSession session) throws IOException{
+    public String boardUpdate(@PathVariable("id") Long id, Board board, @RequestParam(name="file") MultipartFile file, HttpSession session) throws IOException{
 
         Board boardTemp = boardService.boardView(id);
 
@@ -114,50 +121,50 @@ public class HomeController {
         boardTemp.setContent(board.getContent());
         boardTemp.setCategory(board.getCategory());
 
-        boardService.modify(boardTemp, file, (Member) session.getAttribute("member"));
+        boardService.modify(boardTemp, file, (MemberDTO) session.getAttribute("member"));
 
         return "redirect:/board/list";
     }
 
-    @GetMapping("/member/create")
-    public String member(){
+//    @GetMapping("/member2/create")
+//    public String member(){
+//
+//        return "membercreate";
+//    }
+//
+//    @PostMapping("/member2/create")
+//    public String memberCreate(@ModelAttribute MemberDTO member){
+//
+//        System.out.println(member);
+//
+//        memberService.(member);
+//
+//        return "redirect:/board/list";
+//    }
+//
+//    @GetMapping("/member2/login")
+//    public String memberLogin(){
+//        return "memberlogin";
+//    }
 
-        return "membercreate";
-    }
-
-    @PostMapping("/member/create")
-    public String memberCreate(@ModelAttribute Member member){
-
-        System.out.println(member);
-
-        memberService.createMember(member);
-
-        return "redirect:/board/list";
-    }
-
-    @GetMapping("/member/login")
-    public String memberLogin(){
-        return "memberlogin";
-    }
-
-    @PostMapping("/member/login")
-    public String checkLogin(@ModelAttribute Member member, HttpSession session){
-        Optional<Member> loginResult = memberService.loginMember(member);
-
-        if(loginResult.isPresent()){
-            session.setAttribute("member", loginResult.get());
-            return "redirect:/board/list";
-        }else{
-            return "memberlogin";
-        }
-    }
-
-    @GetMapping("/member/")
-    public String findMemberAll(){
-        List<Member> memberList = memberService.findAll();
-
-        return "";
-    }
+//    @PostMapping("/member2/login")
+//    public String checkLogin(@ModelAttribute Member member, HttpSession session){
+//        Optional<Member> loginResult = memberService.loginMember(member);
+//
+//        if(loginResult.isPresent()){
+//            session.setAttribute("member", loginResult.get());
+//            return "redirect:/board/list";
+//        }else{
+//            return "memberlogin";
+//        }
+//    }
+//
+//    @GetMapping("/member2/")
+//    public String findMemberAll(){
+//        List<Member> memberList = memberService.findAll();
+//
+//        return "index";
+//    }
 
     @PostMapping("/cart/contain")
     public String cartContain(Cart cart,

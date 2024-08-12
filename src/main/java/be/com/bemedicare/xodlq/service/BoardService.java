@@ -1,7 +1,8 @@
 package be.com.bemedicare.xodlq.service;
 
+import be.com.bemedicare.member.dto.MemberDTO;
+import be.com.bemedicare.member.repository.MemberRepository;
 import be.com.bemedicare.xodlq.entity.Board;
-import be.com.bemedicare.xodlq.entity.Member;
 import be.com.bemedicare.xodlq.repository.BoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,21 +19,22 @@ public class BoardService {
 
     @Autowired
     private BoardRepository boardRepository;
+    private MemberRepository memberRepository;
 
     //글 작성
-    public void write(Board board, MultipartFile file, Member member) throws IOException {
+    public void write(Board board, MultipartFile file, MemberDTO member) throws IOException {
 
         if(!file.isEmpty()){
             handleFileUpload(board,file);
         }
 
-        board.setName(member.getName());
+        board.setName(member.getMemberName());
 
         boardRepository.save(board);
     }
 
     //글 수정
-    public void modify(Board board, MultipartFile file, Member member) throws IOException{
+    public void modify(Board board, MultipartFile file, MemberDTO member) throws IOException{
 
         if(!file.isEmpty()){
             deleteExistingFile(board);
@@ -78,7 +80,7 @@ public class BoardService {
     }
 
     //특정 게시글 불러오기
-    public Board boardView(Integer id){
+    public Board boardView(Long id){
 
         return boardRepository.findById(id).orElse(null);
     }

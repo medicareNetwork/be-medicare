@@ -1,4 +1,4 @@
-package be.com.bemedicare.member.controller;
+package be.com.bemedicare.controller;
 
 
 import be.com.bemedicare.member.dto.KakaoUserInfoResponseDto;
@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/")
+@RequestMapping("/kakaoapi")
 public class KakaoLoginController {
 
 

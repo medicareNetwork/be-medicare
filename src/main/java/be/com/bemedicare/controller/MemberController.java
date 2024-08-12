@@ -1,4 +1,4 @@
-package be.com.bemedicare.member.controller;
+package be.com.bemedicare.controller;
 
 
 
@@ -10,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 
 @Controller
@@ -42,19 +44,19 @@ public class MemberController {
 
 
     @PostMapping("/login")
-    public String login(@ModelAttribute MemberDTO memberDTO, HttpSession session, Model model) {
-        try {
-            MemberDTO loginResult = memberService.login(memberDTO);
+    public String login(@ModelAttribute MemberDTO memberDTO, HttpSession session) {
+        MemberDTO loginResult = memberService.login(memberDTO);
+
+
+//            MemberDTO loginResult = memberService.login(memberDTO);
             if (loginResult != null) {
-                session.setAttribute("loginEmail", loginResult.getMemberEmail());
-                return "main"; // 성공 시 메인 페이지로 이동
+                session.setAttribute("member", loginResult);
+//                return "main"; // 성공 시 메인 페이지로 이동 <태립이가 만들어놓은곳으로 보낸것이 밑에>
+                return "redirect:/board/list";
+        } else {
+                // 로그인 실패 시 로그인 페이지로 돌아가면서 에러 메시지를 표시합니다.
+                return "login";
             }
-        } catch (IllegalArgumentException e) {
-            // 서비스에서 발생한 예외를 잡아서 에러 메시지를 모델에 추가합니다.
-            model.addAttribute("errorMessage", e.getMessage());
-        }
-        // 로그인 실패 시 로그인 페이지로 돌아가면서 에러 메시지를 표시합니다.
-        return "login";
     }
 
 
