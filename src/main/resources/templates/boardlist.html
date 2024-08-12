@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>게시글 리스트</title>
+</head>
+<style>
+    .layout{
+        width: 90%;
+        margin: auto;
+        text-align: center;
+    }
+    .category_layout{
+        display: inline-block;
+        width: 20%;
+        height: 700px;
+        border: 1px solid black;
+        vertical-align: top;
+        margin: auto;
+        margin-top: 40px;
+    }
+
+    .category_layout ul{
+        padding-inline-start: 0;
+    }
+
+    .category_layout ul li{
+        list-style-type: none;
+    }
+
+    .tbl_layout{
+        display: inline-block;
+        width: 70%;
+        margin: auto;
+        margin-top: 40px;
+    }
+
+    .tbl_layout table{
+        width: 100%;
+    }
+
+    .tbl_layout table tbody tr{
+        border-top: 1px solid black;
+        border-bottom: 1px solid black;
+    }
+</style>
+<body>
+<div th:insert="~{header}"></div>
+<div class="layout">
+    <div class="category_layout">
+        <ul>
+            <li><a th:href="@{/board/list(categoryKeyword = cold_medicine)}">감기약</a></li>
+            <li><a th:href="@{/board/list(categoryKeyword = digestive_medicine)}">소화제</a></li>
+            <li><a th:href="@{/board/list(categoryKeyword = herbal_medicine)}">한약</a></li>
+            <li><a th:href="@{/board/list(categoryKeyword = headache_medicine)}">두통약</a></li>
+        </ul>
+    </div>
+    <div class="tbl_layout">
+        <table>
+            <tbody>
+            <tr th:each="board : ${list}">
+                <td>
+                    <img th:src="${board.filepath!=null ? board.filepath:'/files/img_ready.png'}" th:alt="${board.filename}">
+                </td>
+                <td>
+                    <a th:text="${board.title}" th:href="@{/board/view(id=${board.id})}"></a><br>
+                    가격 : <span th:text="${board.price}"></span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <th:block th:each="page : ${#numbers.sequence(startPage, endPage)}">
+            <a th:if="${page != nowPage}" th:href="@{/board/list(page = ${page - 1}, searchKeyword = ${param.searchKeyword}, categoryKeyword = ${param.categoryKeyword})}" th:text="${page}"></a>
+            <strong th:if="${page==nowPage}" th:text="${page}" style="color : red"></strong>
+        </th:block>
+        <form th:action="@{/board/list}" method="get">
+            <input type="text" name="searchKeyword">
+            <input type="hidden" name="categoryKeyword" th:value="${param.categoryKeyword}">
+            <button type="submit">검색</button>
+        </form>
+        <a th:href="@{/board/write}">글 작성</a>
+    </div>
+</div>
+</body>
+</html>
