@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>로그인</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+  }
+
+  header {
+    background-color: #fff;
+    padding: 10px 20px;
+    border-bottom: 1px solid #eaeaea;
+  }
+
+  nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+  }
+
+  nav ul li {
+    margin-right: 20px;
+  }
+
+  nav ul li a {
+    text-decoration: none;
+    color: #333;
+  }
+
+  .login-container {
+    max-width: 400px;
+    margin: 50px auto;
+    background-color: #fff;
+    padding: 20px;
+    border: 1px solid #eaeaea;
+    border-radius: 10px;
+    text-align: center;
+  }
+
+  .login-form input[type="text"],
+  .login-form input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #eaeaea;
+    box-sizing: border-box;
+  }
+
+
+  .login-form .login-btn,
+  .login-form .kakao-login,
+  .login-form .google-login {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    margin-bottom: 10px;
+    cursor: pointer;
+    color: white;
+  }
+
+
+  .login-btn {
+    background-color: #333;
+  }
+
+
+  .login-options a {
+    color: #007bff;
+    text-decoration: none;
+  }
+
+  .footer-info {
+    background-color: #333;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    font-size: 12px;
+    line-height: 1.6;
+  }
+
+  .footer-info p {
+    margin: 5px 0;
+  }
+
+</style>
+<body>
+<header>
+  <nav>
+    <ul>
+      <li><a href="#">코너별</a></li>
+      <li><a href="#">상품별</a></li>
+      <li><a href="#">베스트</a></li>
+      <li><a href="#">세일중</a></li>
+      <li><a href="#">신제품</a></li>
+      <li><a href="#">이벤트</a></li>
+      <li><a href="#">브랜드</a></li>
+    </ul>
+  </nav>
+</header>
+
+    <main>
+      <section class="login-container">
+        <form class="find-email-form" action="/member/find-email" name = "findEmail" method="post" onsubmit="return cheakFiled()">
+          <h2>이메일 찾기</h2>
+          <input type="text" name="memberName" placeholder="이름">
+          <input type="text" name="memberNumber" placeholder="전화번호">
+          <button type="submit" class="login-btn">이메일 찾기</button>
+        </form>
+        <div th:if="${errorMessage}" class="error-message">
+          <p th:text="${errorMessage}"></p>
+        </div>
+      </section>
+    </main>
+
+
+<footer>
+  <div class="footer-info">
+    <p>회사소개 | 해외배송 | 개인정보처리방침 | 이용약관 | 온라인 고객센터</p>
+    <p>전화: 1588-**** | 이메일: gdjlawyer@naver.com</p>
+    <p>주소: 서울특별시 강남구 ****</p>
+    <p>전문 영양상담센터: 1588-4966</p>
+  </div>
+</footer>
+</body>
+
+<script>
+  function cheakFiled() {
+    let inputs = document.findEmail;
+
+    if (!inputs.memberName.value) {
+      alert("이름을 입력하세요");
+      return false;
+    }
+    if (!inputs.memberNumber.value) {
+      alert("전화번호를 입력하세요");
+      return false;
+    }
+    return true;
+  }
+</script>
+</html>

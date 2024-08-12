@@ -1,0 +1,109 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+}
+
+header {
+    background-color: #fff;
+    padding: 10px 20px;
+    border-bottom: 1px solid #eaeaea;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+}
+
+nav ul li {
+    margin-right: 20px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #333;
+}
+
+.login-container {
+    max-width: 400px;
+    margin: 50px auto;
+    background-color: #fff;
+    padding: 20px;
+    border: 1px solid #eaeaea;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.login-form input[type="text"],
+.login-form input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #eaeaea;
+    box-sizing: border-box;
+}
+
+
+.login-form .login-btn,
+.login-form .kakao-login,
+.login-form .naver-login {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    margin-bottom: 10px;
+    cursor: pointer;
+    color: white;
+}
+
+.kakao-btn {
+    background-color: #ffeb3b;
+    color: #3c1e1e;
+    font-weight: bold;
+}
+
+.login-btn {
+    background-color: #333;
+}
+
+.kakao-login {
+    background-color: #fee500;
+    color: #3c1e1e;
+}
+
+.naver-login {
+    background-color: #03c75a;
+}
+
+.signup-btn {
+    background-color: #666;
+}
+
+
+.login-options {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.login-options a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.footer-info {
+    background-color: #333;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.footer-info p {
+    margin: 5px 0;
+}
