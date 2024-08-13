@@ -1,4 +1,4 @@
-package be.com.bemedicare.member.controller;
+package be.com.bemedicare.controller;
 
 
 import lombok.RequiredArgsConstructor;

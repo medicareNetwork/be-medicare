@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>게시글 상세</title>
+    <style>
+        .item_header{
+            width: 100%;
+            height: 500px;
+            display: flex;
+        }
+
+        .item_img{
+            width: 50%;
+            height: 100%;
+        }
+
+        .item_attr{
+            width: 50%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+<div th:insert="~{header}"></div>
+<div th:class="item_header">
+    <div th:class="item_img">
+        <img th:if="${board.filename!=null}" th:src="${board.filepath}" th:alt="${board.filename}"> <br>
+    </div>
+    <div th:class="item_attr">
+        <h1>제목 : <span th:text="${board.title}">제목입니다</span></h1>
+        가격 : <span th:text="${board.price}">가격입니다</span><br>
+        <form action="/cart/contain" method="post" th:if="${session.member}!=null">
+            <input type="hidden" name="itemId" th:value="${board.id}">
+            <input type="hidden" name="memberId" th:value="${session.member.id}">
+            수량 : <input type="number" name="amount" min="1" max="100" value="1"><br>
+            <input type="submit" name="list_back" value="장바구니">
+            <input type="submit" name="cart_back" value="바로구매">
+        </form>
+
+    </div>
+    <th:block th:if="${session.member!=null && board.name==session.member.getMemberName()}">
+        <a th:href="@{/board/modify/{id}(id = ${board.id})}">수정</a>
+        <a th:href="@{/board/delete(id=${board.id})}">글삭제</a>
+    </th:block>
+</div>
+<div th:class="item_body">
+    내용 : <span th:text="${board.content}">내용입니다</span><br>
+    작성자 : <span th:text="${board.name}">작성자입니다</span>
+</div>
+</body>
+</html>
