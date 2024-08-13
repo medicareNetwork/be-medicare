@@ -1,6 +1,5 @@
 package be.com.bemedicare.cart;
 
-
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -8,15 +7,15 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-public class Cart {
+public class Delivery {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long user_id; // 유저아이디
-    private Long product_id; // 상품아이디
-    private int amount; // 수량
-    private int price; // 갯수
+    private String address;
+
+    @Enumerated(EnumType.STRING)
+    private DeliveryStatus deliveryStatus;
 
 }
