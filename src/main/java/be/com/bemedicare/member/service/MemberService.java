@@ -35,8 +35,8 @@ public class MemberService {
 
             } else if((memberEntity.getMemberPassword())!=(memberDTO.getMemberPassword())) {
                 //비밀번호 불일치
-                }  throw new IllegalArgumentException("비밀번호가 일치하지 않습니다");
-            } else{
+                }    throw new IllegalArgumentException("비밀번호가 일치하지 않습니다");
+               } else{
                 //조회 결과가 없음
             } throw new IllegalArgumentException("이메일이 존재하지 않습니다");
         }
