@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:insert="~{header}"></div>
+<div class="tbl_layout">
+    <table>
+        <tbody>
+        <tr th:each="board : ${list}">
+            <td>
+                <img th:src="${board.filepath!=null ? board.filepath:'/files/img_ready.png'}" th:alt="${board.filename}">
+            </td>
+            <td>
+                <a th:text="${board.title}" th:href="@{/board/view(id=${board.id})}"></a><br>
+                가격 : <span th:text="${board.price}"></span>
+                조회수 : <span th:text="${board.views}"></span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
