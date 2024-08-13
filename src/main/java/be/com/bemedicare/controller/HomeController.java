@@ -136,6 +136,11 @@ public class HomeController {
         return "redirect:/board/list";
     }
 
+    @GetMapping("/maps")
+    public String maps(){
+        return "maps";
+    }
+
 //    @GetMapping("/member2/create")
 //    public String member(){
 //
