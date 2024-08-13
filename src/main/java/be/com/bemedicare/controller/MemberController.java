@@ -52,10 +52,13 @@ public class MemberController {
             if (loginResult != null) {
                 session.setAttribute("member", loginResult);
 //                return "main"; // 성공 시 메인 페이지로 이동 <태립이가 만들어놓은곳으로 보낸것이 밑에>
+//<<<<<<< HEAD:src/main/java/be/com/bemedicare/member/controller/MemberController.java
+//=======
                 return "redirect:/board/list";
         } else {
                 // 로그인 실패 시 로그인 페이지로 돌아가면서 에러 메시지를 표시합니다.
                 return "login";
+//>>>>>>> master:src/main/java/be/com/bemedicare/controller/MemberController.java
             }
     }
 
@@ -87,6 +90,7 @@ public class MemberController {
             return "find-email";
         }
     }
+
     @GetMapping("/find-password")
     public String showFindPasswordPage() {
         return "find-password"; // find-password.html 파일로 이동
@@ -103,6 +107,25 @@ public class MemberController {
             model.addAttribute("errorMessage", "이메일 또는 답변이 일치하지 않습니다.");
             return "find-password"; // 비밀번호 찾기 페이지로 다시 이동
         }
+    }
+
+    // 로그아웃 메서드
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "login";
+    }
+
+    @GetMapping("/mypage")
+    public String mypage(HttpSession httpSession, Model model) {
+        MemberDTO memberDTO = (MemberDTO) httpSession.getAttribute("member");
+
+        if (memberDTO == null) {
+            return "login";
+        }
+        model.addAttribute("member", memberDTO);
+
+        return "mypage";
     }
 }
 
