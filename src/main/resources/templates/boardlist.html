@@ -49,10 +49,10 @@
 <div class="layout">
     <div class="category_layout">
         <ul>
-            <li><a th:href="@{/board/list(categoryKeyword = cold_medicine)}">감기약</a></li>
-            <li><a th:href="@{/board/list(categoryKeyword = digestive_medicine)}">소화제</a></li>
-            <li><a th:href="@{/board/list(categoryKeyword = herbal_medicine)}">한약</a></li>
-            <li><a th:href="@{/board/list(categoryKeyword = headache_medicine)}">두통약</a></li>
+            <li><a th:href="@{/be/com/bemedicare/board/list(categoryKeyword = cold_medicine)}">감기약</a></li>
+            <li><a th:href="@{/be/com/bemedicare/board/list(categoryKeyword = digestive_medicine)}">소화제</a></li>
+            <li><a th:href="@{/be/com/bemedicare/board/list(categoryKeyword = herbal_medicine)}">한약</a></li>
+            <li><a th:href="@{/be/com/bemedicare/board/list(categoryKeyword = headache_medicine)}">두통약</a></li>
         </ul>
     </div>
     <div class="tbl_layout">
@@ -63,7 +63,7 @@
                     <img th:src="${board.filepath!=null ? board.filepath:'/files/img_ready.png'}" th:alt="${board.filename}">
                 </td>
                 <td>
-                    <a th:text="${board.title}" th:href="@{/board/view(id=${board.id})}"></a><br>
+                    <a th:text="${board.title}" th:href="@{/be/com/bemedicare/board/view(id=${board.id})}"></a><br>
                     가격 : <span th:text="${board.price}"></span>
                 </td>
             </tr>
@@ -71,15 +71,15 @@
         </table>
 
         <th:block th:each="page : ${#numbers.sequence(startPage, endPage)}">
-            <a th:if="${page != nowPage}" th:href="@{/board/list(page = ${page - 1}, searchKeyword = ${param.searchKeyword}, categoryKeyword = ${param.categoryKeyword})}" th:text="${page}"></a>
+            <a th:if="${page != nowPage}" th:href="@{/be/com/bemedicare/board/list(page = ${page - 1}, searchKeyword = ${param.searchKeyword}, categoryKeyword = ${param.categoryKeyword})}" th:text="${page}"></a>
             <strong th:if="${page==nowPage}" th:text="${page}" style="color : red"></strong>
         </th:block>
-        <form th:action="@{/board/list}" method="get">
+        <form th:action="@{/be/com/bemedicare/board/list}" method="get">
             <input type="text" name="searchKeyword">
             <input type="hidden" name="categoryKeyword" th:value="${param.categoryKeyword}">
             <button type="submit">검색</button>
         </form>
-        <a th:href="@{/board/write}">글 작성</a>
+        <a th:href="@{/be/com/bemedicare/board/write}">글 작성</a>
     </div>
 </div>
 </body>
