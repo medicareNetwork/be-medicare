@@ -1,0 +1,41 @@
+<!-- src/main/resources/templates/fpage.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Main Page</title>
+</head>
+<style>
+    .layout {
+        width: 500px;
+        margin: 0 auto;
+        margin-top: 40px;
+        text-align: center;
+    }
+    .round-button {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        text-decoration: none;
+        border-radius: 25px;
+        font-size: 16px;
+    }
+    .round-button:hover {
+        background-color: #0056b3;
+    }
+</style>
+
+<body>
+
+<div class="layout">
+    <a href="/board2/list" class="round-button">공지사항</a>
+</div>
+<div class="layout">
+    <a href="/board3/list" class="round-button">건의사항</a>
+</div>
+<div class="layout">
+    <a href="/board1/list" class="round-button">상담</a>
+</div>
+</body>
+</html>
