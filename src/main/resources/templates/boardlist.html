@@ -65,6 +65,7 @@
                 <td>
                     <a th:text="${board.title}" th:href="@{/be/com/bemedicare/board/view(id=${board.id})}"></a><br>
                     가격 : <span th:text="${board.price}"></span>
+                    조회수 : <span th:text="${board.views}"></span>
                 </td>
             </tr>
             </tbody>

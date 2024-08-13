@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -81,8 +82,10 @@ public class BoardService {
 
     //특정 게시글 불러오기
     public Board boardView(Long id){
+        Board board=boardRepository.findById(id).orElse(null);
+        viewsUp(board);
 
-        return boardRepository.findById(id).orElse(null);
+        return board;
     }
 
     //특정 게시글 삭제
@@ -93,5 +96,16 @@ public class BoardService {
         }
 
         boardRepository.deleteById(board.getId());
+    }
+
+    //게시글 조회수 증가
+    public void viewsUp(Board board){
+        board.setViews(board.getViews()+1);
+        boardRepository.save(board);
+    }
+
+    //조회수 높은순서대로 50개 불러오기
+    public List<Board> bestList(){
+        return boardRepository.findTop50ByOrderByViewsDesc();
     }
 }

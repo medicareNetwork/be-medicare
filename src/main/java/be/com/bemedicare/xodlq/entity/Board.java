@@ -26,5 +26,5 @@ public class Board {
 
     private String category;
 
-    private int item_amount;
+    private int views;
 }

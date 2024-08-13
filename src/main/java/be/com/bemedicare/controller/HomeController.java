@@ -3,9 +3,9 @@ package be.com.bemedicare.controller;
 import be.com.bemedicare.member.dto.MemberDTO;
 import be.com.bemedicare.member.service.MemberService;
 import be.com.bemedicare.xodlq.entity.Board;
-import be.com.bemedicare.xodlq.entity.Cart;
+//import be.com.bemedicare.xodlq.entity.Cart;
 import be.com.bemedicare.xodlq.service.BoardService;
-import be.com.bemedicare.xodlq.service.CartService;
+//import be.com.bemedicare.xodlq.service.CartService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -34,8 +34,8 @@ public class HomeController {
     private BoardService boardService;
     @Autowired
     private MemberService memberService;
-    @Autowired
-    private CartService cartService;
+//    @Autowired
+//    private CartService cartService;
 
     @GetMapping("/board/write")
     public String boardWrite(){
@@ -78,6 +78,16 @@ public class HomeController {
         model.addAttribute("endPage", endPage);
 
         return "boardlist";
+    }
+
+    //베스트 리스트
+    @GetMapping("/board/best")
+    public String boardBestList(Model model){
+        List<Board> list = boardService.bestList();
+
+        model.addAttribute("list",list);
+
+        return "bestlist";
     }
 
     @GetMapping("/board/view")
@@ -166,22 +176,22 @@ public class HomeController {
 //        return "index";
 //    }
 
-    @PostMapping("/cart/contain")
-    public String cartContain(Cart cart,
-                              @RequestParam(name = "list_back", required = false) String list_back,
-                              @RequestParam(name = "cart_back", required = false) String cart_back){
-
-        cartService.save(cart);
-
-        String direct = "";
-
-        if(list_back!=null&&cart_back==null){
-            direct="redirect:/board/list";
-        }else if(cart_back!=null&&list_back==null){
-            direct="redirect:/cart/list";
-        }
-
-        return direct;
-    }
+//    @PostMapping("/cart/contain")
+//    public String cartContain(Cart cart,
+//                              @RequestParam(name = "list_back", required = false) String list_back,
+//                              @RequestParam(name = "cart_back", required = false) String cart_back){
+//
+//        cartService.save(cart);
+//
+//        String direct = "";
+//
+//        if(list_back!=null&&cart_back==null){
+//            direct="redirect:/board/list";
+//        }else if(cart_back!=null&&list_back==null){
+//            direct="redirect:/cart/list";
+//        }
+//
+//        return direct;
+//    }
 
 }
