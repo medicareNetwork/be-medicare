@@ -2,8 +2,7 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>로그인</title>
+    <title>마이페이지</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <style>
@@ -36,87 +35,72 @@
         color: #333;
     }
 
-    .login-container {
-        max-width: 400px;
+    .mypage-container {
+        max-width: 600px;
         margin: 50px auto;
         background-color: #fff;
         padding: 20px;
         border: 1px solid #eaeaea;
         border-radius: 10px;
+    }
+
+    .mypage-container h2 {
         text-align: center;
     }
 
-    .login-form input[type="text"],
-    .login-form input[type="password"] {
-        width: 100%;
-        padding: 10px;
+    .mypage-container .info-item {
         margin-bottom: 10px;
-        border-radius: 5px;
-        border: 1px solid #eaeaea;
-        box-sizing: border-box;
     }
 
-
-    .login-form .login-btn,
-    .login-form .kakao-login,
-    .login-form .google-login {
-        width: 100%;
-        padding: 10px;
-        border-radius: 5px;
-        border: none;
-        margin-bottom: 10px;
-        cursor: pointer;
-        color: white;
-    }
-
-    .kakao-btn {
-        background-color: #ffeb3b;
-        color: #3c1e1e;
+    .mypage-container .info-item label {
+        display: block;
         font-weight: bold;
+        margin-bottom: 5px;
     }
 
-    .login-btn {
+    .mypage-container .info-item span {
+        display: block;
+        padding: 10px;
+        border-radius: 5px;
+        background-color: #f2f2f2;
+        border: 1px solid #eaeaea;
+    }
+
+    .logout-btn {
+        display: block;
+        width: 100%;
+        padding: 10px;
         background-color: #333;
-    }
-
-    .kakao-login {
-        background-color: #fee500;
-        color: #3c1e1e;
-    }
-
-    .google-login {
-        background-color: gray;
-    }
-
-    .signup-btn {
-        background-color: #666;
-    }
-
-
-    .login-options {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 10px;
-    }
-
-    .login-options a {
-        color: #007bff;
+        color: white;
+        text-align: center;
+        border-radius: 5px;
+        margin-top: 20px;
         text-decoration: none;
     }
 
-    .footer-info {
-        background-color: #333;
+    .changeMy-btn {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        background-color: antiquewhite;
         color: white;
-        padding: 20px;
         text-align: center;
-        font-size: 12px;
-        line-height: 1.6;
+        border-radius: 5px;
+        margin-top: 20px;
+        text-decoration: none;
     }
 
-    .footer-info p {
-        margin: 5px 0;
+    .changePassword-btn {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        background-color: aqua;
+        color: white;
+        text-align: center;
+        border-radius: 5px;
+        margin-top: 20px;
+        text-decoration: none;
     }
-
 </style>
 <body>
 <header>
@@ -134,11 +118,40 @@
 </header>
 
 <main>
-    <section class="login-container">
+    <section class="mypage-container">
+        <h2>마이페이지</h2>
+        <div class="info-item">
+            <label>이름:</label>
+            <span th:text="${member.getMemberName()}"></span>
         </div>
-        <form class="login-form" action="/member/mypage" >
-            <p>이름 : <span th:text="${memberInfo.getMemberName()}"></span></p>
-        </form>
+        <div class="info-item">
+            <label>이메일:</label>
+            <span th:text="${member.getMemberEmail()}"></span>
+        </div>
+        <div class="info-item">
+            <label>나이:</label>
+            <span th:text="${member.getMemberAge()}"></span>
+        </div>
+        <div class="info-item">
+            <label>몸무게:</label>
+            <span th:text="${member.getMemberWeight()}"></span>
+        </div>
+        <div class="info-item">
+            <label>신장:</label>
+            <span th:text="${member.getMemberHeight()}"></span>
+        </div>
+        <div class="info-item">
+            <label>핸드폰 번호:</label>
+            <span th:text="${member.getMemberNumber()}"></span>
+        </div>
+        <div class="info-item">
+            <label>주소:</label>
+            <span th:text="${member.getMemberAddress()}"></span>
+        </div>
+        <a href="" class="changePassword-btn">비밀번호 수정</a>
+        <a href="" class="changeMy-btn">개인정보 수정</a>
+        <a href="/member/logout" class="logout-btn">로그아웃</a>
+
     </section>
 </main>
 

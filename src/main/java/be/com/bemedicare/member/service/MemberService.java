@@ -79,14 +79,6 @@ public class MemberService {
             return null; // 또는 적절한 에러 메시지 반환
         }
     }
-    // 이메일로 사용자 정보 조회
-    public MemberDTO getMemberInfo(String memberEmail) {
-        MemberEntity memberEntity = memberRepository.findByMemberEmail(memberEmail).orElse(null);
-        if (memberEntity != null) {
-            return MemberDTO.toMemberDTO(memberEntity);
-        }
-        return null;
-    }
 
 }
 
