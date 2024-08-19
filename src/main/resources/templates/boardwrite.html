@@ -26,20 +26,11 @@
 <body>
 <div th:insert="~{header}"></div>
     <div class="layout">
-        <form action="/board/write" method="post" enctype="multipart/form-data">
+        <form action="/board/writepro" method="post" enctype="multipart/form-data">
             <input name="title" type="text" placeholder="제목">
             <textarea name="content" placeholder="내용"></textarea>
             <input type="file" name="file">
-            가격 :<input type="number" name="price"
-                       placeholder="숫자로만 입력하세요."><br><br>
-            카테고리 : <select name="category">
-                <option value="cold_medicine">감기약</option>
-                <option value="digestive_medicine">소화제</option>
-                <option value="herbal_medicine">한약</option>
-                <option value="headache_medicine">두통약</option>
-            </select><br>
-            재고 :<input type="number" name="stockAmount"
-                       placeholder="숫자로만 입력하세요."><br><br>
+            <input type="text" name="price" placeholder="가격">
             <button type="submit">작성</button>
         </form>
     </div>
