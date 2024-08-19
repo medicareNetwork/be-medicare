@@ -34,18 +34,20 @@ public class HomeController {
     private BoardService boardService;
     @Autowired
     private MemberService memberService;
-//    @Autowired
-//    private CartService cartService;
 
     @GetMapping("/board/write")
     public String boardWrite(){
         return "boardwrite";
+
     }
 
 
-    @PostMapping("/board/writepro")
-    public String boardWritePro(Board board, @RequestParam(name="file") MultipartFile file, HttpSession session) throws IOException {
-        boardService.write(board,file, (MemberDTO) session.getAttribute("member"));
+    @PostMapping("/board/write")
+    public String boardWritePro(Board board,
+                                @RequestParam(name="file") MultipartFile file,
+                                HttpSession session) throws IOException {
+        boardService.write(board,file,
+                (MemberDTO) session.getAttribute("member"));
 
         return "redirect:/board/list";
     }
@@ -130,6 +132,7 @@ public class HomeController {
         boardTemp.setTitle(board.getTitle());
         boardTemp.setContent(board.getContent());
         boardTemp.setCategory(board.getCategory());
+        //가격,재고
 
         boardService.modify(boardTemp, file, (MemberDTO) session.getAttribute("member"));
 

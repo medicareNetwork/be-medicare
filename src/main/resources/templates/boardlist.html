@@ -58,21 +58,41 @@
     <div class="tbl_layout">
         <table>
             <tbody>
-            <tr th:each="board : ${list}">
-                <td>
-                    <img th:src="${board.filepath!=null ? board.filepath:'/files/img_ready.png'}" th:alt="${board.filename}">
-                </td>
-                <td>
-                    <a th:text="${board.title}" th:href="@{/board/view(id=${board.id})}"></a><br>
-                    가격 : <span th:text="${board.price}"></span>
-                    조회수 : <span th:text="${board.views}"></span>
-                </td>
-            </tr>
+
+            <form action="/cart/add" method="post">
+                <tr th:each="board : ${list}">
+                    <td>
+                        <img th:src="${board.filepath!=null ? board.filepath:'/files/img_ready.png'}" th:alt="${board.filename}">
+                    </td>
+                    <td>
+                        <a th:text="${board.title}" th:href="@{|/board/modify/${board.id}|}">수정버튼이죠</a><BR>
+                        가격 : <span th:text="${board.price}"></span>
+                        조회수 : <span th:text="${board.views}"></span>
+                    </td>
+                        <td>
+                            <form action="/cart/add" method="post">
+                            구매수량 : <input type="number" name ="amount"
+                                          class="amount" value="1" min="1">
+                            <input type="hidden" name="boardId" th:value="${board.id}">
+                            <button type="submit">장바구니 추가하기</button>
+                        </form>
+                    </td>
+<!--                        <td>-->
+<!--                            <input type="hidden" name="boardId" th:value="${board.id}">-->
+<!--&lt;!&ndash;                            <input type="hidden" name="memberId" th:value="${member.id}">&ndash;&gt;-->
+<!--                            <button type="submit" >장바구니 추가하기</button>-->
+<!--                        </td>-->
+                </tr>
+            </form>
             </tbody>
         </table>
 
         <th:block th:each="page : ${#numbers.sequence(startPage, endPage)}">
-            <a th:if="${page != nowPage}" th:href="@{/board/list(page = ${page - 1}, searchKeyword = ${param.searchKeyword}, categoryKeyword = ${param.categoryKeyword})}" th:text="${page}"></a>
+            <a th:if="${page != nowPage}"
+               th:href="@{/board/list(page = ${page - 1},
+             searchKeyword = ${param.searchKeyword},
+              categoryKeyword = ${param.categoryKeyword})}"
+               th:text="${page}"></a>
             <strong th:if="${page==nowPage}" th:text="${page}" style="color : red"></strong>
         </th:block>
         <form th:action="@{/board/list}" method="get">
@@ -83,5 +103,25 @@
         <a th:href="@{/board/write}">글 작성</a>
     </div>
 </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('button.addToCart').click(function() {
+            var boardId = $(this).data('id');
+            var amount = $(this).siblings('.amount').val(); //입력된 수량을 가져옴
+            $.ajax({
+                url: '/cart/add',
+                type: 'POST',
+                data: { boardId: boardId, amount: amount },
+                success: function(response) {
+                    alert(response);
+                },
+                error: function(error) {
+                    console.error('Error:', error);
+                }
+            });
+        });
+    });
+</script>
 </body>
 </html>
