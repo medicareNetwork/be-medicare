@@ -11,6 +11,7 @@ import java.util.Optional;
 @Repository
 public interface MemberRepository extends JpaRepository<MemberEntity, Long> {
 
+    // 이메일과 이름으로 멤버가 존재하는지 확인하는 메서드
     boolean existsByMemberEmail(String memberEmail);
     boolean existsByMemberName(String memberName);
 

@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 @Getter
 @Setter
 @Service
-
 public class KakaoUserInfo {
     private String authId;
     private String nickName;
