@@ -47,6 +47,8 @@ public class KakaoLoginController {
                     userInfo.getKakaoAccount().getProfile().getProfileImageUrl(),
                     userInfo.getKakaoAccount().getEmail()
             );
+
+            
             session.setAttribute("member", existingMember);
             return new ResponseEntity<>("회원가입 성공", HttpStatus.OK);
         } else {
