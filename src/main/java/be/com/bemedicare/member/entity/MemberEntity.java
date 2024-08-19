@@ -78,4 +78,13 @@ public class MemberEntity {
         return memberEntity;
     }
 
+    public void update(MemberDTO memberDTO) {
+        this.memberName = memberDTO.getMemberName();
+        this.memberAge = memberDTO.getMemberAge();
+        this.memberHeight = memberDTO.getMemberHeight();
+        this.memberWeight = memberDTO.getMemberWeight();
+        this.memberAddress = memberDTO.getMemberAddress();
+        this.memberNumber = memberDTO.getMemberNumber();
+    }
+
 }

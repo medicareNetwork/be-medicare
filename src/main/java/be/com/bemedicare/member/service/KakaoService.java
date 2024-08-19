@@ -22,7 +22,6 @@ public class KakaoService {
     private final String KAUTH_TOKEN_URL_HOST;
     private final String KAUTH_USER_URL_HOST;
 
-
     @Autowired
     public KakaoService(@Value("${kakao.client_id}") String clientId) {
         this.clientId = clientId;
@@ -82,7 +81,6 @@ public class KakaoService {
         log.info("[ Kakao Service ] Email ---> {} ", userInfo.getKakaoAccount().getEmail());
         return userInfo;
     }
-
 
 
 }

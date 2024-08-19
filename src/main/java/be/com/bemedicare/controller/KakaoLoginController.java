@@ -6,20 +6,20 @@ import be.com.bemedicare.member.entity.MemberEntity;
 import be.com.bemedicare.member.service.KakaoService;
 import be.com.bemedicare.member.service.KakaoUserInfo;
 import be.com.bemedicare.member.service.MemberService;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+
 
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/kakaoapi")
+@RequestMapping("/")
 public class KakaoLoginController {
 
 
@@ -31,8 +31,9 @@ public class KakaoLoginController {
     private KakaoUserInfo kakaoUserInfo;
 
 
+
     @GetMapping("/callback")
-    public ResponseEntity<?> callback(@RequestParam("code") String code) {
+    public ResponseEntity<?> callback(@RequestParam("code") String code, HttpSession session) {
         String accessToken = kakaoService.getAccessTokenFromKakao(code);
         KakaoUserInfoResponseDto userInfo = kakaoService.getUserInfo(accessToken);
 
@@ -46,10 +47,13 @@ public class KakaoLoginController {
                     userInfo.getKakaoAccount().getProfile().getProfileImageUrl(),
                     userInfo.getKakaoAccount().getEmail()
             );
+            session.setAttribute("member", existingMember);
             return new ResponseEntity<>("회원가입 성공", HttpStatus.OK);
         } else {
             // 회원 정보가 있으면 로그인
+            session.setAttribute("member", existingMember);
             return new ResponseEntity<>("로그인 성공", HttpStatus.OK);
         }
     }
 }
+
