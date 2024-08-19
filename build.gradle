@@ -28,15 +28,35 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-webflux'
+	implementation 'org.springframework.boot:spring-boot-starter-websocket'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.boot:spring-boot-starter-web-services'
+
+	// Lombok
 	compileOnly 'org.projectlombok:lombok'
-	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-	runtimeOnly 'com.mysql:mysql-connector-j'
 	annotationProcessor 'org.projectlombok:lombok'
+
+	// MySQL Connector
+	runtimeOnly 'com.mysql:mysql-connector-j'
+
+	// OkHttp (HTTP 요청 라이브러리)
+	implementation 'com.squareup.okhttp3:okhttp:4.9.3'
+
+	// Jackson (JSON 처리 라이브러리)
+	implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.0'
+
+	// DevTools
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+	// 테스트 의존성
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-	implementation 'org.springframework.boot:spring-boot-starter-webflux'
-	//리액티브 프로그래밍 모델을 지원하는 스프링의 모듈로, 비동기 논블로킹 서버-클라이언트 애플리케이션을 작성할 수 있게 해줍니다.
+	testImplementation 'io.projectreactor:reactor-test'
+
+
 }
+
 
 
 

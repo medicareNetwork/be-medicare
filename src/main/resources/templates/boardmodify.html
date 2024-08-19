@@ -39,7 +39,10 @@
             <option value="herbal_medicine">한약</option>
             <option value="headache_medicine">두통약</option>
         </select>
-        <input type="price" name="price" th:value="${board.price}">
+        가격 : <input type="number" name="price" th:value="${board.price}"
+        placeholder="숫자로만 입력하세요.">
+        재고 : <input type="number" name="price" th:value="${board.stockAmount}"
+               placeholder="숫자로만 입력하세요.">
         <button type="submit">수정</button>
     </form>
 </div>

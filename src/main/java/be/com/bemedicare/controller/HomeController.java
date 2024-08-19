@@ -3,9 +3,9 @@ package be.com.bemedicare.controller;
 import be.com.bemedicare.member.dto.MemberDTO;
 import be.com.bemedicare.member.service.MemberService;
 import be.com.bemedicare.xodlq.entity.Board;
-import be.com.bemedicare.xodlq.entity.Cart;
+//import be.com.bemedicare.xodlq.entity.Cart;
 import be.com.bemedicare.xodlq.service.BoardService;
-import be.com.bemedicare.xodlq.service.CartService;
+//import be.com.bemedicare.xodlq.service.CartService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -34,18 +34,20 @@ public class HomeController {
     private BoardService boardService;
     @Autowired
     private MemberService memberService;
-    @Autowired
-    private CartService cartService;
 
     @GetMapping("/board/write")
     public String boardWrite(){
         return "boardwrite";
+
     }
 
 
-    @PostMapping("/board/writepro")
-    public String boardWritePro(Board board, @RequestParam(name="file") MultipartFile file, HttpSession session) throws IOException {
-        boardService.write(board,file, (MemberDTO) session.getAttribute("member"));
+    @PostMapping("/board/write")
+    public String boardWritePro(Board board,
+                                @RequestParam(name="file") MultipartFile file,
+                                HttpSession session) throws IOException {
+        boardService.write(board,file,
+                (MemberDTO) session.getAttribute("member"));
 
         return "redirect:/board/list";
     }
@@ -78,6 +80,16 @@ public class HomeController {
         model.addAttribute("endPage", endPage);
 
         return "boardlist";
+    }
+
+    //베스트 리스트
+    @GetMapping("/board/best")
+    public String boardBestList(Model model){
+        List<Board> list = boardService.bestList();
+
+        model.addAttribute("list",list);
+
+        return "bestlist";
     }
 
     @GetMapping("/board/view")
@@ -120,10 +132,16 @@ public class HomeController {
         boardTemp.setTitle(board.getTitle());
         boardTemp.setContent(board.getContent());
         boardTemp.setCategory(board.getCategory());
+        //가격,재고
 
         boardService.modify(boardTemp, file, (MemberDTO) session.getAttribute("member"));
 
         return "redirect:/board/list";
+    }
+
+    @GetMapping("/maps")
+    public String maps(){
+        return "maps";
     }
 
 //    @GetMapping("/member2/create")
@@ -166,22 +184,22 @@ public class HomeController {
 //        return "index";
 //    }
 
-    @PostMapping("/cart/contain")
-    public String cartContain(Cart cart,
-                              @RequestParam(name = "list_back", required = false) String list_back,
-                              @RequestParam(name = "cart_back", required = false) String cart_back){
-
-        cartService.save(cart);
-
-        String direct = "";
-
-        if(list_back!=null&&cart_back==null){
-            direct="redirect:/board/list";
-        }else if(cart_back!=null&&list_back==null){
-            direct="redirect:/cart/list";
-        }
-
-        return direct;
-    }
+//    @PostMapping("/cart/contain")
+//    public String cartContain(Cart cart,
+//                              @RequestParam(name = "list_back", required = false) String list_back,
+//                              @RequestParam(name = "cart_back", required = false) String cart_back){
+//
+//        cartService.save(cart);
+//
+//        String direct = "";
+//
+//        if(list_back!=null&&cart_back==null){
+//            direct="redirect:/board/list";
+//        }else if(cart_back!=null&&list_back==null){
+//            direct="redirect:/cart/list";
+//        }
+//
+//        return direct;
+//    }
 
 }
