@@ -1,0 +1,40 @@
+.video-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 70vh; /* 화면 높이의 3분의 1 */
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw; /* 화면의 전체 너비 */
+    height: 100%; /* 컨테이너 높이 100% */
+    object-fit: cover; /* 비디오를 컨테이너에 맞게 조정 */
+  }
+
+  .overlay-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.5); /* 배경에 반투명 검정색을 추가 */
+    border-radius: 10px;
+}
+
+.overlay-text h1 {
+  font-size: 4em;
+  margin: 0;
+}
+
+.overlay-text p {
+  font-size: 2em;
+  margin: 10px 0 0;
+}

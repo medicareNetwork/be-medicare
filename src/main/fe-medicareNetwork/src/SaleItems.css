@@ -1,0 +1,66 @@
+/* SaleItems.css */
+.sale-items {
+    padding: 40px;
+    text-align: center;
+    background-color: #f7f7f7;
+    color: #333;
+    font-family: 'Arial', sans-serif;
+}
+
+.title {
+    font-size: 2.5em;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #111;
+}
+
+.subtitle {
+    font-size: 1.2em;
+    margin-bottom: 40px;
+    color: #666;
+}
+
+.products-grid {
+    /*display: grid;*/
+    /*grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));*/
+    gap: 20px;
+    justify-content: center; /* 가운데 정렬 */
+}
+
+.product-card {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease;
+    max-width: 200px;
+    width: 100%;
+    text-align: center;
+    display: inline-block;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+}
+
+.product-image {
+    width: 160px; /* 이미지 크기 조정 */
+    height: 160px;
+    object-fit: cover;
+    border-bottom: 1px solid #eee;
+}
+
+.product-name {
+    font-size: 1.5em;
+    margin: 15px 0;
+    color: #111;
+}
+
+.product-price {
+    font-size: 1.2em;
+    margin: 15px 0;
+    color: #555;
+}

@@ -1,0 +1,97 @@
+.footer {
+    background-color: #ffffff; /* Set the background color to white */
+    color: #333333; /* Dark gray text color for contrast */
+    padding: 40px;
+    font-family: Arial, sans-serif;
+    border-top: 2px solid #ff4500; /* Accent color for the top border */
+}
+
+.footer-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.footer-section {
+    flex: 1 1 calc(25% - 20px);
+    margin: 10px;
+    min-width: 220px;
+}
+
+.footer-section h3 {
+    margin-top: 0;
+    font-size: 20px;
+    color: #ff4500; /* Accent color for headings */
+    border-bottom: 2px solid #ff4500; /* Underline for headings */
+    padding-bottom: 10px;
+}
+
+.footer-section p {
+    margin: 5px 0;
+    color: #333333; /* Dark gray text color for paragraphs */
+}
+
+.footer-section a {
+    color: #ff4500; /* Accent color for links */
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.footer-section a:hover {
+    color: #e03e00; /* Darker shade of accent color on hover */
+}
+
+.social-media-links {
+    display: flex;
+    gap: 15px;
+}
+
+.social-media-icon {
+    color: #ff4500; /* Accent color for social media icons */
+    text-decoration: none;
+    font-size: 16px;
+    transition: color 0.3s;
+}
+
+.social-media-icon:hover {
+    color: #e03e00; /* Darker shade of accent color on hover */
+}
+
+.newsletter-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.newsletter-form input {
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9; /* Light background for input field */
+    color: #333333; /* Dark gray text color for input */
+    font-size: 16px;
+}
+
+.newsletter-form button {
+    padding: 12px;
+    background-color: #ff4500; /* Accent color for the button */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.newsletter-form button:hover {
+    background-color: #e03e00; /* Darker shade of accent color on hover */
+}
+
+.footer-bottom {
+    text-align: center;
+    padding: 10px;
+    border-top: 1px solid #ddd;
+    font-size: 14px;
+    color: #333333; /* Dark gray text color for footer bottom */
+}

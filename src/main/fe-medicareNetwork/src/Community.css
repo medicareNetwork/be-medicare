@@ -1,0 +1,93 @@
+/* 게시판 컨테이너 스타일 */
+.community {
+    padding: 20px;
+    max-width: 900px;
+    margin: 0 auto;
+    font-family: Arial, sans-serif;
+}
+
+/* 제목 스타일 */
+.title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #333;
+}
+
+/* 새 게시물 작성 폼 스타일 */
+.post-form {
+    margin-bottom: 40px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    background-color: #f9f9f9;
+}
+
+.post-form h2 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    color: #555;
+}
+
+.post-form input,
+.post-form textarea {
+    width: calc(100% - 22px); /* 전체 폭에서 padding 및 border 크기 고려 */
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.post-form textarea {
+    height: 150px;
+    resize: vertical;
+}
+
+.post-form button {
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.post-form button:hover {
+    background-color: #0056b3;
+}
+
+/* 게시물 리스트 스타일 */
+.posts-list {
+    margin-top: 20px;
+}
+
+.post {
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.post-title {
+    font-size: 1.75rem;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.post-content {
+    font-size: 1rem;
+    color: #666;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    .post-form input,
+    .post-form textarea {
+        width: 100%;
+    }
+}

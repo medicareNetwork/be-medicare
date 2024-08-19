@@ -1,0 +1,101 @@
+.header {
+  width: 100%;
+  background-color: #333;
+  color: #fff;
+  display: flex;
+  justify-content: center; /* Center the header content horizontally */
+  align-items: center;
+  padding: 10px 20px;
+  box-sizing: border-box;
+}
+
+.header-content {
+  display: flex;
+  width: 100%;
+  max-width: 1400px; /* Increase max-width to allow more space for menu items */
+  justify-content: space-between; /* Space between logo/nav and auth section */
+  align-items: center;
+}
+
+.logo {
+  font-size: 2em; /* Increased font size for better visibility */
+  font-weight: bold;
+  color: #fff; /* Text color remains white */
+  background: none; /* Remove any background or gradient */
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.nav {
+  display: flex;
+  flex: 1;
+  justify-content: center; /* Center nav items */
+  overflow: auto; /* Allow scrolling if items overflow */
+}
+
+.nav ul {
+  list-style: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
+  flex-wrap: wrap; /* Allow items to wrap if necessary */
+}
+
+.nav li {
+  margin: 0 25px; /* Adjusted space between menu items */
+}
+
+.nav a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1.2em; /* Increased font size for menu items */
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.nav a:hover {
+  color: #ddd;
+  text-decoration: underline;
+}
+
+.auth {
+  display: flex;
+  align-items: center;
+}
+
+.search-form {
+  display: flex;
+  align-items: center;
+  margin-right: 10px; /* Add spacing between search form and buttons */
+}
+
+.search-input {
+  padding: 5px;
+  border: 1px solid #444;
+  border-radius: 5px;
+  outline: none;
+  margin-right: 5px;
+  display: none; /* Hide the search input */
+}
+
+.search-input:focus {
+  border-color: #666;
+}
+
+.login-btn,
+.cart-btn {
+  background-color: #555;
+  border: none;
+  color: #fff;
+  padding: 10px 20px;
+  margin-left: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 1em; /* Increased font size for buttons */
+}
+
+.login-btn:hover,
+.cart-btn:hover {
+  background-color: #777;
+}
