@@ -10,16 +10,22 @@ import lombok.Setter;
 
 @Entity
 @Getter @Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+//@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class CartItem {
 
-    @Id @GeneratedValue
-    @Column(name = "cart_item_id")
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="cartItem_id")
     private Long id;
+
+    private Long memberId;
+//    private Long boardId;
+    private String itemName;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "board_id")
     private Board board;
+
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
@@ -45,7 +51,7 @@ public class CartItem {
     }
     //주문 상품 다 합쳐서 얼마인지
     public int getTotalPrice() {
-        return getTotalPrice() * getCount();
+        return getOrderPrice() * getCount();
     }
 
 }

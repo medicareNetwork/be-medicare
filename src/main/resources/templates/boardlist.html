@@ -64,18 +64,23 @@
                         <img th:src="${board.filepath!=null ? board.filepath:'/files/img_ready.png'}" th:alt="${board.filename}">
                     </td>
                     <td>
-                        <a th:text="${board.title}" th:href="@{|/board/modify/${board.id}|}">제목입니다</a><BR>
+                        <a th:text="${board.title}" th:href="@{|/board/modify/${board.id}|}">수정버튼이죠</a><BR>
                         가격 : <span th:text="${board.price}"></span>
                         조회수 : <span th:text="${board.views}"></span>
                     </td>
                         <td>
+                            <form action="/cart/add" method="post">
                             구매수량 : <input type="number" name ="amount"
                                           class="amount" value="1" min="1">
-                        </td>
-                        <td>
                             <input type="hidden" name="boardId" th:value="${board.id}">
-                            <button type="submit" >장바구니 추가하기</button>
-                        </td>
+                            <button type="submit">장바구니 추가하기</button>
+                        </form>
+                    </td>
+<!--                        <td>-->
+<!--                            <input type="hidden" name="boardId" th:value="${board.id}">-->
+<!--&lt;!&ndash;                            <input type="hidden" name="memberId" th:value="${member.id}">&ndash;&gt;-->
+<!--                            <button type="submit" >장바구니 추가하기</button>-->
+<!--                        </td>-->
                 </tr>
             </form>
             </tbody>

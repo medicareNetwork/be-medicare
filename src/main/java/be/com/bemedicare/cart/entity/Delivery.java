@@ -11,6 +11,7 @@ import lombok.Setter;
 public class Delivery {
 
     @Id
+    @Column(name="delivery_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 

@@ -68,7 +68,8 @@ public class MemberEntity {
 
 
     @JsonIgnore//member를 json으로 변환 시 얘는 빼고 변환해라~
-    @OneToMany(mappedBy = "member") // 장바구니에서 member에있는 내용들을 꺼내쓸수있게
+//    @OneToMany(mappedBy = "member") // 장바구니에서 member에있는 내용들을 꺼내쓸수있게
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<Cart> cart = new ArrayList<>();
 
 

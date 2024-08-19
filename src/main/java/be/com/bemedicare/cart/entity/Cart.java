@@ -18,7 +18,9 @@ public class Cart {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="cart_id")
     private Long id;
+
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name ="member_id")
@@ -26,7 +28,7 @@ public class Cart {
 
     @JsonIgnore
     @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL)
-    //장바구니 (진짜 장바구니처럼) 번호 만들기
+//    장바구니 (진짜 장바구니처럼) 번호 만들기
     private List<CartItem> cartItems = new ArrayList<>();
 
     @JsonIgnore
@@ -80,7 +82,7 @@ public class Cart {
         }
     }
     //장바구니 주문 가격
-    public int getTotalPirce() {
+    public int getTotalPrice() {
         int totalPrice = 0;
         for(CartItem cartItem : cartItems) {
             totalPrice += cartItem.getTotalPrice();
