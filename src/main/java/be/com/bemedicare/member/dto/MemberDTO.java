@@ -4,7 +4,6 @@ package be.com.bemedicare.member.dto;
 
 import be.com.bemedicare.member.entity.MemberEntity;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,19 +12,15 @@ import lombok.ToString;
 @Getter @Setter
 @NoArgsConstructor
 @ToString
-@NotBlank
-@Email
 public class MemberDTO {
     private Long id;
 
-    @NotBlank(message = "이메일 주소를 입력해주세요.")
-   // @Email(message = "올바른 이메일 주소를 입력해주세요.")
+
+    @Email(message = "올바른 이메일 주소를 입력해주세요.")
     private String memberEmail;
 
-    @NotBlank(message = "비밀번호를 입력해주세요.")
     private String memberPassword;
 
-    @NotBlank(message = "닉네임을 입력해주세요.")
     private String memberName;
 
     private int memberAge;
@@ -35,6 +30,15 @@ public class MemberDTO {
     private String memberAddress;
     private String memberQ;
     private String memberQnA;
+
+
+    private String authId;
+
+    private String nickName;
+
+    private String profileImageUrl;
+
+    private String email;
 
 
 
@@ -54,6 +58,20 @@ public class MemberDTO {
         memberDTO.setMemberQ(memberEntity.getMemberQ());
 
         return memberDTO;
+    }
+
+    public static MemberEntity toEntity(MemberDTO memberDTO) {
+        MemberEntity memberEntity = new MemberEntity();
+        memberEntity.setId(memberDTO.getId());
+        memberEntity.setEmail(memberDTO.getMemberEmail());
+        memberEntity.setMemberPassword(memberDTO.getMemberPassword());
+        memberEntity.setMemberName(memberDTO.getMemberName());
+        memberEntity.setMemberAge(memberDTO.getMemberAge());
+        memberEntity.setMemberWeight(memberDTO.getMemberWeight());
+        memberEntity.setMemberHeight(memberDTO.getMemberHeight());
+        memberEntity.setMemberNumber(memberDTO.getMemberNumber());
+        memberEntity.setMemberAddress(memberDTO.getMemberAddress());
+        return memberEntity;
     }
 }
 

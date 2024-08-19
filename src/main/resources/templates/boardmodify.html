@@ -26,7 +26,7 @@
 <body>
 <div th:insert="~{header}"></div>
 <div class="layout">
-    <form th:action="@{/be/com/bemedicare/board/update/{id}(id=${board.id})}" method="post" enctype="multipart/form-data">
+    <form th:action="@{/board/update/{id}(id=${board.id})}" method="post" enctype="multipart/form-data">
         <input type="text" name="title" th:value="${board.title}">
         <textarea name="content" th:text="${board.content}"></textarea>
         <div class="file_info" th:if="${oriName!=null}">
@@ -39,7 +39,10 @@
             <option value="herbal_medicine">한약</option>
             <option value="headache_medicine">두통약</option>
         </select>
-        <input type="price" name="price" th:value="${board.price}">
+        가격 : <input type="number" name="price" th:value="${board.price}"
+        placeholder="숫자로만 입력하세요.">
+        재고 : <input type="number" name="price" th:value="${board.stockAmount}"
+               placeholder="숫자로만 입력하세요.">
         <button type="submit">수정</button>
     </form>
 </div>

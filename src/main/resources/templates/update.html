@@ -45,8 +45,8 @@
         text-align: center;
     }
 
-    .login-form input[type="text"],
-    .login-form input[type="password"] {
+    .update-form input[type="text"],
+    .update-form input[type="password"] {
         width: 100%;
         padding: 10px;
         margin-bottom: 10px;
@@ -55,9 +55,9 @@
         box-sizing: border-box;
     }
 
-    .login-form .login-btn,
-    .login-form .kakao-login,
-    .login-form .google-login {
+    .update-form .login-btn,
+    .update-form .kakao-login,
+    .update-form .google-login {
         width: 100%;
         padding: 10px;
         border-radius: 5px;
@@ -67,34 +67,12 @@
         color: white;
     }
 
-    .kakao-btn {
-        background-color: #ffeb3b;
-        color: #3c1e1e;
-        font-weight: bold;
-    }
-
     .login-btn {
-        background-color: #333;
+        background-color: #007bff;
+        color: black;
     }
 
-    .kakao-login {
-        background-color: #fee500;
-        color: #3c1e1e;
-    }
 
-    .google-login {
-        background-color: gray;
-    }
-
-    .signup-btn {
-        background-color: #666;
-    }
-
-    .login-options {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 10px;
-    }
 
     .login-options a {
         color: #007bff;
@@ -132,25 +110,27 @@
 
 <main>
     <section class="login-container">
-        <form class="login-form" action="/member/save" name="saveForm" method="post" enctype="multipart/form-data" onsubmit="return checkFiled();">
-            <h2>회원가입</h2>
-            이메일  <input type="text" name="memberEmail" placeholder="필수 입력사항">
-            <div th:if="${errorMessage}" th:text="${errorMessage}" style="color: red"></div>
-            비밀번호 <input type="password" name="memberPassword" placeholder="필수 입력사항">
-            비밀번호 확인  <input type="password" name="confirmPassword" placeholder="필수 입력사항">
-            비밀번호 질문 <input type="text" name="memberQ" value="다녔던 초등학교 이름은?" readonly>
-            비밀번호 답변 <input type="text" name="memberQnA" placeholder="필수선택">
-            이름  <input type="text" name="memberName" placeholder="필수 입력사항">
-            나이  <input type="text" name="memberAge" placeholder="">
-            몸무게  <input type="text" name="memberWeight" placeholder="">
-            신장  <input type="text" name="memberHeight" placeholder="">
-            핸드폰번호  <input type="text" name="memberNumber" placeholder="필수 입력사항">
-            주소  <input type="text" name="memberAddress">
-            <button class="login-btn">회원가입</button>
-            <div>
-                <button type="button" class="kakao-login" onclick="window.location.href='/kakao/login';">카카오로 회원가입</button>
-                <button class="google-login">구글로 회원가입</button>
-            </div>
+        <form  class="update-form" th:action="@{/member/update}" th:object="${memberDTO}" method="post" name="updateForm" enctype="multipart/form-data" onsubmit="return checkFiled();">
+            <h2>개인정보 수정</h2>
+            <label for="memberName">이름:</label>
+            <input type="text" id="memberName" th:field="*{memberName}" /><br/>
+
+            <label for="memberAge">나이:</label>
+            <input type="text" id="memberAge" th:field="*{memberAge}" /><br/>
+
+            <label for="memberAge">키:</label>
+            <input type="text" id="memberHeight" th:field="*{memberHeight}" /><br/>
+
+            <label for="memberAge">몸무게:</label>
+            <input type="text" id="memberWeight" th:field="*{memberWeight}" /><br/>
+
+            <label for="memberAge">주소:</label>
+            <input type="text" id="memberAddress" th:field="*{memberAddress}" /><br/>
+
+            <label for="memberNumber">전화번호:</label>
+            <input type="text" id="memberNumber" th:field="*{memberNumber}" /><br/>
+
+            <button type="submit" class="login-btn">개인정보 수정완료</button>
         </form>
     </section>
 </main>
@@ -166,22 +146,26 @@
 </body>
 <script>
     function checkFiled(){
-        let inputs = document.saveForm;
+        let inputs = document.updateForm;
 
-        if(!inputs.memberEmail.value){
-            alert("이메일을 입력하세요");
+        if(!inputs.memberName.value){
+            alert("이름을 입력하세요");
             return false;
         }
-        if(!inputs.memberPassword.value) {
-            alert("비밀번호를 입력하세요");
+        if(!inputs.memberAge.value) {
+            alert("나이 입력하세요");
             return false;
         }
-        if(!inputs.confirmPassword.value) {
-            alert("비밀번호를 다시 한번 입력하세요");
+        if(!inputs.memberHeight.value) {
+            alert("키를 입려하세요");
             return false;
         }
-        if(inputs.memberPassword.value !== inputs.confirmPassword.value) {
-            alert("비밀번호가 일치하지 않습니다.");
+        if(!inputs.memberWeight.value) {
+            alert("몸무게를 입려하세요");
+            return false;
+        }
+        if(!inputs.memberAddress.value) {
+            alert("주소 입력하세요");
             return false;
         }
         if(!inputs.memberNumber.value) {

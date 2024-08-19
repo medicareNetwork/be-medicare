@@ -1,10 +1,15 @@
 package be.com.bemedicare.member.entity;
 
 
+import be.com.bemedicare.cart.entity.Cart;
 import be.com.bemedicare.member.dto.MemberDTO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Setter
@@ -62,6 +67,12 @@ public class MemberEntity {
     private String email;
 
 
+    @JsonIgnore//member를 json으로 변환 시 얘는 빼고 변환해라~
+//    @OneToMany(mappedBy = "member") // 장바구니에서 member에있는 내용들을 꺼내쓸수있게
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    private List<Cart> cart = new ArrayList<>();
+
+
     // dto를 entity로 변환
     public static MemberEntity toMemberEntity(MemberDTO memberDTO) {
         MemberEntity memberEntity = new MemberEntity();
@@ -76,6 +87,15 @@ public class MemberEntity {
         memberEntity.setMemberQnA(memberDTO.getMemberQnA());
         memberEntity.setMemberQ(memberDTO.getMemberQ());
         return memberEntity;
+    }
+
+    public void update(MemberDTO memberDTO) {
+        this.memberName = memberDTO.getMemberName();
+        this.memberAge = memberDTO.getMemberAge();
+        this.memberHeight = memberDTO.getMemberHeight();
+        this.memberWeight = memberDTO.getMemberWeight();
+        this.memberAddress = memberDTO.getMemberAddress();
+        this.memberNumber = memberDTO.getMemberNumber();
     }
 
 }
