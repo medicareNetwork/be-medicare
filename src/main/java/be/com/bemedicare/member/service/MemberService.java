@@ -12,12 +12,14 @@ import java.util.Optional;
 
 
 @Service
-@RequiredArgsConstructor
 public class MemberService {
 
 
     private final MemberRepository memberRepository;
 
+    public MemberService(MemberRepository memberRepository) {
+        this.memberRepository = memberRepository;
+    }
 
     public void save(MemberDTO memberDTO) {
 
@@ -26,15 +28,14 @@ public class MemberService {
         memberRepository.save(memberEntity);
     }
 
-    public MemberDTO login(MemberDTO memberDTO) {
-        Optional<MemberEntity> byMemberEmail = memberRepository.findByMemberEmail(memberDTO.getMemberEmail());
+    public MemberEntity login(MemberEntity member) {
+        Optional<MemberEntity> byMemberEmail = memberRepository.findByMemberEmail(member.getMemberEmail());
         if (byMemberEmail.isPresent()) {
             MemberEntity memberEntity = byMemberEmail.get();
 
-            if (memberEntity.getMemberPassword().equals(memberDTO.getMemberPassword())) {
-                return MemberDTO.toMemberDTO(memberEntity);
-
-            } else if ((memberEntity.getMemberPassword()) != (memberDTO.getMemberPassword())) {
+            if (memberEntity.getMemberPassword().equals(member.getMemberPassword())) {
+                return memberEntity;
+            } else{
                 //비밀번호 불일치
 
             }
@@ -85,37 +86,16 @@ public class MemberService {
         }
     }
 
-    public void update(MemberDTO memberDTO) {
-        // MemberDTO를 엔티티로 변환한 후 DB에 저장
-        MemberEntity member = memberRepository.findById(memberDTO.getId()).orElseThrow(() -> new IllegalArgumentException("회원이 존재하지 않습니다."));
-        member.update(memberDTO); //엔티티 클래스에 업데이트 메서드 추가
-        memberRepository.save(member);
+    public void update(MemberEntity memberEntity) {
+        memberRepository.save(memberEntity);
     }
 
-    public boolean changePassword(String memberEmail, ChangePasswordRequestDTO request) {
-        Optional<MemberEntity> optionalMember = memberRepository.findByMemberEmail(memberEmail);
-
-        if (optionalMember.isPresent()) {
-            MemberEntity member = optionalMember.get();
-
-            // 현재 비밀번호 확인
-            if (!member.getMemberPassword().equals(request.getCurrentPassword())) {
-                return false;
-            }
-
-            // 새로운 비밀번호와 확인 비밀번호가 일치하는지 확인
-            if (!request.getNewPassword().equals(request.getConfirmNewPassword())) {
-                return false;
-            }
-
-            // 비밀번호 변경
-            member.setMemberPassword(request.getNewPassword());
+    public void changePassword(MemberEntity member) {
             memberRepository.save(member);
+    }
 
-            return true;
-        } else {
-            return false;
-        }
+    public void updateMemberAdditionalInfo(MemberEntity member) {
+        memberRepository.save(member);
     }
 
 

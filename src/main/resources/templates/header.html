@@ -60,7 +60,7 @@
         <a th:href="@{/member/save}">회원가입</a>
         <a th:href="@{/member/login}">로그인</a>
         <a th:if="${session.member!=null}" th:href="@{/cart/list}">장바구니</a><br>
-        session 값 확인 : <span th:text="${session.member != null ? session.member.getMemberName() : '로그인이 필요합니다'}"></span>
+        session 값 확인 : <span th:text="${session.member != null ? session.member.getId(): '로그인이 필요합니다'}"></span>
     </div>
 </div>
 <div class="table_layout">
