@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import StarRating from './StarRating';
-import './SupplementList.css';
+import '../css/SupplementList.css';
 import axios from "axios";
 
 const PAGE_SIZE = 20;

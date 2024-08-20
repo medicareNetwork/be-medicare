@@ -16,7 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 //바꿔이새기야
 
-@Controller
+@RestController
 @RequestMapping("/member")
 @RequiredArgsConstructor
 public class MemberController {
@@ -47,14 +47,12 @@ public class MemberController {
 
 
     @PostMapping("/login")
-    public String login(@ModelAttribute MemberDTO memberDTO, HttpSession session, Model model) {
+    public String login(@RequestBody MemberDTO memberDTO, HttpSession session, Model model) {
         try {
             MemberDTO loginResult = memberService.login(memberDTO);
             if (loginResult != null) {
                 session.setAttribute("member", loginResult);
-//                return "main"; // 성공 시 메인 페이지로 이동 <태립이가 만들어놓은곳으로 보낸것이 밑에>
-
-                return "redirect:/board/list";
+                return "redirect:/";
             }
         } catch (IllegalArgumentException e) {
             model.addAttribute("errorMessage", e.getMessage());

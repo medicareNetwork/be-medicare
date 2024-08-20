@@ -1,5 +1,5 @@
 import React from 'react';
-import './SaleItems.css'; // 별도의 CSS 파일을 사용할 예정
+import '../css/SaleItems.css'; // 별도의 CSS 파일을 사용할 예정
 
 const products = [
     { id: 1, name: 'Albumin', price: '$800', image: 'albumin.webp' },

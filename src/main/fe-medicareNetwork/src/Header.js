@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './Header.css';
+import './css/Header.css';
 
 const Header = ({ onLoginClick, onCartClick, onCommunityClick, cartCount }) => {
     const [searchTerm, setSearchTerm] = useState('');
@@ -24,7 +24,7 @@ const Header = ({ onLoginClick, onCartClick, onCommunityClick, cartCount }) => {
                         <li><a href="/sale-items">Sale Items</a></li>
                     </ul>
                     <ul className="right-menu">
-                        <li><a href="/community" onClick={onCommunityClick}>Community</a></li>
+                        <li><a href="/community/Community" onClick={onCommunityClick}>Community</a></li>
                         <li><a href="/contact-us">Contact Us</a></li>
                     </ul>
                 </nav>

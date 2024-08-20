@@ -1,5 +1,5 @@
 import React from 'react';
-import './NewArrivals.css'; // 별도의 CSS 파일을 사용할 예정
+import '../css/NewArrivals.css'; // 별도의 CSS 파일을 사용할 예정
 
 const products = [
     { id: 1, name: 'Coral Calcium', price: '$29.99', image: 'cal.avif' },

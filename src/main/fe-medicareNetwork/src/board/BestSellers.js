@@ -1,5 +1,5 @@
 import React from 'react';
-import './BestSellers.css'; // 별도의 CSS 파일을 사용할 예정
+import '../css/BestSellers.css'; // 별도의 CSS 파일을 사용할 예정
 
 const products = [
     { id: 1, name: 'Vitamin C', price: '$39.99', image: 'vitaminc.jpg' },
