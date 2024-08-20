@@ -5,10 +5,11 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.Date;
 import java.util.HashMap;
-
+@Setter
 @Getter
 @NoArgsConstructor //역직렬화를 위한 기본 생성자
 @JsonIgnoreProperties(ignoreUnknown = true)
