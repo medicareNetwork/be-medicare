@@ -5,6 +5,8 @@ package be.com.bemedicare.controller;
 import be.com.bemedicare.member.dto.ChangePasswordRequestDTO;
 import be.com.bemedicare.member.dto.KakaoUserInfoResponseDto;
 import be.com.bemedicare.member.dto.MemberDTO;
+import be.com.bemedicare.member.entity.MemberEntity;
+import be.com.bemedicare.member.service.KakaoService;
 import be.com.bemedicare.member.service.MemberService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +25,7 @@ public class MemberController {
     private static final Logger log = LoggerFactory.getLogger(MemberController.class);
     //생성자  주입
     private final MemberService memberService;
+    private final KakaoService kakaoService;
 
     @GetMapping("/save")
     public String saveForm() {
@@ -40,6 +43,7 @@ public class MemberController {
         }
     }
 
+
     @GetMapping("/login")
     public String loginForm() {
         return "login";
@@ -47,9 +51,10 @@ public class MemberController {
 
 
     @PostMapping("/login")
-    public String login(@RequestBody MemberDTO memberDTO, HttpSession session, Model model) {
+
+    public String login(@ModelAttribute MemberEntity memberEntity, HttpSession session, Model model) {
         try {
-            MemberDTO loginResult = memberService.login(memberDTO);
+            MemberEntity loginResult = memberService.login(memberEntity);
             if (loginResult != null) {
                 session.setAttribute("member", loginResult);
                 return "redirect:/";
@@ -115,39 +120,36 @@ public class MemberController {
     }
 
     @GetMapping("/mypage")
-    public String mypage(HttpSession httpSession, Model model) {
-        MemberDTO memberDTO = (MemberDTO) httpSession.getAttribute("member");
+    public String mypage(HttpSession session) {
+        MemberEntity memberEntity = (MemberEntity) session.getAttribute("member");
 
-        if (memberDTO == null) {
+        if (memberEntity == null) {
             return "login";
         }
-        model.addAttribute("member", memberDTO);
 
         return "mypage";
     }
 
     @GetMapping("/update")
-    public String updateForm(HttpSession httpSession, Model model) {
-        MemberDTO loggedInMember = (MemberDTO) httpSession.getAttribute("member");
+    public String updateForm() {
 
-        model.addAttribute("memberDTO", loggedInMember);
         return "update";
     }
 
     @PostMapping("/update")
-    public String update(@ModelAttribute MemberDTO memberDTO, HttpSession session, Model model) {
+    public String update(MemberEntity memberEntity, HttpSession session, Model model) {
         try {
             // 세션에서 로그인한 사용자 정보를 가져옴
-            MemberDTO loggedInMember = (MemberDTO) session.getAttribute("member");
+            MemberEntity loggedInMember = (MemberEntity) session.getAttribute("member");
+
 
             // 기존의 회원 정보를 새롭게 입력한 데이터로 저장
-            loggedInMember.setMemberName(memberDTO.getMemberName());
-            loggedInMember.setMemberAge(memberDTO.getMemberAge());
-            loggedInMember.setMemberHeight(memberDTO.getMemberHeight());
-            loggedInMember.setMemberWeight(memberDTO.getMemberWeight());
-            loggedInMember.setMemberAddress(memberDTO.getMemberAddress());
-            loggedInMember.setMemberNumber(memberDTO.getMemberNumber());
-
+            loggedInMember.setMemberName(memberEntity.getMemberName());
+            loggedInMember.setMemberAge(memberEntity.getMemberAge());
+            loggedInMember.setMemberHeight(memberEntity.getMemberHeight());
+            loggedInMember.setMemberWeight(memberEntity.getMemberWeight());
+            loggedInMember.setMemberAddress(memberEntity.getMemberAddress());
+            loggedInMember.setMemberNumber(memberEntity.getMemberNumber());
 
             //DB에 업데이트
             memberService.update(loggedInMember);
@@ -169,25 +171,19 @@ public class MemberController {
 
     }
 
+
     @PostMapping("/changePassword")
-    public String changePassword(@RequestParam String currentPassword,
-                                 @RequestParam String newPassword,
-                                 @RequestParam String confirmNewPassword,
+    public String changePassword(ChangePasswordRequestDTO request,
                                  HttpSession session,
                                  Model model) {
 
-        MemberDTO resetPassword = (MemberDTO) session.getAttribute("member");
+        MemberEntity reset = (MemberEntity) session.getAttribute("member");
 
-
-        ChangePasswordRequestDTO request = new ChangePasswordRequestDTO();
-        request.setCurrentPassword(currentPassword);
-        request.setNewPassword(newPassword);
-        request.setConfirmNewPassword(confirmNewPassword);
-
-        boolean isPasswordChanged = memberService.changePassword(resetPassword.getMemberEmail(), request);
-
-        if (isPasswordChanged) {
-            model.addAttribute("member", resetPassword);
+        if (reset.getMemberPassword().equals(request.getCurrentPassword()) &&
+                request.getNewPassword().equals(request.getConfirmNewPassword())){
+            reset.setMemberPassword(request.getNewPassword());
+            session.setAttribute("member",reset);
+            memberService.changePassword(reset);
             return "mypage";
         } else {
             model.addAttribute("errorMessage", "현재 비밀번호가 잘못되었거나 새 비밀번호가 일치하지 않습니다.");

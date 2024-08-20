@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko" >
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <title>로그인</title>
@@ -45,8 +45,8 @@
         text-align: center;
     }
 
-    .update-form input[type="text"],
-    .update-form input[type="password"] {
+    .login-form input[type="text"],
+    .login-form input[type="password"] {
         width: 100%;
         padding: 10px;
         margin-bottom: 10px;
@@ -55,9 +55,9 @@
         box-sizing: border-box;
     }
 
-    .update-form .login-btn,
-    .update-form .kakao-login,
-    .update-form .google-login {
+    .login-form .login-btn,
+    .login-form .kakao-login,
+    .login-form .google-login {
         width: 100%;
         padding: 10px;
         border-radius: 5px;
@@ -67,12 +67,34 @@
         color: white;
     }
 
-    .login-btn {
-        background-color: #007bff;
-        color: black;
+    .kakao-btn {
+        background-color: #ffeb3b;
+        color: #3c1e1e;
+        font-weight: bold;
     }
 
+    .login-btn {
+        background-color: #333;
+    }
 
+    .kakao-login {
+        background-color: #fee500;
+        color: #3c1e1e;
+    }
+
+    .google-login {
+        background-color: gray;
+    }
+
+    .signup-btn {
+        background-color: #666;
+    }
+
+    .login-options {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+    }
 
     .login-options a {
         color: #007bff;
@@ -110,25 +132,23 @@
 
 <main>
     <section class="login-container">
-        <form  class="update-form" th:action="@{/member/update}" name="updateForm"  method="post" id="updateForm" enctype="multipart/form-data" onsubmit="return checkFiled();">
-            <h2>개인정보 수정</h2>
-
+        <form class="login-form" action="/saveAdditionalInfo" method="post">
             <label for="memberAge">나이:</label>
-            <input type="text" id="memberAge" name="memberAge" th:value="${session.member.getMemberAge()}" /><br/>
+            <input type="number" id="memberAge" name="memberAge" required><br>
 
-            <label for="memberHeight">키:</label>
-            <input type="text" id="memberHeight" name="memberHeight" th:value="${session.member.getMemberHeight()}" /><br/>
+            <label for="memberWeight">체중 (kg):</label>
+            <input type="number" id="memberWeight" name="memberWeight" required><br>
 
-            <label for="memberWeight">몸무게:</label>
-            <input type="text" id="memberWeight" name="memberWeight" th:value="${session.member.getMemberWeight()}" /><br/>
-
-            <label for="memberAddress">주소:</label>
-            <input type="text" id="memberAddress" name="memberAddress" th:value="${session.member.getMemberAddress()}" /><br/>
+            <label for="memberHeight">신장 (cm):</label>
+            <input type="number" id="memberHeight" name="memberHeight" required><br>
 
             <label for="memberNumber">전화번호:</label>
-            <input type="text" id="memberNumber" name="memberNumber" th:value="${session.member.getMemberNumber()}" /><br/>
+            <input type="text" id="memberNumber" name="memberNumber" required><br>
 
-            <button type="submit" class="login-btn">개인정보 수정완료</button>
+            <label for="memberAddress">주소:</label>
+            <input type="text" id="memberAddress" name="memberAddress" required><br>
+
+            <button type="submit">저장</button>
         </form>
     </section>
 </main>
@@ -144,28 +164,29 @@
 </body>
 <script>
     function checkFiled(){
-        let inputs = document.updateForm;
+        let inputs = document.saveForm;
 
-        if(!inputs.memberAge.value){
-            alert("나이을 입력하세요");
+        if(!inputs.memberEmail.value){
+            alert("이메일을 입력하세요");
             return false;
         }
-        if(!inputs.memberWeight.value) {
-            alert("몸무게를 입력하세요");
+        if(!inputs.memberPassword.value) {
+            alert("비밀번호를 입력하세요");
             return false;
         }
-        if(!inputs.memberHeight.value) {
-            alert("키를 입려하세요");
+        if(!inputs.confirmPassword.value) {
+            alert("비밀번호를 다시 한번 입력하세요");
+            return false;
+        }
+        if(inputs.memberPassword.value !== inputs.confirmPassword.value) {
+            alert("비밀번호가 일치하지 않습니다.");
             return false;
         }
         if(!inputs.memberNumber.value) {
-            alert("전화번호를 입려하세요");
+            alert("전화번호를 입력하세요");
             return false;
         }
-        if(!inputs.memberAddress.value) {
-            alert("주소 입력하세요");
-            return false;
-        }
+
         return true;
     }
 </script>

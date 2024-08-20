@@ -12,18 +12,20 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 
 
 @Slf4j
-@RestController
+@Controller
 @RequiredArgsConstructor
 @RequestMapping("/")
 public class KakaoLoginController {
 
 
     private final KakaoService kakaoService;
+
 
     @Autowired
     private MemberService memberService;
@@ -33,7 +35,7 @@ public class KakaoLoginController {
 
 
     @GetMapping("/callback")
-    public ResponseEntity<?> callback(@RequestParam("code") String code, HttpSession session) {
+    public String callback(@RequestParam("code") String code, HttpSession session) {
         String accessToken = kakaoService.getAccessTokenFromKakao(code);
         KakaoUserInfoResponseDto userInfo = kakaoService.getUserInfo(accessToken);
 
@@ -47,13 +49,43 @@ public class KakaoLoginController {
                     userInfo.getKakaoAccount().getProfile().getProfileImageUrl(),
                     userInfo.getKakaoAccount().getEmail()
             );
-            session.setAttribute("member", existingMember);
-            return new ResponseEntity<>("회원가입 성공", HttpStatus.OK);
+            MemberEntity member = memberService.findMemberByAuthId(String.valueOf(userInfo.getId()));
+            session.setAttribute("member", member);
+            return "/kakaosave";
         } else {
             // 회원 정보가 있으면 로그인
-            session.setAttribute("member", existingMember);
-            return new ResponseEntity<>("로그인 성공", HttpStatus.OK);
+            MemberEntity member = memberService.findMemberByAuthId(String.valueOf(userInfo.getId()));
+            session.setAttribute("member", member);
+            return "redirect:/board/list";
         }
     }
-}
 
+    @PostMapping("/saveAdditionalInfo")
+    public String saveAdditionalInfo(
+            @RequestParam(name="memberAge") int memberAge,
+            @RequestParam(name="memberWeight") int memberWeight,
+            @RequestParam(name="memberHeight") int memberHeight,
+            @RequestParam(name="memberNumber") String memberNumber,
+            @RequestParam(name="memberAddress") String memberAddress,
+            HttpSession session) {
+
+        MemberEntity member = (MemberEntity) session.getAttribute("member");
+
+        if (member!=null){
+            member.setMemberAge(memberAge);
+            member.setMemberWeight(memberWeight);
+            member.setMemberHeight(memberHeight);
+            member.setMemberNumber(memberNumber);
+            member.setMemberAddress(memberAddress);
+            session.setAttribute("member",member);
+        }
+
+        // 회원의 추가 정보 업데이트
+        memberService.updateMemberAdditionalInfo(member);
+
+        // 업데이트 후 메인 페이지로 이동
+        return "redirect:/board/list";
+    }
+
+
+}
