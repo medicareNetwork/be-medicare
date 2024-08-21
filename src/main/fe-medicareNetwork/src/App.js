@@ -1,18 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Header from './Header';
-import VideoSection from './VideoSection';
-import './App.css';
-import videoSrc from './health.mp4'; // 비디오 파일 경로
-import SupplementList from './SupplementList';
+import VideoSection from './video/VideoSection';
+import './css/App.css';
+import videoSrc from './video/health.mp4'; // 비디오 파일 경로
+import Login from './backend/Login';
+import SupplementList from './board/SupplementList';
 import SupplementButton from './SupplementButton';
 import Footer from './Footer';
-import NewArrivals from './NewArrivals';
-import BestSellers from './BestSellers';
-import SaleItems from './SaleItems';
-import Cart from './Cart';
-import Community from './Community'; // 게시판 페이지 import
-import ContactUs from './ContactUs';
+import NewArrivals from './board/NewArrivals';
+import BestSellers from './board/BestSellers';
+import SaleItems from './board/SaleItems';
+import Cart from './order/Cart';
+import Community from './community/Community'; // 게시판 페이지 import
+import useCheckLoginStatus from './session/CheckLogin';
+import ContactUs from './community/ContactUs';
 import axios from "axios";
 
 function App() {
@@ -20,6 +22,7 @@ function App() {
     const [cartItems, setCartItems] = useState([]);
     const [cartMessage, setCartMessage] = useState('');
     const [bestList, setBestList] = useState([]);
+    const isLoggedIn = useCheckLoginStatus(); // 로그인 상태 확인
 
     // 로컬 스토리지에서 카트 아이템을 불러옵니다.
     useEffect(() => {
@@ -28,11 +31,6 @@ function App() {
             setCartItems(JSON.parse(storedCartItems));
         }
     }, []);
-
-    // 페이지를 처음 열때마다 로컬스토리지 초기화(쓸모없는 코드)
-    // useEffect(() => {
-    //     localStorage.setItem('cartItems', JSON.stringify(cartItems));
-    // }, [cartItems]);
 
     useEffect(() => {
         axios.get('http://localhost:8090/api/bestList')
@@ -45,7 +43,12 @@ function App() {
     }, []);
 
     const handleLoginClick = () => {
-        setIsLoginScreen(true);
+        if (!isLoggedIn) {
+            setIsLoginScreen(true);
+        }
+    };
+    const closeLoginScreen = () => {
+        setIsLoginScreen(false);  // 로그인 화면 닫기
     };
 
     const addToCart = (product) => {
@@ -72,14 +75,21 @@ function App() {
     return (
         <Router>
             <div className="App">
-                <Header onLoginClick={handleLoginClick} onCartClick={handleCartClick} onCommunityClick={handleCommunityClick} cartCount={cartItems.length} />
+                <Header onLoginClick={handleLoginClick}
+                        onCartClick={handleCartClick}
+                        onCommunityClick={handleCommunityClick}
+                        cartCount={cartItems.length} />
                 {cartMessage && <div className="cart-message">{cartMessage}</div>}
                 <div className="content">
                     {isLoginScreen ? (
-                        <LoginScreen />
+                        <div>
+                            <Login />
+                            <button onClick={closeLoginScreen}>닫기</button>
+                        </div>
                     ) : (
                         <>
                             <Routes>
+                                <Route path="/login" element={<Login />} />
                                 <Route path="/" element={<VideoSection videoSrc={videoSrc} />} />
                                 <Route path="/new-arrivals" element={<NewArrivals addToCart={addToCart} />} />
                                 <Route path="/best-sellers" element={<BestSellers addToCart={addToCart} bestList={bestList} />} />
@@ -89,17 +99,17 @@ function App() {
                                 <Route path="/contact-us" element={<ContactUs />} /> {/* Contact Us 페이지 추가 */}
                             </Routes>
                             <SupplementButton />
-                            <SupplementList addToCart={addToCart}/>
+                            <SupplementList addToCart={addToCart} />
                             <Footer />
                         </>
-                    )}
+                        )}
                 </div>
             </div>
         </Router>
     );
 }
 
-const LoginScreen = () => {
+const LoginScreen2 = () => {
     return (
         <div className="login-screen">
             <div className="login-container">

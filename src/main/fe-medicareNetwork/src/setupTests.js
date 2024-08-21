@@ -1,5 +1,5 @@
 import React from 'react';
-import './StarRating.css';
+import './css/StarRating.css';
 
 const StarRating = ({ rating }) => {
   const stars = [];

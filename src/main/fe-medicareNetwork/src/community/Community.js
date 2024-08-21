@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './Community.css'; // 게시판의 스타일을 위한 CSS 파일
+import '../css/Community.css'; // 게시판의 스타일을 위한 CSS 파일
 
 const Community = () => {
     const [posts, setPosts] = useState([

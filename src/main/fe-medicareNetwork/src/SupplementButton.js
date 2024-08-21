@@ -1,5 +1,5 @@
 import React from 'react';
-import './SupplementButton.css';
+import './css/SupplementButton.css';
 
 const SupplementButton = () => {
   return (
