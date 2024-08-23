@@ -15,7 +15,6 @@ public class OpenAIService {
 
     @Value("${openai.api.key}")
     private String apiKey;
-    private static final String API_KEY2 = "sk-Qe6CeNA94XBHRhCK886bMyxDnZpKPKOecotjtMJRi0T3BlbkFJa6jt1ty4FjOWx_6dmaitFbTtpOmyksHYrIM3ASGocA";
     private static final String OPENAI_API_URL = "https://api.openai.com/v1/chat/completions";
 
     public String sendMessageToGPT(String userMessage) throws IOException {
@@ -33,7 +32,7 @@ while (retryCount < maxRetries) {
 
         Request request = new Request.Builder()
                 .url(OPENAI_API_URL)
-                .header("Authorization", "Bearer " + API_KEY2)
+                .header("Authorization", "Bearer " + apiKey)
                 .post(body)
                 .build();
 
