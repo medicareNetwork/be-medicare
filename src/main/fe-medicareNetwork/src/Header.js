@@ -26,10 +26,11 @@ const Header = ({ onLoginClick, onCartClick, onCommunityClick, cartCount }) => {
                     <ul className="right-menu">
                         <li><a href="/community/Community" onClick={onCommunityClick}>Community</a></li>
                         <li><a href="/contact-us">Contact Us</a></li>
+                        <li><a href="/mypage">My Page</a></li>
                     </ul>
                 </nav>
                 <div className="auth">
-                    <form className="search-form" onSubmit={handleSearchSubmit}>
+                <form className="search-form" onSubmit={handleSearchSubmit}>
                         <input
                             type="text"
                             className="search-input"
@@ -41,11 +42,11 @@ const Header = ({ onLoginClick, onCartClick, onCommunityClick, cartCount }) => {
                     <button className="login-btn" onClick={onLoginClick}>Sign In</button>
                     <button className="cart-btn" onClick={onCartClick}>
                         Cart {cartCount > 0 && `(${cartCount})`}
-                    </button>
+                        </button>
                 </div>
             </div>
         </header>
-    );
+);
 };
 
 export default Header;

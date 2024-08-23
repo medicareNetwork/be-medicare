@@ -16,6 +16,7 @@ import Community from './community/Community'; // 게시판 페이지 import
 import useCheckLoginStatus from './session/CheckLogin';
 import ContactUs from './community/ContactUs';
 import axios from "axios";
+import MyPage from './backend/MyPage';
 
 function App() {
     const [isLoginScreen, setIsLoginScreen] = useState(false);
@@ -94,6 +95,7 @@ function App() {
                                 <Route path="/new-arrivals" element={<NewArrivals addToCart={addToCart} />} />
                                 <Route path="/best-sellers" element={<BestSellers addToCart={addToCart} bestList={bestList} />} />
                                 <Route path="/sale-items" element={<SaleItems addToCart={addToCart} />} />
+                                <Route path="/mypage" element={<MyPage />} />
                                 <Route path="/cart" element={<Cart cart={cartItems} />} />
                                 <Route path="/community" element={<Community />} /> {/* Community 페이지 라우팅 추가 */}
                                 <Route path="/contact-us" element={<ContactUs />} /> {/* Contact Us 페이지 추가 */}
