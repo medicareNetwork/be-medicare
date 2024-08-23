@@ -19,6 +19,7 @@ import SignAddForm from "./backend/SignAddForm";
 import LoginForm from "./backend/Login";
 import FindEmail from "./backend/FindEmail";
 import FindPassword from "./backend/FindPassword"
+import MyPage from "./backend/MyPage";
 
 function App() {
     const [isLoginScreen, setIsLoginScreen] = useState(false);
@@ -43,6 +44,15 @@ function App() {
                 console.error('Error fetching data:', error);
             });
     }, []);
+
+    // 로컬 스토리지에 true인가 확인
+    useEffect(() => {
+        const loggedIn = localStorage.getItem('isLoggedIn');
+        if (loggedIn === 'true') {
+            setIsLoginIn(true);
+        }
+    }, []);
+
 
 
     const closeLoginScreen = () => {
@@ -70,15 +80,35 @@ function App() {
         window.location.href = '/community';
     };
 
+    // 로그인 상태 변수
+    const [isLoginIn, setIsLoginIn] = useState(false);
+
+    // 로그인 성공시 true
+    const handleLoginSuccess = () => {
+        setIsLoginIn(true);
+    }
+
+    // 로그아웃시 false
+    const handleLogout = () => {
+        localStorage.removeItem('isLoggedIn'); // 로컬 스토리지에서 로그인 상태 제거
+        setIsLoginIn(false);
+        window.location.href = '/';
+    };
+
+
     return (
         <Router>
             <div className="App">
-                <Header onCartClick={handleCartClick}
+                <Header
+                        onCartClick={handleCartClick}
                         onCommunityClick={handleCommunityClick}
-                        cartCount={cartItems.length}/>
+                        cartCount={cartItems.length}
+                        isLoginIn={isLoginIn}
+                        onLogout={handleLogout}/>
 
                 {cartMessage && <div className="cart-message">{cartMessage}</div>}
                 <div className="content">
+
                     {isLoginScreen ? (
                         <div>
                             <Login/>
@@ -87,7 +117,6 @@ function App() {
                     ) : (
                         <>
                             <Routes>
-                                <Route path="/loginAdd" element={<LoginForm/>}/>
                                 <Route path="/" element={<VideoSection videoSrc={videoSrc}/>}/>
                                 <Route path="/new-arrivals" element={<NewArrivals addToCart={addToCart}/>}/>
                                 <Route path="/best-sellers"
@@ -99,6 +128,8 @@ function App() {
                                 <Route path='/signAdd' element={<SignAddForm/>}/>
                                 <Route path='/find-Email' element={<FindEmail/>}/>
                                 <Route path='/find-password' element={<FindPassword/>}/>
+                                <Route path='/MyPage' element={<MyPage/>}/>
+                                <Route path='/loginAdd' element={<LoginForm onLoginSuccess={handleLoginSuccess}/>}/>
                             </Routes>
                             <SupplementButton/>
                             <SupplementList addToCart={addToCart}/>
@@ -109,6 +140,6 @@ function App() {
             </div>
         </Router>
     );
-};
+}
 
 export default App;

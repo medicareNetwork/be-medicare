@@ -3,7 +3,7 @@ import axios from "axios";
 import {useNavigate} from "react-router-dom";
 
 
-function LoginForm() {
+function LoginForm({onLoginSuccess}) {
 
     const [formData, setFormData] = useState({
         memberEmail: '',
@@ -36,7 +36,9 @@ function LoginForm() {
 
     axios.post('http://localhost:8090/api/member/login', formData)
         .then(response => {
-            window.location.href = '/';
+            localStorage.setItem('isLoggedIn', 'true');
+            onLoginSuccess();
+            navigate('/');
         })
         .catch(error => {
             if(error.response && error.response.status === 401) {

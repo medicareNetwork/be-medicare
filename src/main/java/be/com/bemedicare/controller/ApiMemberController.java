@@ -13,6 +13,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.rsocket.RSocketRequester;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api/member")
 @CrossOrigin(origins = "http://localhost:3000")
@@ -93,4 +96,27 @@ public class ApiMemberController {
     }
 
 
+    @PostMapping("/update")
+    public ResponseEntity<?> update(@RequestBody MemberEntity memberEntity, HttpSession session) {
+        try {
+            MemberEntity loginResult = (MemberEntity) session.getAttribute("member");
+
+            loginResult.setMemberName(memberEntity.getMemberName());
+            loginResult.setMemberAge(memberEntity.getMemberAge());
+            loginResult.setMemberHeight(memberEntity.getMemberHeight());
+            loginResult.setMemberWeight(memberEntity.getMemberWeight());
+            loginResult.setMemberAddress(memberEntity.getMemberAddress());
+            loginResult.setMemberNumber(memberEntity.getMemberNumber());
+
+            //DB에 업데이트
+            memberService.update(loginResult);
+
+            // 업데이트한 정보를 다시 저장
+            session.setAttribute("member", loginResult);
+
+            return ResponseEntity.ok(loginResult);  // 업데이트된 객체를 반환
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("업데이트 중 오류가 발생했습니다.");
+        }
+    }
 }
