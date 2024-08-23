@@ -16,6 +16,7 @@ import Community from './community/Community'; // 게시판 페이지 import
 import useCheckLoginStatus from './session/CheckLogin';
 import ContactUs from './community/ContactUs';
 import axios from "axios";
+import KakaoMap from "./KakaoMap";
 
 function App() {
     const [isLoginScreen, setIsLoginScreen] = useState(false);
@@ -97,6 +98,7 @@ function App() {
                                 <Route path="/cart" element={<Cart cart={cartItems} />} />
                                 <Route path="/community" element={<Community />} /> {/* Community 페이지 라우팅 추가 */}
                                 <Route path="/contact-us" element={<ContactUs />} /> {/* Contact Us 페이지 추가 */}
+                                <Route path="/maps" element={<KakaoMap/>}/>
                             </Routes>
                             <SupplementButton />
                             <SupplementList addToCart={addToCart} />
