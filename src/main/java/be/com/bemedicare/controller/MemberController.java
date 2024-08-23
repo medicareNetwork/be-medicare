@@ -9,12 +9,13 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 
-@RestController
+@Controller
 @RequestMapping("/member")
 @RequiredArgsConstructor
 public class MemberController {
@@ -46,19 +47,23 @@ public class MemberController {
 
 
     @PostMapping("/login")
-
-    public String login(@ModelAttribute MemberEntity memberEntity, HttpSession session, Model model) {
+    public String login(@RequestParam(name="memberEmail") String memberEmail,
+                                    @RequestParam(name="memberPassword") String memberPassword,
+                                   HttpSession session,
+                                   Model model) {
+        MemberEntity memberEntity = new MemberEntity();
+        memberEntity.setMemberEmail(memberEmail);
+        memberEntity.setMemberPassword(memberPassword);
         try {
             MemberEntity loginResult = memberService.login(memberEntity);
-            if (loginResult != null) {
-                session.setAttribute("member", loginResult);
-                return "redirect:/";
-            }
+            session.setAttribute("member", loginResult);
+            return "redirect:/board/list";
         } catch (IllegalArgumentException e) {
             model.addAttribute("errorMessage", e.getMessage());
+            return "login";
+
         }
         // 로그인 실패 시 로그인 페이지로 돌아가면서 에러 메시지를 표시합니다.
-        return "login";
     }
 
 

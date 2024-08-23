@@ -26,31 +26,23 @@ public class CartService {
     private final CartRepository cartRepository;
     private final MemberRepository memberRepository;
     private final BoardRepository boardRepository;
-    private final CartItemRepository cartItemRepository;
     private static final String CART_SESSION_KEY = "cartItems";
-    private static final String MEMBER_SESSION_KEY = "member";
 
 
-//    @GetMapping("/order")
-//    public String showOrderForm(Model model, HttpSession session) {
-//        MemberDTO loggedInMember = (MemberDTO) session.getAttribute("member");
-//        List<ItemDTO> items = itemService.getAllItems();
-
-//        model.addAttribute("loggedInMember", loggedInMember);
-//        model.addAttribute("items", items);
 
     @Transactional
     public void addItemToCart(Long boardId,int amount, HttpSession session) {
-        MemberDTO member = (MemberDTO) session.getAttribute("member");
+        MemberEntity member = (MemberEntity) session.getAttribute("loggedin");
+
         Map<Long, Integer> cartItems = (Map<Long, Integer>) session.getAttribute(CART_SESSION_KEY);
 
         if(cartItems == null) {
             cartItems = new HashMap<>();
-            session.setAttribute(MEMBER_SESSION_KEY, member);
+//            session.setAttribute(MEMBER_SESSION_KEY, member);
             session.setAttribute(CART_SESSION_KEY, cartItems);
                     //엔티티 조회
         }
-        //이미 장바구니에 있는 boardId면 수량을 더하게함)
+        //이미 장바구니에 있는 boardId면 수량을 더하게함
         cartItems.put(boardId, cartItems.getOrDefault(boardId, 0) + amount);
     }
     @Transactional
@@ -60,12 +52,14 @@ public class CartService {
             cartItems = new HashMap<>();
             session.setAttribute(CART_SESSION_KEY, cartItems);
         }
+        System.out.println("--------------------------------------------------------------");
+        System.out.println("cartItems: " + cartItems);
         return cartItems;
     }
 
     @Transactional
     public void completeOrder(HttpSession session) {
-        MemberDTO member = (MemberDTO) session.getAttribute("member");
+        MemberEntity member = (MemberEntity) session.getAttribute("loggedin");
         Map<Long, Integer> cartItems = (Map<Long, Integer>) session.getAttribute(CART_SESSION_KEY);
 
         if(member==null || cartItems==null || cartItems.isEmpty()) {
@@ -95,47 +89,16 @@ public class CartService {
 
 
         if(cart == null) {
-            throw new IllegalArgumentException("카트가 null이다 이새기야");
+            throw new IllegalArgumentException("카트가 텅 비어있습니다.");
         }else {
 
             cartRepository.saveAndFlush(cart);
         }
-//        cartRepository.save(cart);
         cartRepository.saveAndFlush(cart);
-
-
         session.removeAttribute(CART_SESSION_KEY);
 
 
-
     }
-//    @Transactional
-//    public String placeOrder(HttpSession session, RedirectAttributes redirectAttributes) {
-//        Map<Long, Integer> cartItems = (Map<Long, Integer>) session.getAttribute(CART_SESSION_KEY);
-//        Map<Long, Board> boardMap = (Map<Long, Board>) session.getAttribute("boardMap");
-//        Long memberId = (Long) session.getAttribute("memberId");
-//
-//        if (cartItems != null && boardMap != null && memberId != null) {
-//            for (Map.Entry<Long, Integer> entry : cartItems.entrySet()) {
-//                Long boardId = entry.getKey();
-//                int quantity = entry.getValue();
-//                Board board = boardMap.get(boardId);
-//
-//                // 새로운 Cart 엔티티를 생성하여 주문 정보를 저장합니다.
-//                CartItem order = new CartItem();
-//                order.setMemberId(memberId);
-//                order.setBoard(boardId);
-//                order.setItemName(board.getTitle());
-//                order.setCount(amount);
-//                order.setOrderPrice();
-//
-//
-//                // CartRepository를 사용하여 데이터베이스에 저장합니다.
-//                cartRepository.save(order);
-//
-//
-//        }
-//    }
 
     @Transactional
     public void clearCart(HttpSession session) {
@@ -144,7 +107,10 @@ public class CartService {
 
     @Transactional
     public int getTotalAmountAtCart(HttpSession session) {
-        Map<Long, Integer> cartItems = getCartItems(session); //세션을 통해서 등록된장바구니 가져오고
+        Map<Long, Integer> cartItems = (Map<Long, Integer>) session.getAttribute(CART_SESSION_KEY); //세션을 통해서 등록된장바구니 가져오고
+        if (cartItems == null) {
+            return 0;
+        }
         int totalAmount = 0; //총액값 초기화하고
 
        for(Map.Entry<Long, Integer> entry : cartItems.entrySet()) {
@@ -159,39 +125,5 @@ public class CartService {
        return totalAmount;
     }
 
-
-
-//    @Transactional
-//    public Long order(Long memberId, Long boardId, int count) {
-//
-//
-//        //엔티티 조회
-//        MemberEntity member = memberRepository.findById(memberId).orElse(null);
-//        Board board = boardRepository.findAllById(boardId);
-//
-//        //배송정보 생성
-//        Delivery delivery = new Delivery();
-//        delivery.setAddress(member.getMemberAddress());//배송지 가져오기
-//        delivery.setDeliveryStatus(DeliveryStatus.READY);
-//
-//        //주문 상품 생성
-//        CartItem cartItem = CartItem.createCartItem(board, board.getPrice(), count);
-//
-//        //주문 생성 여기서 리턴값 : cart
-//        Cart cart = Cart.createCart(member,delivery,cartItem);
-//
-//        //주문 저장
-//        cartRepository.save(cart);
-//
-//        return cartItem.getId();
-//    }
-//
-//    @Transactional
-//    public void cancelOrder(Long cartId) {
-//        //주문 엔티티 조회
-//        Cart cart = cartRepository.findOne(cartId);
-//        //주문 취소
-//        cart.orderCancel();
-//    }
 
 }
