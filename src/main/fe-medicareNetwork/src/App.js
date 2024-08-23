@@ -87,11 +87,12 @@ function App() {
                     ) : (
                         <>
                             <Routes>
-                                <Route path="/login" element={<LoginForm />} />
-                                <Route path="/" element={<VideoSection videoSrc={videoSrc} />} />
-                                <Route path="/new-arrivals" element={<NewArrivals addToCart={addToCart} />} />
-                                <Route path="/best-sellers" element={<BestSellers addToCart={addToCart} bestList={bestList} />} />
-                                <Route path="/sale-items" element={<SaleItems addToCart={addToCart} />} />
+                                <Route path="/loginAdd" element={<LoginForm/>}/>
+                                <Route path="/" element={<VideoSection videoSrc={videoSrc}/>}/>
+                                <Route path="/new-arrivals" element={<NewArrivals addToCart={addToCart}/>}/>
+                                <Route path="/best-sellers"
+                                       element={<BestSellers addToCart={addToCart} bestList={bestList}/>}/>
+                                <Route path="/sale-items" element={<SaleItems addToCart={addToCart}/>}/>
                                 <Route path="/mypage" element={<MyPage />} />
                                 <Route path="/cart" element={<Cart cart={cartItems} />} />
                                 <Route path="/community" element={<Community />} /> {/* Community 페이지 라우팅 추가 */}
@@ -112,25 +113,5 @@ function App() {
     );
 }
 
-const LoginScreen2 = () => {
-    return (
-        <div className="login-screen">
-            <div className="login-container">
-                <h2>Sign In</h2>
-                <form>
-                    <div className="input-group">
-                        <label htmlFor="username">ID</label>
-                        <input type="text" id="username" name="username" />
-                    </div>
-                    <div className="input-group">
-                        <label htmlFor="password">Password</label>
-                        <input type="password" id="password" name="password" />
-                    </div>
-                    <button type="submit" className="login-button">Sign In</button>
-                </form>
-            </div>
-        </div>
-    );
-};
 
 export default App;
