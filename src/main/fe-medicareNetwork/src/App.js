@@ -13,16 +13,18 @@ import BestSellers from './board/BestSellers';
 import SaleItems from './board/SaleItems';
 import Cart from './order/Cart';
 import Community from './community/Community'; // 게시판 페이지 import
-import useCheckLoginStatus from './session/CheckLogin';
 import ContactUs from './community/ContactUs';
 import axios from "axios";
+import SignAddForm from "./backend/SignAddForm";
+import LoginForm from "./backend/Login";
+import FindEmail from "./backend/FindEmail";
+import FindPassword from "./backend/FindPassword"
 
 function App() {
     const [isLoginScreen, setIsLoginScreen] = useState(false);
     const [cartItems, setCartItems] = useState([]);
     const [cartMessage, setCartMessage] = useState('');
     const [bestList, setBestList] = useState([]);
-    const isLoggedIn = useCheckLoginStatus(); // 로그인 상태 확인
 
     // 로컬 스토리지에서 카트 아이템을 불러옵니다.
     useEffect(() => {
@@ -42,11 +44,7 @@ function App() {
             });
     }, []);
 
-    const handleLoginClick = () => {
-        if (!isLoggedIn) {
-            setIsLoginScreen(true);
-        }
-    };
+
     const closeLoginScreen = () => {
         setIsLoginScreen(false);  // 로그인 화면 닫기
     };
@@ -55,7 +53,7 @@ function App() {
         setCartItems(prevItems => {
             const newItems = [...prevItems, product];
             console.log('카트아이템 : ' + newItems);
-            localStorage.setItem('cartItems',JSON.stringify(newItems));
+            localStorage.setItem('cartItems', JSON.stringify(newItems));
             return newItems;
         });
         setCartMessage('Item added to cart');
@@ -75,58 +73,41 @@ function App() {
     return (
         <Router>
             <div className="App">
-                <Header onLoginClick={handleLoginClick}
-                        onCartClick={handleCartClick}
+                <Header onCartClick={handleCartClick}
                         onCommunityClick={handleCommunityClick}
-                        cartCount={cartItems.length} />
+                        cartCount={cartItems.length}/>
+
                 {cartMessage && <div className="cart-message">{cartMessage}</div>}
                 <div className="content">
                     {isLoginScreen ? (
                         <div>
-                            <Login />
+                            <Login/>
                             <button onClick={closeLoginScreen}>닫기</button>
                         </div>
                     ) : (
                         <>
                             <Routes>
-                                <Route path="/login" element={<Login />} />
-                                <Route path="/" element={<VideoSection videoSrc={videoSrc} />} />
-                                <Route path="/new-arrivals" element={<NewArrivals addToCart={addToCart} />} />
-                                <Route path="/best-sellers" element={<BestSellers addToCart={addToCart} bestList={bestList} />} />
-                                <Route path="/sale-items" element={<SaleItems addToCart={addToCart} />} />
-                                <Route path="/cart" element={<Cart cart={cartItems} />} />
-                                <Route path="/community" element={<Community />} /> {/* Community 페이지 라우팅 추가 */}
-                                <Route path="/contact-us" element={<ContactUs />} /> {/* Contact Us 페이지 추가 */}
+                                <Route path="/loginAdd" element={<LoginForm/>}/>
+                                <Route path="/" element={<VideoSection videoSrc={videoSrc}/>}/>
+                                <Route path="/new-arrivals" element={<NewArrivals addToCart={addToCart}/>}/>
+                                <Route path="/best-sellers"
+                                       element={<BestSellers addToCart={addToCart} bestList={bestList}/>}/>
+                                <Route path="/sale-items" element={<SaleItems addToCart={addToCart}/>}/>
+                                <Route path="/cart" element={<Cart cart={cartItems}/>}/>
+                                <Route path="/community" element={<Community/>}/> {/* Community 페이지 라우팅 추가 */}
+                                <Route path="/contact-us" element={<ContactUs/>}/> {/* Contact Us 페이지 추가 */}
+                                <Route path='/signAdd' element={<SignAddForm/>}/>
+                                <Route path='/find-Email' element={<FindEmail/>}/>
+                                <Route path='/find-password' element={<FindPassword/>}/>
                             </Routes>
-                            <SupplementButton />
-                            <SupplementList addToCart={addToCart} />
-                            <Footer />
+                            <SupplementButton/>
+                            <SupplementList addToCart={addToCart}/>
+                            <Footer/>
                         </>
-                        )}
+                    )}
                 </div>
             </div>
         </Router>
-    );
-}
-
-const LoginScreen2 = () => {
-    return (
-        <div className="login-screen">
-            <div className="login-container">
-                <h2>Sign In</h2>
-                <form>
-                    <div className="input-group">
-                        <label htmlFor="username">ID</label>
-                        <input type="text" id="username" name="username" />
-                    </div>
-                    <div className="input-group">
-                        <label htmlFor="password">Password</label>
-                        <input type="password" id="password" name="password" />
-                    </div>
-                    <button type="submit" className="login-button">Sign In</button>
-                </form>
-            </div>
-        </div>
     );
 };
 
