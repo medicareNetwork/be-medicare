@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './css/Header.css';
+import {useNavigate} from "react-router-dom";
 
 const Header = ({ onLoginClick, onCartClick, onCommunityClick, cartCount }) => {
     const [searchTerm, setSearchTerm] = useState('');
@@ -12,6 +13,17 @@ const Header = ({ onLoginClick, onCartClick, onCommunityClick, cartCount }) => {
         event.preventDefault();
         console.log('Search term:', searchTerm);
     };
+
+    const navigate = useNavigate();
+
+
+    const handleSignAddClick = () => {
+        navigate('/signAdd')
+    }
+
+    const handelLoginAddclick =  () => {
+        navigate('/loginAdd')
+    }
 
     return (
         <header className="header">
@@ -39,7 +51,8 @@ const Header = ({ onLoginClick, onCartClick, onCommunityClick, cartCount }) => {
                             placeholder="Search"
                         />
                     </form>
-                    <button className="login-btn" onClick={onLoginClick}>Sign In</button>
+                    <button className='login-btn' onClick={handleSignAddClick}>회원가입</button>
+                    <button className="login-btn" onClick={handelLoginAddclick}>로그인</button>
                     <button className="cart-btn" onClick={onCartClick}>
                         Cart {cartCount > 0 && `(${cartCount})`}
                         </button>

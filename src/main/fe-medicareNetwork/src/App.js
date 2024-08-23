@@ -13,17 +13,20 @@ import BestSellers from './board/BestSellers';
 import SaleItems from './board/SaleItems';
 import Cart from './order/Cart';
 import Community from './community/Community'; // 게시판 페이지 import
-import useCheckLoginStatus from './session/CheckLogin';
 import ContactUs from './community/ContactUs';
 import axios from "axios";
 import MyPage from './backend/MyPage';
+import KakaoMap from "./KakaoMap";
+import SignAddForm from "./backend/SignAddForm";
+import LoginForm from "./backend/Login";
+import FindEmail from "./backend/FindEmail";
+import FindPassword from "./backend/FindPassword"
 
 function App() {
     const [isLoginScreen, setIsLoginScreen] = useState(false);
     const [cartItems, setCartItems] = useState([]);
     const [cartMessage, setCartMessage] = useState('');
     const [bestList, setBestList] = useState([]);
-    const isLoggedIn = useCheckLoginStatus(); // 로그인 상태 확인
 
     // 로컬 스토리지에서 카트 아이템을 불러옵니다.
     useEffect(() => {
@@ -43,11 +46,6 @@ function App() {
             });
     }, []);
 
-    const handleLoginClick = () => {
-        if (!isLoggedIn) {
-            setIsLoginScreen(true);
-        }
-    };
     const closeLoginScreen = () => {
         setIsLoginScreen(false);  // 로그인 화면 닫기
     };
@@ -76,8 +74,7 @@ function App() {
     return (
         <Router>
             <div className="App">
-                <Header onLoginClick={handleLoginClick}
-                        onCartClick={handleCartClick}
+                <Header onCartClick={handleCartClick}
                         onCommunityClick={handleCommunityClick}
                         cartCount={cartItems.length} />
                 {cartMessage && <div className="cart-message">{cartMessage}</div>}
@@ -90,7 +87,7 @@ function App() {
                     ) : (
                         <>
                             <Routes>
-                                <Route path="/login" element={<Login />} />
+                                <Route path="/login" element={<LoginForm />} />
                                 <Route path="/" element={<VideoSection videoSrc={videoSrc} />} />
                                 <Route path="/new-arrivals" element={<NewArrivals addToCart={addToCart} />} />
                                 <Route path="/best-sellers" element={<BestSellers addToCart={addToCart} bestList={bestList} />} />
@@ -99,6 +96,10 @@ function App() {
                                 <Route path="/cart" element={<Cart cart={cartItems} />} />
                                 <Route path="/community" element={<Community />} /> {/* Community 페이지 라우팅 추가 */}
                                 <Route path="/contact-us" element={<ContactUs />} /> {/* Contact Us 페이지 추가 */}
+                                <Route path="/signAdd" element={<SignAddForm/>}/>
+                                <Route path="/find-email" element={<FindEmail/>}/>
+                                <Route path="/find-password" element={<FindPassword/>}/>
+                                <Route path="/maps" element={<KakaoMap/>}/>
                             </Routes>
                             <SupplementButton />
                             <SupplementList addToCart={addToCart} />

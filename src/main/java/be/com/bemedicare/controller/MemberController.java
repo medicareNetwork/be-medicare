@@ -1,12 +1,9 @@
 package be.com.bemedicare.controller;
 
 
-
 import be.com.bemedicare.member.dto.ChangePasswordRequestDTO;
-import be.com.bemedicare.member.dto.KakaoUserInfoResponseDto;
 import be.com.bemedicare.member.dto.MemberDTO;
 import be.com.bemedicare.member.entity.MemberEntity;
-import be.com.bemedicare.member.service.KakaoService;
 import be.com.bemedicare.member.service.MemberService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -14,10 +11,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-//바꿔이새기야
+
 
 @Controller
 @RequestMapping("/member")
@@ -26,7 +22,6 @@ public class MemberController {
     private static final Logger log = LoggerFactory.getLogger(MemberController.class);
     //생성자  주입
     private final MemberService memberService;
-    private final KakaoService kakaoService;
 
     @GetMapping("/save")
     public String saveForm() {
@@ -87,6 +82,7 @@ public class MemberController {
     public String showFindEmailForm() {
         return "find-email";
     }
+
 
     @PostMapping("/find-email")
     public String findEmail(@RequestParam String memberName, @RequestParam String memberNumber, Model model) {
@@ -185,9 +181,9 @@ public class MemberController {
         MemberEntity reset = (MemberEntity) session.getAttribute("member");
 
         if (reset.getMemberPassword().equals(request.getCurrentPassword()) &&
-                request.getNewPassword().equals(request.getConfirmNewPassword())){
+                request.getNewPassword().equals(request.getConfirmNewPassword())) {
             reset.setMemberPassword(request.getNewPassword());
-            session.setAttribute("member",reset);
+            session.setAttribute("member", reset);
             memberService.changePassword(reset);
             return "mypage";
         } else {

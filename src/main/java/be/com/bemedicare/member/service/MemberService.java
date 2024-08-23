@@ -1,11 +1,10 @@
 package be.com.bemedicare.member.service;
 
 
-import be.com.bemedicare.member.dto.ChangePasswordRequestDTO;
+
 import be.com.bemedicare.member.dto.MemberDTO;
 import be.com.bemedicare.member.entity.MemberEntity;
 import be.com.bemedicare.member.repository.MemberRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -35,17 +34,15 @@ public class MemberService {
 
             if (memberEntity.getMemberPassword().equals(member.getMemberPassword())) {
                 return memberEntity;
-            } else{
-                //비밀번호 불일치
-
+            } else {
+                // 비밀번호 불일치
+                return null;
             }
-            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다");
         } else {
-            //조회 결과가 없음
+            // 이메일이 존재하지 않음
+            return null;
         }
-        throw new IllegalArgumentException("이메일이 존재하지 않습니다");
     }
-
 
     public boolean checkEmail(String email) {
         return memberRepository.existsByMemberEmail(email);

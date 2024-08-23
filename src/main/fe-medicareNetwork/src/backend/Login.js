@@ -1,44 +1,81 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import React, {useState} from "react";
+import axios from "axios";
+import {useNavigate} from "react-router-dom";
 
-const Login = () => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+
+function LoginForm() {
+
+    const [formData, setFormData] = useState({
+        memberEmail: '',
+        memberPassword: ''
+    });
+
     const navigate = useNavigate();
-    const handleSubmit = async (e) => {
-        e.preventDefault();
 
-        try{
-            const response = await axios.post('http://localhost:8090/member/login', {
-                memberEmail : email,
-                memberPassword : password
-            });
+    const handleButtonClick = () => {
+        navigate('/find-email')
+    }
 
-            if (response.status === 200) {
-                //로그인 성공 시 메인 페이지로 리다이렉션
-                navigate('/');
-            }
-        } catch (error) {
-            console.error('로그인에 실패하였습니다', error);
-        }
+    const handlePasswordClick = () => {
+        navigate("/find-password")
+    }
+
+    const [errorMessage, setErrorMessage] = useState('');
+
+    const handleChange = (e) => {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value
+        });
     };
 
-    return (
-        <div className="login-screen">
-            <div className="login-container">
-                <form className="input-group" onSubmit={handleSubmit}>
-                    <h2>로그인</h2>
-                    <input type="text" name="memberEmail" placeholder="이메일"
-                    value={email} onChange={(e) =>setEmail(e.target.value)} />
-                    <input type="text" name="memberPassword" placeholder="비밀번호"
-                   value={password} onChange={(e)=>setPassword(e.target.value)} />
-                    <button type="submit" className="login-button">리액트 로그인</button>
-                </form>
-            </div>
-        </div>
-    );
+    const handleSubmit = (e) => {
+        e.preventDefault();
 
+
+    axios.post('http://localhost:8090/api/member/login', formData)
+        .then(response => {
+            window.location.href = '/';
+        })
+        .catch(error => {
+            if(error.response && error.response.status === 401) {
+                setErrorMessage("아이디 및 비밀번호가 틀립니다");
+            }
+        });
 };
 
-export default  Login;
+return (
+    <div className='login-container'>
+        <form onSubmit={handleSubmit}>
+            <h2>로그인</h2>
+            <div>
+                <input
+                    type='text'
+                    name='memberEmail'
+                    placeholder='이메일'
+                    value={formData.memberEmail}
+                    onChange={handleChange}
+                    required
+                />
+            </div>
+            <div>
+                <input
+                    type='password'
+                    name='memberPassword'
+                    placeholder='비밀번호'
+                    value={formData.memberPassword}
+                    onChange={handleChange}
+                    required
+                />
+            </div>
+            {errorMessage && <div style={{ color: 'red' }}>{errorMessage}</div>}
+            <button type='submit'>로그인</button>
+            <button onClick={handleButtonClick}>이메일 찾기</button>
+            <button onClick={handlePasswordClick}>비밀번호 찾기</button>
+
+        </form>
+    </div>
+);
+}
+
+export default LoginForm;
