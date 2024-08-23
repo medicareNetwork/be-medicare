@@ -17,6 +17,10 @@ import useCheckLoginStatus from './session/CheckLogin';
 import ContactUs from './community/ContactUs';
 import axios from "axios";
 import KakaoMap from "./KakaoMap";
+import SignAddForm from "./backend/SignAddForm";
+import LoginForm from "./backend/Login";
+import FindEmail from "./backend/FindEmail";
+import FindPassword from "./backend/FindPassword"
 
 function App() {
     const [isLoginScreen, setIsLoginScreen] = useState(false);
@@ -98,7 +102,6 @@ function App() {
                                 <Route path="/cart" element={<Cart cart={cartItems} />} />
                                 <Route path="/community" element={<Community />} /> {/* Community 페이지 라우팅 추가 */}
                                 <Route path="/contact-us" element={<ContactUs />} /> {/* Contact Us 페이지 추가 */}
-                                <Route path="/maps" element={<KakaoMap/>}/>
                             </Routes>
                             <SupplementButton />
                             <SupplementList addToCart={addToCart} />

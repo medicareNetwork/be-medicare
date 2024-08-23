@@ -42,37 +42,39 @@ public class MemberDTO {
 
 
 
-    //Entity를 DTO로 변환
-    public static MemberDTO toMemberDTO(MemberEntity memberEntity) {
-        MemberDTO memberDTO = new MemberDTO();
-        memberDTO.setId(memberEntity.getId());
-        memberDTO.setMemberEmail(memberEntity.getMemberEmail());
-        memberDTO.setMemberPassword(memberEntity.getMemberPassword());
-        memberDTO.setMemberName(memberEntity.getMemberName());
-        memberDTO.setMemberAge(memberEntity.getMemberAge());
-        memberDTO.setMemberWeight(memberEntity.getMemberWeight());
-        memberDTO.setMemberHeight(memberEntity.getMemberHeight());
-        memberDTO.setMemberNumber(memberEntity.getMemberNumber());
-        memberDTO.setMemberAddress(memberEntity.getMemberAddress());
-        memberDTO.setMemberQnA(memberEntity.getMemberQnA());
-        memberDTO.setMemberQ(memberEntity.getMemberQ());
+//    //Entity를 DTO로 변환
+//    public static MemberDTO toMemberDTO(MemberEntity memberEntity) {
+//        MemberDTO memberDTO = new MemberDTO();
+//        memberDTO.setId(memberEntity.getId());
+//        memberDTO.setMemberEmail(memberEntity.getMemberEmail());
+//        memberDTO.setMemberPassword(memberEntity.getMemberPassword());
+//        memberDTO.setMemberName(memberEntity.getMemberName());
+//        memberDTO.setMemberAge(memberEntity.getMemberAge());
+//        memberDTO.setMemberWeight(memberEntity.getMemberWeight());
+//        memberDTO.setMemberHeight(memberEntity.getMemberHeight());
+//        memberDTO.setMemberNumber(memberEntity.getMemberNumber());
+//        memberDTO.setMemberAddress(memberEntity.getMemberAddress());
+//        memberDTO.setMemberQnA(memberEntity.getMemberQnA());
+//        memberDTO.setMemberQ(memberEntity.getMemberQ());
+//
+//        return memberDTO;
+//    }
+//
+//    public static MemberEntity toEntity(MemberDTO memberDTO) {
+//        MemberEntity memberEntity = new MemberEntity();
+//        memberEntity.setId(memberDTO.getId());
+//        memberEntity.setEmail(memberDTO.getMemberEmail());
+//        memberEntity.setMemberPassword(memberDTO.getMemberPassword());
+//        memberEntity.setMemberName(memberDTO.getMemberName());
+//        memberEntity.setMemberAge(memberDTO.getMemberAge());
+//        memberEntity.setMemberWeight(memberDTO.getMemberWeight());
+//        memberEntity.setMemberHeight(memberDTO.getMemberHeight());
+//        memberEntity.setMemberNumber(memberDTO.getMemberNumber());
+//        memberEntity.setMemberAddress(memberDTO.getMemberAddress());
+//        return memberEntity;
+//    }
 
-        return memberDTO;
-    }
 
-    public static MemberEntity toEntity(MemberDTO memberDTO) {
-        MemberEntity memberEntity = new MemberEntity();
-        memberEntity.setId(memberDTO.getId());
-        memberEntity.setEmail(memberDTO.getMemberEmail());
-        memberEntity.setMemberPassword(memberDTO.getMemberPassword());
-        memberEntity.setMemberName(memberDTO.getMemberName());
-        memberEntity.setMemberAge(memberDTO.getMemberAge());
-        memberEntity.setMemberWeight(memberDTO.getMemberWeight());
-        memberEntity.setMemberHeight(memberDTO.getMemberHeight());
-        memberEntity.setMemberNumber(memberDTO.getMemberNumber());
-        memberEntity.setMemberAddress(memberDTO.getMemberAddress());
-        return memberEntity;
-    }
 }
 
 
