@@ -48,7 +48,6 @@ public class MemberService {
         return memberRepository.existsByMemberEmail(email);
     }
 
-
     public boolean checkName(String name) {
         return memberRepository.existsByMemberName(name);
     }
@@ -94,6 +93,7 @@ public class MemberService {
     public void updateMemberAdditionalInfo(MemberEntity member) {
         memberRepository.save(member);
     }
+
 
 
 }

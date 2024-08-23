@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
+import Session from "react-session-api/src";
 
 
 function LoginForm() {
@@ -35,6 +36,8 @@ function LoginForm() {
 
     axios.post('http://localhost:8090/api/member/login', formData)
         .then(response => {
+            const member = response.data;
+            window.sessionStorage.setItem("member1",JSON.stringify(member));
             window.location.href = '/';
         })
         .catch(error => {

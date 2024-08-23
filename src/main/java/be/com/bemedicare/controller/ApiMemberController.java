@@ -32,16 +32,16 @@ public class ApiMemberController {
 
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> login(@RequestBody @Valid LoginRequest request, HttpSession session) {
+    public ResponseEntity<?> login(@RequestBody @Valid LoginRequest request, HttpSession session) {
 
-        MemberEntity member = new MemberEntity();
-        member.setMemberEmail(request.memberEmail);
-        member.setMemberPassword(request.memberPassword);
-        MemberEntity loginResult = memberService.login(member);
-        if (loginResult != null) {
-            session.setAttribute("member", loginResult);
-            return ResponseEntity.status(HttpStatus.OK).body(new LoginResponse(request.memberEmail));
-        } else {
+        MemberEntity memberEntity = new MemberEntity();
+        memberEntity.setMemberEmail(request.memberEmail);
+        memberEntity.setMemberPassword(request.memberPassword);
+        try {
+            MemberEntity loginResult = memberService.login(memberEntity);
+            session.setAttribute("loginResult", loginResult);
+            return ResponseEntity.status(HttpStatus.OK).body(loginResult);
+        } catch(Exception e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
     }
@@ -108,4 +108,5 @@ public class ApiMemberController {
             this.memberPassword = memberPassword;
         }
     }
+
 }
