@@ -36,7 +36,8 @@ public class ApiMemberController {
 
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> login(@RequestBody @Valid LoginRequest request, HttpSession session) {
+    public ResponseEntity<?> login(@RequestBody @Valid LoginRequest request, HttpSession session) {
+
 
         MemberEntity member = new MemberEntity();
         member.setMemberEmail(request.getMemberEmail());
@@ -119,4 +120,5 @@ public class ApiMemberController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("업데이트 중 오류가 발생했습니다.");
         }
     }
+
 }

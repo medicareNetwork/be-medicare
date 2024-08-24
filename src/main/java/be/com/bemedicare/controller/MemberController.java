@@ -1,6 +1,5 @@
 package be.com.bemedicare.controller;
 
-
 import be.com.bemedicare.member.dto.ChangePasswordRequestDTO;
 import be.com.bemedicare.member.dto.MemberDTO;
 import be.com.bemedicare.member.entity.MemberEntity;

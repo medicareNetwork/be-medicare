@@ -15,6 +15,7 @@ import Cart from './order/Cart';
 import Community from './community/Community'; // 게시판 페이지 import
 import ContactUs from './community/ContactUs';
 import axios from "axios";
+import KakaoMap from "./KakaoMap";
 import SignAddForm from "./backend/SignAddForm";
 import LoginForm from "./backend/Login";
 import FindEmail from "./backend/FindEmail";
@@ -45,6 +46,7 @@ function App() {
             });
     }, []);
 
+
     // 로컬 스토리지에 true인가 확인
     useEffect(() => {
         const loggedIn = localStorage.getItem('isLoggedIn');
@@ -52,8 +54,6 @@ function App() {
             setIsLoginIn(true);
         }
     }, []);
-
-
 
     const closeLoginScreen = () => {
         setIsLoginScreen(false);  // 로그인 화면 닫기
@@ -63,7 +63,7 @@ function App() {
         setCartItems(prevItems => {
             const newItems = [...prevItems, product];
             console.log('카트아이템 : ' + newItems);
-            localStorage.setItem('cartItems', JSON.stringify(newItems));
+            localStorage.setItem('cartItems',JSON.stringify(newItems));
             return newItems;
         });
         setCartMessage('Item added to cart');
@@ -105,13 +105,12 @@ function App() {
                         cartCount={cartItems.length}
                         isLoginIn={isLoginIn}
                         onLogout={handleLogout}/>
-
                 {cartMessage && <div className="cart-message">{cartMessage}</div>}
                 <div className="content">
 
                     {isLoginScreen ? (
                         <div>
-                            <Login/>
+                            <Login />
                             <button onClick={closeLoginScreen}>닫기</button>
                         </div>
                     ) : (
@@ -130,12 +129,13 @@ function App() {
                                 <Route path='/find-password' element={<FindPassword/>}/>
                                 <Route path='/MyPage' element={<MyPage/>}/>
                                 <Route path='/loginAdd' element={<LoginForm onLoginSuccess={handleLoginSuccess}/>}/>
+                                <Route path="/maps" element={<KakaoMap/>}/>
                             </Routes>
-                            <SupplementButton/>
-                            <SupplementList addToCart={addToCart}/>
-                            <Footer/>
+                            <SupplementButton />
+                            <SupplementList addToCart={addToCart} />
+                            <Footer />
                         </>
-                    )}
+                        )}
                 </div>
             </div>
         </Router>
