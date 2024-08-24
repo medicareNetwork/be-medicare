@@ -1,6 +1,5 @@
 package be.com.bemedicare.controller;
 
-
 import be.com.bemedicare.member.dto.ChangePasswordRequestDTO;
 import be.com.bemedicare.member.dto.MemberDTO;
 import be.com.bemedicare.member.entity.MemberEntity;
@@ -9,7 +8,6 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

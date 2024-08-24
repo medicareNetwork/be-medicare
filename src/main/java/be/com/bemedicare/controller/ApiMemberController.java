@@ -1,16 +1,20 @@
 package be.com.bemedicare.controller;
 
 
+import be.com.bemedicare.member.apiDTO.*;
 import be.com.bemedicare.member.dto.MemberDTO;
 import be.com.bemedicare.member.entity.MemberEntity;
 import be.com.bemedicare.member.service.MemberService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.rsocket.RSocketRequester;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/member")
@@ -32,41 +36,27 @@ public class ApiMemberController {
 
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> login(@RequestBody @Valid LoginRequest request, HttpSession session) {
+    public ResponseEntity<?> login(@RequestBody @Valid LoginRequest request, HttpSession session) {
+
 
         MemberEntity member = new MemberEntity();
-        member.setMemberEmail(request.memberEmail);
-        member.setMemberPassword(request.memberPassword);
+        member.setMemberEmail(request.getMemberEmail());
+        member.setMemberPassword(request.getMemberPassword());
         MemberEntity loginResult = memberService.login(member);
         if (loginResult != null) {
             session.setAttribute("member", loginResult);
-            return ResponseEntity.status(HttpStatus.OK).body(new LoginResponse(request.memberEmail));
+            return ResponseEntity.status(HttpStatus.OK).body(new LoginResponse(request.getMemberEmail()));
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
     }
 
-    @Data
-    static class LoginResponse {
-        private String email;
-
-        public LoginResponse(String email) {
-            this.email = email;
-        }
-    }
-
-    @Data
-    static class LoginRequest {
-        private String memberEmail;
-        private String memberPassword;
-    }
-
 
     @PostMapping("/find-email")
-    public ResponseEntity<LoginResponse> findEmail(@RequestBody @Valid EmailFInd emailFInd) {
+    public ResponseEntity<LoginResponse> findEmail(@RequestBody @Valid EmailFind emailFind) {
         MemberEntity member = new MemberEntity();
-        member.setMemberName(emailFInd.memberName);
-        member.setMemberNumber(emailFInd.memberNumber);
+        member.setMemberName(emailFind.getMemberName());
+        member.setMemberNumber(emailFind.getMemberNumber());
         String memberEmail = memberService.findEmailByNameAndNumber(member.getMemberName(), member.getMemberNumber());
         if (memberEmail != null) {
             return ResponseEntity.status(HttpStatus.OK).body(new LoginResponse(memberEmail));
@@ -75,37 +65,60 @@ public class ApiMemberController {
         }
     }
 
-    @Data
-    static class EmailFInd {
-        private String memberName;
-        private String memberNumber;
+
+    @PostMapping("/check-email")
+    public ResponseEntity<Boolean> checkEmail(@RequestBody CheckEmailRequest request) {
+        boolean result = memberService.checkEmail(request.getMemberEmail());
+        return ResponseEntity.ok(result);
     }
 
 
     @PostMapping("/find-password")
     public ResponseEntity<FindPasswordResponse> findPassword(@RequestBody @Valid FindPasswordRequest request) {
         MemberEntity member = new MemberEntity();
-        member.setMemberEmail(request.memberEmail);
-        member.setMemberQnA(request.memberQnA);
-        String memberPassword = memberService.findPassword(request.memberEmail, request.memberQnA);
+        member.setMemberEmail(request.getMemberEmail());
+        member.setMemberQnA(request.getMemberQnA());
+        String memberPassword = memberService.findPassword(request.getMemberEmail(), request.getMemberQnA());
         if (memberPassword != null) {
             return ResponseEntity.status(HttpStatus.OK).body(new FindPasswordResponse(memberPassword));
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
     }
-    @Data
-    static class FindPasswordRequest {
-        private String memberEmail;
-        private String memberQnA;
-    }
 
-    @Data
-    static class FindPasswordResponse {
-        private String memberPassword;
-
-        public FindPasswordResponse(String memberPassword) {
-            this.memberPassword = memberPassword;
+    @GetMapping("/mypage")
+    public ResponseEntity<MemberEntity> mypage(HttpSession session) {
+        MemberEntity memberEntity = (MemberEntity) session.getAttribute("member");
+        if (memberEntity != null) {
+            return ResponseEntity.ok(memberEntity);
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
     }
+
+
+    @PostMapping("/update")
+    public ResponseEntity<?> update(@RequestBody MemberEntity memberEntity, HttpSession session) {
+        try {
+            MemberEntity loginResult = (MemberEntity) session.getAttribute("member");
+
+            loginResult.setMemberName(memberEntity.getMemberName());
+            loginResult.setMemberAge(memberEntity.getMemberAge());
+            loginResult.setMemberHeight(memberEntity.getMemberHeight());
+            loginResult.setMemberWeight(memberEntity.getMemberWeight());
+            loginResult.setMemberAddress(memberEntity.getMemberAddress());
+            loginResult.setMemberNumber(memberEntity.getMemberNumber());
+
+            //DB에 업데이트
+            memberService.update(loginResult);
+
+            // 업데이트한 정보를 다시 저장
+            session.setAttribute("member", loginResult);
+
+            return ResponseEntity.ok(loginResult);  // 업데이트된 객체를 반환
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("업데이트 중 오류가 발생했습니다.");
+        }
+    }
+
 }

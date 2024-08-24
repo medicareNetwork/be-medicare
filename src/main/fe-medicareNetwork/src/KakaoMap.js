@@ -1,10 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
+import Session from "react-session-api/src";
 import './css/KakaoMap.css'; // CSS 파일을 불러옵니다
+import axios from "axios";
 
 const {kakao} = window;
 
 const MapComponent = () => {
-    const [keyword, setKeyword] = useState('구로디지털단지 약국');
+    const [keyword, setKeyword] = useState(' 약국');
+    const member = JSON.parse(window.sessionStorage.getItem("member1"));
     const mapRef = useRef(null);
     const markers = useRef([]);
     const infowindow = useRef(null);
@@ -12,6 +15,7 @@ const MapComponent = () => {
     const map = useRef(null);
 
     useEffect(() => {
+        setKeyword(member.memberAddress + " 약국");
         const initializeMap = () => {
             const mapContainer = mapRef.current;
             const mapOption = {

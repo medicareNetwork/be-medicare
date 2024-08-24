@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import './css/Header.css';
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-const Header = ({ onLoginClick, onCartClick, onCommunityClick, cartCount }) => {
+const Header = ({ onCartClick, onCommunityClick, cartCount, isLoginIn, onLogout }) => {
     const [searchTerm, setSearchTerm] = useState('');
 
     const handleSearchChange = (event) => {
@@ -16,12 +16,15 @@ const Header = ({ onLoginClick, onCartClick, onCommunityClick, cartCount }) => {
 
     const navigate = useNavigate();
 
-
     const handleSignAddClick = () => {
         navigate('/signAdd')
     }
 
-    const handelLoginAddclick =  () => {
+    const handleMyPageClick = () => {
+        navigate('/mypage')
+    }
+
+    const handleLoginAddclick = () => {
         navigate('/loginAdd')
     }
 
@@ -51,8 +54,17 @@ const Header = ({ onLoginClick, onCartClick, onCommunityClick, cartCount }) => {
                             placeholder="Search"
                         />
                     </form>
-                    <button className='login-btn' onClick={handleSignAddClick}>회원가입</button>
-                    <button className="login-btn" onClick={handelLoginAddclick}>로그인</button>
+                    {isLoginIn ? (
+                        <>
+                            <button className="login-btn" onClick={handleMyPageClick}>마이페이지</button>
+                            <button className="login-btn" onClick={onLogout}>로그아웃</button>
+                        </>
+                    ) : (
+                        <>
+                            <button className="login-btn" onClick={handleSignAddClick}>회원가입</button>
+                            <button className="login-btn" onClick={handleLoginAddclick}>로그인</button>
+                        </>
+                    )}
                     <button className="cart-btn" onClick={onCartClick}>
                         Cart {cartCount > 0 && `(${cartCount})`}
                         </button>

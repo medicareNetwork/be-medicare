@@ -18,16 +18,46 @@ function SignAddForm() {
     });
 
     const [errorMessage, setErrorMessage] = useState('');
+    const [emailCheck, setEmailCheck] = useState('');
+    const [emailCheckMessage, setEmailCheckMessage] = useState('');
+
 
     const handleChange = (e) => {
         setFormData({
             ...formData,
             [e.target.name]: e.target.value
         });
+        if (e.target.name === 'memberEmail') {
+            setEmailCheck(false);
+            setEmailCheckMessage('');
+        }
+    };
+
+    const checkEmailButton = () => {
+        axios.post('http://localhost:8090/api/member/check-email',
+            {memberEmail : formData.memberEmail})
+            .then(response =>{
+                if (response.data) {
+                    setEmailCheckMessage("이 이메일은 사용중입니다");
+                    setEmailCheck(false);
+                } else {
+                    setEmailCheckMessage("사용가능한 이메일입니다");
+                    setEmailCheck(true);
+                }
+            })
+            .catch(error => {
+                console.error("이메일 중복체크를 확인해주세요");
+            })
+
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        if (!emailCheck) {
+            setErrorMessage("이메일 중복확인을 해주새요");
+            return;
+        }
 
         if (formData.memberPassword !== formData.confirmPassword) {
             setErrorMessage("비밀번호가 일치하지 않습니다");
@@ -54,6 +84,8 @@ function SignAddForm() {
                         onChange={handleChange}
                         required
                     />
+                    <button type='button' onClick={checkEmailButton}>중복 체크</button>
+                    {emailCheckMessage && <div style={{color:'red'}}>{emailCheckMessage}</div>}
                 </div>
                 <div>
                     <input
@@ -149,7 +181,7 @@ function SignAddForm() {
                         onChange={handleChange}
                     />
                 </div>
-                {errorMessage && <div style={{color:'red'}}>{errorMessage}</div>}
+                {errorMessage && <div style={{color: 'red'}}>{errorMessage}</div>}
                 <button type='submit'>회원가입</button>
             </form>
         </div>
