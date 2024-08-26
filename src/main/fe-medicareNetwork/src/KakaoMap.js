@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import Session from "react-session-api/src";
+// import Session from "react-session-api/src";
 import './css/KakaoMap.css'; // CSS 파일을 불러옵니다
 import axios from "axios";
 

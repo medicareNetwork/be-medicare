@@ -24,7 +24,7 @@ import MyPage from "./backend/MyPage";
 import UpdateMember from "./backend/UpdateMember";
 import PasswordChange from "./backend/PasswordChange";
 import AdditionalInfoForm from './backend/AdditionalInfoForm';
-import kakaoCallback from "./backend/KakaoCallback";
+import KakaoCallback from "./backend/KakaoCallback";
 
 
 
@@ -142,8 +142,9 @@ function App() {
                                 <Route path='/mypage' element={<MyPage/>}/>
                                 <Route path="/update" element={<UpdateMember />} />
                                 <Route path="/passwordChange" element={<PasswordChange/>} />
-                                <Route path="/callback" element={<kakaoCallback />} />
+                                <Route path="/callback" element={<KakaoCallback />} />
                                 <Route path="/additional-info" element={<AdditionalInfoForm />} />
+
 
                             </Routes>
                             <SupplementButton/>

@@ -1,9 +1,9 @@
 .footer {
     background-color: #ffffff; /* Set the background color to white */
-    color: #333333; /* Dark gray text color for contrast */
+    color: #101010; /* Dark gray text color for contrast */
     padding: 40px;
     font-family: Arial, sans-serif;
-    border-top: 2px solid #ff4500; /* Accent color for the top border */
+    border-top: 2px solid #101010; /* Accent color for the top border */
 }
 
 .footer-container {
@@ -22,8 +22,8 @@
 .footer-section h3 {
     margin-top: 0;
     font-size: 20px;
-    color: #ff4500; /* Accent color for headings */
-    border-bottom: 2px solid #ff4500; /* Underline for headings */
+    color: #101010; /* Accent color for headings */
+    border-bottom: 2px solid #101010; /* Underline for headings */
     padding-bottom: 10px;
 }
 
@@ -33,13 +33,13 @@
 }
 
 .footer-section a {
-    color: #ff4500; /* Accent color for links */
+    color: #101010; /* Accent color for links */
     text-decoration: none;
     transition: color 0.3s;
 }
 
 .footer-section a:hover {
-    color: #e03e00; /* Darker shade of accent color on hover */
+    color: #101010; /* Darker shade of accent color on hover */
 }
 
 .social-media-links {
@@ -48,14 +48,14 @@
 }
 
 .social-media-icon {
-    color: #ff4500; /* Accent color for social media icons */
+    color: #101010; /* Accent color for social media icons */
     text-decoration: none;
     font-size: 16px;
     transition: color 0.3s;
 }
 
 .social-media-icon:hover {
-    color: #e03e00; /* Darker shade of accent color on hover */
+    color: #101010; /* Darker shade of accent color on hover */
 }
 
 .newsletter-form {
@@ -75,7 +75,7 @@
 
 .newsletter-form button {
     padding: 12px;
-    background-color: #ff4500; /* Accent color for the button */
+    background-color: #101010; /* Accent color for the button */
     color: white;
     border: none;
     border-radius: 5px;
@@ -85,7 +85,7 @@
 }
 
 .newsletter-form button:hover {
-    background-color: #e03e00; /* Darker shade of accent color on hover */
+    background-color: #101010; /* Darker shade of accent color on hover */
 }
 
 .footer-bottom {
