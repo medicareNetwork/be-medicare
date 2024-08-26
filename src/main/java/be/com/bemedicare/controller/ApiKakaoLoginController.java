@@ -5,19 +5,20 @@ import be.com.bemedicare.member.entity.MemberEntity;
 import be.com.bemedicare.member.service.KakaoService;
 import be.com.bemedicare.member.service.KakaoUserInfo;
 import be.com.bemedicare.member.service.MemberService;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
+import java.io.IOException;
 import java.util.Map;
 
 @Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
 public class ApiKakaoLoginController {
 
     private final KakaoService kakaoService;
@@ -25,13 +26,13 @@ public class ApiKakaoLoginController {
     private final KakaoUserInfo kakaoUserInfo;
 
     @GetMapping("/callback")
-    public Map<String, Object> callback(@RequestParam("code") String code, HttpSession session) {
+    public void callback(@RequestParam("code") String code, HttpSession session, HttpServletResponse response) throws IOException {
         String accessToken = kakaoService.getAccessTokenFromKakao(code);
         KakaoUserInfoResponseDto userInfo = kakaoService.getUserInfo(accessToken);
 
-        Map<String, Object> response = new HashMap<>();
         MemberEntity existingMember = memberService.findMemberByAuthId(String.valueOf(userInfo.getId()));
 
+        boolean isNewUser;
         if (existingMember == null) {
             memberService.saveKakaoMemberInfo(
                     String.valueOf(userInfo.getId()),
@@ -41,15 +42,15 @@ public class ApiKakaoLoginController {
             );
             MemberEntity member = memberService.findMemberByAuthId(String.valueOf(userInfo.getId()));
             session.setAttribute("member", member);
-            response.put("isNewUser", true);
-            response.put("member", member);
+            isNewUser = true;
         } else {
             session.setAttribute("member", existingMember);
-            response.put("isNewUser", false);
-            response.put("member", existingMember);
+            isNewUser = false;
         }
 
-        return response;
+        // 리다이렉트 시 필요한 데이터를 쿼리 파라미터로 전달
+        String redirectUrl = String.format("http://localhost:3000/callback?isNewUser=%s&userId=%s", isNewUser, userInfo.getId());
+        response.sendRedirect(redirectUrl);
     }
 
     @PostMapping("/saveAdditionalInfo")
@@ -60,12 +61,15 @@ public class ApiKakaoLoginController {
         MemberEntity member = (MemberEntity) session.getAttribute("member");
 
         if (member != null) {
-            member.setMemberAge((int) additionalInfo.get("age"));
-            member.setMemberWeight((int) additionalInfo.get("weight"));
-            member.setMemberHeight((int) additionalInfo.get("height"));
+            member.setMemberAge(Integer.parseInt((String) additionalInfo.get("age")));
+            member.setMemberWeight(Integer.parseInt((String) additionalInfo.get("weight")));
+            member.setMemberHeight(Integer.parseInt((String) additionalInfo.get("height")));
             member.setMemberNumber((String) additionalInfo.get("number"));
             member.setMemberAddress((String) additionalInfo.get("address"));
             session.setAttribute("member", member);
+            System.out.println("member = " + member.getEmail());
+            System.out.println("member.getMemberAge() = " + member.getMemberAge());
+            System.out.println("member.getMemberPassword() = " + member.getMemberPassword());
 
             memberService.updateMemberAdditionalInfo(member);
         }

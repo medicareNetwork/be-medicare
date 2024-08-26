@@ -6,19 +6,19 @@ const Footer = () => {
     <footer className="footer">
       <div className="footer-container">
         <div className="footer-section">
-          <h3>Company Information</h3>
-          <p>Medicare Network Inc.</p>
-          <p> 123 goot Street, GuroGu, Seoul , SouthKorea</p>
-          <p>Phone: (02) 777-7777</p>
-          <p>Email: <a href="mailto:support@MedicareNetwork.com">support@MedicareNetwork.com</a></p>
+          <h3>회사 정보</h3>
+          <p>(주) Medicare Network</p>
+          <p> 서울시 구로구 구로동 구트아카데미</p>
+          <p>Phone: 010-23XX-XXXX</p>
+          <p>Email: <a href="mailto:gallawer@naver.com">gallawer@naver.com</a></p>
         </div>
         <div className="footer-section">
-          <h3>Customer Support</h3>
-          <p><a href="/terms-of-service">Terms of Service</a></p>
-          <p><a href="/privacy-policy">Privacy Policy</a></p>
+          <h3>협력 업체</h3>
+          <p><a href="/terms-of-service">경동 제약</a></p>
+          <p><a href="/privacy-policy">종근당</a></p>
         </div>
         <div className="footer-section">
-          <h3>Follow Us</h3>
+          <h3>SNS 커뮤니티</h3>
           <div className="social-media-links">
             <a href="https://facebook.com/MedicareNetwork" target="_blank" rel="noopener noreferrer" className="social-media-icon">Facebook</a>
             <a href="https://twitter.com/MedicareNetwork" target="_blank" rel="noopener noreferrer" className="social-media-icon">Twitter</a>

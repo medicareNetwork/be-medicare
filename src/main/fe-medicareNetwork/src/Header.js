@@ -31,7 +31,9 @@ const Header = ({ onCartClick, onCommunityClick, cartCount, isLoginIn, onLogout 
     return (
         <header className="header">
             <div className="header-content">
-                <button className="logo" onClick={() => window.location.href = '/'}>Medicare Network</button>
+                <button  onClick={() => window.location.href = '/'}>
+                    <img src="/logo.jpg" alt="Medicare Logo" style={{width: '130px', height: '60px'}} />
+                </button>
                 <nav className="nav">
                     <ul className="left-menu">
                         <li><a href="/new-arrivals">New Arrivals</a></li>

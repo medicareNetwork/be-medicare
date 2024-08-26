@@ -45,7 +45,7 @@ const PasswordChange = () => {
             const response = await axios.post('http://localhost:8090/api/member/changePassword', passwords, { withCredentials: true });
 
             if (response.status === 200) {
-                setMessage("비밀번호가 성공적으로 변경되었습니다.");
+                alert("비밀번호가 성공적으로 변경되었습니다.");
                 navigate('/mypage');
             }
         } catch (error) {
