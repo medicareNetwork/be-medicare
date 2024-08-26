@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
+import KakaoLogin from "./KakaoLogin";
 
 
 function LoginForm({onLoginSuccess}) {
@@ -34,7 +35,8 @@ function LoginForm({onLoginSuccess}) {
         e.preventDefault();
 
 
-    axios.post('http://localhost:8090/api/member/login', formData)
+    axios.post('http://localhost:8090/api/member/login', formData,
+        { withCredentials: true})
         .then(response => {
             localStorage.setItem('isLoggedIn', 'true');
             onLoginSuccess();
@@ -46,6 +48,8 @@ function LoginForm({onLoginSuccess}) {
             }
         });
 };
+
+
 
 return (
     <div className='login-container'>
@@ -71,14 +75,15 @@ return (
                     required
                 />
             </div>
-            {errorMessage && <div style={{ color: 'red' }}>{errorMessage}</div>}
+            {errorMessage && <div style={{color: 'red'}}>{errorMessage}</div>}
             <button type='submit'>로그인</button>
             <button onClick={handleButtonClick}>이메일 찾기</button>
             <button onClick={handlePasswordClick}>비밀번호 찾기</button>
-
+            <KakaoLogin />
         </form>
     </div>
-);
-}
+)
+    ;
+    }
 
-export default LoginForm;
+    export default LoginForm;

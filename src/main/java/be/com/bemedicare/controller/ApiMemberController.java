@@ -2,6 +2,7 @@ package be.com.bemedicare.controller;
 
 
 import be.com.bemedicare.member.apiDTO.*;
+import be.com.bemedicare.member.dto.ChangePasswordRequestDTO;
 import be.com.bemedicare.member.dto.MemberDTO;
 import be.com.bemedicare.member.entity.MemberEntity;
 import be.com.bemedicare.member.service.MemberService;
@@ -10,15 +11,12 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.messaging.rsocket.RSocketRequester;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/member")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3000",  allowCredentials = "true")
 @RequiredArgsConstructor
 public class ApiMemberController {
 
@@ -44,6 +42,7 @@ public class ApiMemberController {
         MemberEntity loginResult = memberService.login(member);
         if (loginResult != null) {
             session.setAttribute("member", loginResult);
+            System.out.println("로그인 성공, 세션에 저장된 멤버: " + session.getAttribute("member"));
             return ResponseEntity.status(HttpStatus.OK).body(new LoginResponse(request.getMemberEmail()));
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
@@ -86,7 +85,7 @@ public class ApiMemberController {
     }
 
     @GetMapping("/mypage")
-    public ResponseEntity<MemberEntity> mypage(HttpSession session) {
+    public ResponseEntity<MemberEntity> mypage( HttpSession session) {
         MemberEntity memberEntity = (MemberEntity) session.getAttribute("member");
         if (memberEntity != null) {
             return ResponseEntity.ok(memberEntity);
@@ -119,4 +118,22 @@ public class ApiMemberController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("업데이트 중 오류가 발생했습니다.");
         }
     }
+
+    @PostMapping("/changePassword")
+    public ResponseEntity<?> changePassword(@RequestBody ChangePasswordRequestDTO request,
+                                 HttpSession session) {
+
+        MemberEntity reset = (MemberEntity) session.getAttribute("member");
+
+        if (reset.getMemberPassword().equals(request.getCurrentPassword()) &&
+                request.getNewPassword().equals(request.getConfirmNewPassword())) {
+            reset.setMemberPassword(request.getNewPassword());
+            session.setAttribute("member", reset);
+            memberService.changePassword(reset);
+            return ResponseEntity.ok(reset);
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("입력한 비밀번호 및 비밀번호가 일치하지 않습니다");
+        }
+    }
+
 }

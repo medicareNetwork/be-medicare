@@ -20,6 +20,12 @@ import LoginForm from "./backend/Login";
 import FindEmail from "./backend/FindEmail";
 import FindPassword from "./backend/FindPassword"
 import MyPage from "./backend/MyPage";
+import UpdateMember from "./backend/UpdateMember";
+import PasswordChange from "./backend/PasswordChange";
+import AdditionalInfoForm from './backend/AdditionalInfoForm';
+import kakaoCallback from "./backend/KakaoCallback";
+
+
 
 function App() {
     const [isLoginScreen, setIsLoginScreen] = useState(false);
@@ -128,8 +134,13 @@ function App() {
                                 <Route path='/signAdd' element={<SignAddForm/>}/>
                                 <Route path='/find-Email' element={<FindEmail/>}/>
                                 <Route path='/find-password' element={<FindPassword/>}/>
-                                <Route path='/MyPage' element={<MyPage/>}/>
                                 <Route path='/loginAdd' element={<LoginForm onLoginSuccess={handleLoginSuccess}/>}/>
+                                <Route path='/mypage' element={<MyPage/>}/>
+                                <Route path="/update" element={<UpdateMember />} />
+                                <Route path="/passwordChange" element={<PasswordChange/>} />
+                                <Route path="/callback" element={<kakaoCallback />} />
+                                <Route path="/additional-info" element={<AdditionalInfoForm />} />
+
                             </Routes>
                             <SupplementButton/>
                             <SupplementList addToCart={addToCart}/>

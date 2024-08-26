@@ -1,44 +1,58 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import {useNavigate} from "react-router-dom";
 
-function MyPage() {
-    const [memberData, setMemberData] = useState(null);
-    const [errorMessage, setErrorMessage] = useState('');
+const MyPage = () => {
+    const [member, setMember] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+
     const navigate = useNavigate();
 
+
+    const handleMemberUpdate = () => {
+        navigate('/update', {state: {member}});
+    }
+
+    const handlePasswordChange = () => {
+        navigate('/passwordChange')
+    }
+
     useEffect(() => {
-        axios.get('http://localhost:8090/api/member/mypage')
+        axios.get('http://localhost:8090/api/member/mypage', { withCredentials: true }) // 쿠키를 포함한 요청을 보낼 경우
             .then(response => {
-                setMemberData(response.data);
+                setMember(response.data);
+                setLoading(false);
             })
-            .catch(error => {
-                if (error.response && error.response.status === 401) {
-                    setErrorMessage("로그인이 필요합니다.");
-                    navigate('/login');
-                } else {
-                    setErrorMessage("정보를 불러오는 데 실패했습니다.");
-                }
+            .catch(err => {
+                setError(err);
+                setLoading(false);
             });
-    }, [navigate]);
+    }, []);
+
+    if (loading) return <div>Loading...</div>;
+    if (error) return <div>Error: {error.message}</div>;
 
     return (
-        <div className='mypage-container'>
-            <h2>마이페이지</h2>
-            {errorMessage && <div style={{ color: 'red' }}>{errorMessage}</div>}
-            {memberData ? (
+        <div>
+            {member ? (
                 <div>
-                    <p>나이: {memberData.memberAge}</p>
-                    <p>몸무게: {memberData.memberWeight}</p>
-                    <p>키: {memberData.memberHeight}</p>
-                    <p>전화번호: {memberData.memberNumber}</p>
-                    <p>주소: {memberData.memberAddress}</p>
+                    <h1>안녕하세요</h1>
+                    <h1>{member.memberName} 님</h1>
+                    <p>나이: {member.memberAge}</p>
+                    <p>몸무게: {member.memberWeight}</p>
+                    <p>신장: {member.memberHeight}</p>
+                    <p>핸드폰 번호: {member.memberNumber}</p>
+                    <p>주소: {member.memberAddress}</p>
                 </div>
             ) : (
-                <p>로딩 중...</p>
+                <div>You are not logged in.</div>
             )}
+            <button onClick={handleMemberUpdate}>개인정보 수정</button>
+            <button onClick={handlePasswordChange}>비밀번호 수정</button>
         </div>
     );
-}
+};
 
 export default MyPage;

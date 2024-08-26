@@ -21,7 +21,7 @@ const Header = ({ onCartClick, onCommunityClick, cartCount, isLoginIn, onLogout 
     }
 
     const handleMyPageClick = () => {
-        navigate('/mypage')
+        navigate('/myPage')
     }
 
     const handleLoginAddclick = () => {
