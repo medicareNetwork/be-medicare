@@ -75,7 +75,7 @@ function SignAddForm() {
         <div className='signAdd-container'>
             <form onSubmit={handleSubmit}>
                 <h2>회원가입</h2>
-                <div>
+                <div className="flex-container">
                     <input
                         type='text'
                         name='memberEmail'
@@ -84,9 +84,11 @@ function SignAddForm() {
                         onChange={handleChange}
                         required
                     />
-                    <button type='button' onClick={checkEmailButton}>중복 체크</button>
-                    {emailCheckMessage && <div style={{color:'red'}}>{emailCheckMessage}</div>}
+                    <button type='button' className='emailsign' onClick={checkEmailButton}>
+                        중복 체크
+                    </button>
                 </div>
+                {emailCheckMessage && <div style={{ color: 'red' }}>{emailCheckMessage}</div>}
                 <div>
                     <input
                         type='password'
@@ -166,7 +168,7 @@ function SignAddForm() {
                     <input
                         type="text"
                         name="memberNumber"
-                        placeholder="핸드폰 번호"
+                        placeholder="핸드폰 번호(- 빼고 입력하세요)"
                         value={formData.memberNumber}
                         onChange={handleChange}
                         required

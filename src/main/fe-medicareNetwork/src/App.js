@@ -6,7 +6,6 @@ import './css/App.css';
 import videoSrc from './video/health.mp4'; // 비디오 파일 경로
 import Login from './backend/Login';
 import SupplementList from './board/SupplementList';
-import SupplementButton from './SupplementButton';
 import Footer from './Footer';
 import NewArrivals from './board/NewArrivals';
 import BestSellers from './board/BestSellers';
@@ -147,7 +146,6 @@ function App() {
 
 
                             </Routes>
-                            <SupplementButton/>
                             <SupplementList addToCart={addToCart}/>
                             <Footer/>
                         </>
