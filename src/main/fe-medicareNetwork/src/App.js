@@ -15,6 +15,7 @@ import Cart from './order/Cart';
 import Community from './community/Community'; // 게시판 페이지 import
 import ContactUs from './community/ContactUs';
 import axios from "axios";
+import KakaoMap from "./KakaoMap";
 import SignAddForm from "./backend/SignAddForm";
 import LoginForm from "./backend/Login";
 import FindEmail from "./backend/FindEmail";
@@ -51,6 +52,7 @@ function App() {
             });
     }, []);
 
+
     // 로컬 스토리지에 true인가 확인
     useEffect(() => {
         const loggedIn = localStorage.getItem('isLoggedIn');
@@ -69,7 +71,7 @@ function App() {
         setCartItems(prevItems => {
             const newItems = [...prevItems, product];
             console.log('카트아이템 : ' + newItems);
-            localStorage.setItem('cartItems', JSON.stringify(newItems));
+            localStorage.setItem('cartItems',JSON.stringify(newItems));
             return newItems;
         });
         setCartMessage('Item added to cart');
@@ -134,7 +136,9 @@ function App() {
                                 <Route path='/signAdd' element={<SignAddForm/>}/>
                                 <Route path='/find-Email' element={<FindEmail/>}/>
                                 <Route path='/find-password' element={<FindPassword/>}/>
+                                <Route path='/MyPage' element={<MyPage/>}/>
                                 <Route path='/loginAdd' element={<LoginForm onLoginSuccess={handleLoginSuccess}/>}/>
+                                <Route path="/maps" element={<KakaoMap/>}/>
                                 <Route path='/mypage' element={<MyPage/>}/>
                                 <Route path="/update" element={<UpdateMember />} />
                                 <Route path="/passwordChange" element={<PasswordChange/>} />

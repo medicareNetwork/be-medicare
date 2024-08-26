@@ -85,7 +85,7 @@ public class ApiMemberController {
     }
 
     @GetMapping("/mypage")
-    public ResponseEntity<MemberEntity> mypage( HttpSession session) {
+    public ResponseEntity<MemberEntity> mypage(HttpSession session) {
         MemberEntity memberEntity = (MemberEntity) session.getAttribute("member");
         if (memberEntity != null) {
             return ResponseEntity.ok(memberEntity);
