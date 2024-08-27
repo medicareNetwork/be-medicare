@@ -9,6 +9,7 @@ import SupplementList from './board/SupplementList';
 import Footer from './Footer';
 import NewArrivals from './board/NewArrivals';
 import BestSellers from './board/BestSellers';
+import NewItem from "./board/NewItem";
 import SaleItems from './board/SaleItems';
 import Cart from './order/Cart';
 import Community from './community/Community'; // 게시판 페이지 import
@@ -124,7 +125,13 @@ function App() {
                     ) : (
                         <>
                             <Routes>
-                                <Route path="/" element={<VideoSection videoSrc={videoSrc}/>}/>
+                                <Route path="/" element={
+                                    <>
+                                        <VideoSection videoSrc={videoSrc}/>
+                                        <SupplementList addToCart={addToCart}/>
+                                    </>
+                                }/>
+                                <Route path="/write" element={<NewItem/>}/>
                                 <Route path="/new-arrivals" element={<NewArrivals addToCart={addToCart}/>}/>
                                 <Route path="/best-sellers"
                                        element={<BestSellers addToCart={addToCart} bestList={bestList}/>}/>
@@ -146,7 +153,6 @@ function App() {
 
 
                             </Routes>
-                            <SupplementList addToCart={addToCart}/>
                             <Footer/>
                         </>
                     )}

@@ -28,15 +28,19 @@ const SupplementList = ({ addToCart }) => {
         setCurrentPage(page);
     };
 
+    const NewItem_Button = () => {
+        window.location.href="/NewItem";
+    };
+
     return (
         <div className="supplement-list">
             {products.map(item => (
                 <div className="supplement-item" key={item.id}>
                     <img src={`${item.filepath}`} alt={`${item.filename}`} />
                     <div className="supplement-info">
+                        <h2 className="supplement-description">{item.title}</h2>
                         <p className="supplement-price">{item.price}</p>
-                        <p className="supplement-description">{item.content}</p>
-                        <StarRating rating={4} />
+                        <StarRating rating={4}/>
                         <button
                             className="add-to-cart-button"
                             onClick={() => addToCart(item)} // Add to Cart function
@@ -68,6 +72,9 @@ const SupplementList = ({ addToCart }) => {
                 >
                     Next &raquo;
                 </button>
+            </div>
+            <div className="NewItem-Button">
+                <button onClick={() => NewItem_Button()}>상품 등록</button>
             </div>
         </div>
     );
