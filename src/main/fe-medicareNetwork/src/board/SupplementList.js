@@ -75,7 +75,7 @@ const SupplementList = ({ addToCart }) => {
                     <div className="supplement-info">
                         <h2 className="supplement-description">{item.title}</h2>
                         <p className="supplement-price">{item.price}</p>
-                        <StarRating rating={4} />
+                        <StarRating rating={4}/>
                         <input
                             type="number"
                             min="1"
@@ -93,7 +93,7 @@ const SupplementList = ({ addToCart }) => {
                 </div>
             ))}
             <div className="pagination">
-                <button
+            <button
                     onClick={() => handlePageChange(currentPage - 1)}
                     disabled={currentPage === 0}
                 >
