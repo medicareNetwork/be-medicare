@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Header from './Header';
 import VideoSection from './video/VideoSection';
 import './css/App.css';
-import videoSrc from './video/health.mp4'; // 비디오 파일 경로
+import videoSrc from './video/health2.mp4'; // 비디오 파일 경로
 import Login from './backend/Login';
 import SupplementList from './board/SupplementList';
 import Footer from './Footer';
