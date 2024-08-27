@@ -32,7 +32,7 @@ public class CartService {
 
     @Transactional
     public void addItemToCart(Long boardId,int amount, HttpSession session) {
-        MemberEntity member = (MemberEntity) session.getAttribute("loggedin");
+        MemberEntity member = (MemberEntity) session.getAttribute("member");
 
         Map<Long, Integer> cartItems = (Map<Long, Integer>) session.getAttribute(CART_SESSION_KEY);
 
@@ -59,8 +59,11 @@ public class CartService {
 
     @Transactional
     public void completeOrder(HttpSession session) {
-        MemberEntity member = (MemberEntity) session.getAttribute("loggedin");
+        MemberEntity member = (MemberEntity) session.getAttribute("member");
         Map<Long, Integer> cartItems = (Map<Long, Integer>) session.getAttribute(CART_SESSION_KEY);
+
+        System.out.println("member = " + member);
+        System.out.println("cartItems = " + cartItems);
 
         if(member==null || cartItems==null || cartItems.isEmpty()) {
             throw new IllegalArgumentException("장바구니가 비어있습니다.");
