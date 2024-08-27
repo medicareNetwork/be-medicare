@@ -35,16 +35,16 @@ const Header = ({ onCartClick, onCommunityClick, cartCount, isLoginIn, onLogout 
         <header className="header">
             <div className="header-content">
                 <button  onClick={() => navigate('/')}>
-                    <img src="/logo.jpg" alt="Medicare Logo" style={{width: '130px', height: '60px'}} />
+                    <img src="/logg.jpg" alt="Medicare Logo" style={{width: '130px', height: '60px', border: 'none', padding: '0', margin: '0'}} />
                 </button>
                 <nav className="nav">
                     <ul className="left-menu">
-                        <li><a href="/new-arrivals">New Arrivals</a></li>
-                        <li><a href="/best-sellers">Best Sellers</a></li>
-                        <li><a href="/sale-items">Sale Items</a></li>
+                        <li><a href="/new-arrivals">신상품</a></li>
+                        <li><a href="/best-sellers">인기상품</a></li>
+                        <li><a href="/sale-items">기간 세일</a></li>
                     </ul>
                     <ul className="right-menu">
-                        <li><a href="/community/Community" onClick={onCommunityClick}>Community</a></li>
+                        <li><a href="/community/Community" onClick={onCommunityClick}>고객센터</a></li>
                         <li><a href="/contact-us">Contact Us</a></li>
                     </ul>
                 </nav>

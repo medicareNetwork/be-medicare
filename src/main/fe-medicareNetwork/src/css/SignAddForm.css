@@ -1,4 +1,113 @@
-.signAdd-container {
-    padding: 20px;
-    background-color: green;
+
+
+h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* 입력 필드 스타일링 */
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+/* 버튼 스타일링 */
+.emailsign {
+    width: 100%;
+    background-color: #007bff;
+    color: white;
+    padding: 12px 20px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* 이메일 체크 버튼을 인라인으로 배치 */
+div > button[type="button"] {
+    width: auto;
+    margin-left: 10px;
+    background-color: #28a745;
+}
+
+div > button[type="button"]:hover {
+    background-color: #218838;
+}
+
+/* 에러 메시지 */
+div[style*="color: red"] {
+    color: #dc3545;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+/* 이메일 입력 필드와 버튼을 포함하는 부모 div에 flex 적용 */
+.flex-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;  /* 입력 필드 아래 간격 조절 */
+}
+
+/* 이메일 입력 필드의 너비를 조절 */
+.flex-container input[type="text"] {
+    flex: 1;  /* 입력 필드가 가능한 넓게 차지하도록 설정 */
+    margin-right: 10px;  /* 입력 필드와 버튼 사이에 간격 추가 */
+}
+
+/* 이메일 체크 버튼의 너비를 자동으로 설정 */
+.flex-container button.emailsign {
+    width: auto;
+    background-color: #007bff;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.flex-container button.emailsign:hover {
+    background-color: #0056b3;
+}
+
+
+/* 회원가입 버튼 스타일링 */
+button[type="submit"] {
+    width: 100%;
+    background: linear-gradient(135deg, #6a11cb, #2575fc); /* 그라데이션 배경 */
+    color: white;
+    padding: 12px 20px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 50px; /* 둥근 모서리 */
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+    text-transform: uppercase;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* 그림자 효과 */
+    transition: all 0.3s ease; /* 부드러운 전환 효과 */
+}
+
+button[type="submit"]:hover {
+    background: linear-gradient(135deg, #2575fc, #6a11cb); /* 호버 시 배경 색상 전환 */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3); /* 호버 시 그림자 더 진하게 */
+    transform: translateY(-2px); /* 살짝 떠오르는 효과 */
 }
