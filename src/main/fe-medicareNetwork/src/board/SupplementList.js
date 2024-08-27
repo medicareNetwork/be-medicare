@@ -9,6 +9,7 @@ const SupplementList = ({ addToCart }) => {
     const [products, setProducts] = useState([]);
     const [currentPage, setCurrentPage] = useState(0);
     const [totalPages, setTotalPages] = useState(0);
+    const [quantities, setQuantities] = useState({}); // 수량을 저장할 상태
 
     const fetchProducts = async (page) => {
         try {
