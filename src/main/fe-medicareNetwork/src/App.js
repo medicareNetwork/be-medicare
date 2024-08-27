@@ -136,13 +136,12 @@ function App() {
                                 <Route path="/best-sellers"
                                        element={<BestSellers addToCart={addToCart} bestList={bestList}/>}/>
                                 <Route path="/sale-items" element={<SaleItems addToCart={addToCart}/>}/>
-                                <Route path="/cart" element={<Cart cart={cartItems}/>}/>
+                                {/*<Route path="/cart" element={<Cart cart={cartItems}/>}/>*/}
                                 <Route path="/community" element={<Community/>}/> {/* Community 페이지 라우팅 추가 */}
                                 <Route path="/contact-us" element={<ContactUs/>}/> {/* Contact Us 페이지 추가 */}
                                 <Route path='/signAdd' element={<SignAddForm/>}/>
                                 <Route path='/find-Email' element={<FindEmail/>}/>
                                 <Route path='/find-password' element={<FindPassword/>}/>
-                                <Route path='/MyPage' element={<MyPage/>}/>
                                 <Route path='/loginAdd' element={<LoginForm onLoginSuccess={handleLoginSuccess}/>}/>
                                 <Route path="/maps" element={<KakaoMap/>}/>
                                 <Route path='/mypage' element={<MyPage/>}/>
@@ -150,6 +149,7 @@ function App() {
                                 <Route path="/passwordChange" element={<PasswordChange/>} />
                                 <Route path="/callback" element={<KakaoCallback />} />
                                 <Route path="/additional-info" element={<AdditionalInfoForm />} />
+                                <Route path="/cart" element={<Cart />} />
 
 
                             </Routes>
@@ -161,5 +161,6 @@ function App() {
         </Router>
     );
 }
+
 
 export default App;

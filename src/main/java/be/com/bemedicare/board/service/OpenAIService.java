@@ -15,16 +15,18 @@ public class OpenAIService {
 
     @Value("${openai.api.key}")
     private String apiKey;
-    private static final String API_KEY = "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";
     private static final String OPENAI_API_URL = "https://api.openai.com/v1/chat/completions";
 
     public String sendMessageToGPT(String userMessage) throws IOException {
         OkHttpClient client = new OkHttpClient();
+        int retryCount = 0;
+        int maxRetries = 5;
+        int backoffTime = 1000; // 시작 지연 시간 (밀리초)
 
         Map<String, Object> json = new HashMap<>();
         json.put("model", "gpt-3.5-turbo");
         json.put("messages", List.of(Map.of("role", "user", "content", userMessage)));
-
+while (retryCount < maxRetries) {
         RequestBody body = RequestBody.create(
                 MediaType.parse("application/json"), new ObjectMapper().writeValueAsString(json));
 
@@ -33,6 +35,7 @@ public class OpenAIService {
                 .header("Authorization", "Bearer " + apiKey)
                 .post(body)
                 .build();
+
 
         Response response = client.newCall(request).execute();
         if (response.isSuccessful()) {
@@ -43,9 +46,21 @@ public class OpenAIService {
                 Map<String, Object> message = (Map<String, Object>) choices.get(0).get("message");
                 return (String) message.get("content");
             }
-        } else {
+        }else if (response.code() == 429){
+            // 429 Too Many Requests 오류 처리
+            retryCount++;
+            System.out.println("429 오류 발생, " + backoffTime + "ms 후 재시도...");
+            try {
+                Thread.sleep(backoffTime); // InterruptedException 처리
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt(); // 현재 스레드의 인터럽트 상태를 설정
+                throw new IOException("Thread interrupted during backoff", e);
+            }
+            backoffTime *= 2; // 백오프 시간 증가
+        }else {
             throw new IOException("OpenAI API 요청 실패: " + response.code());
         }
-        return "API 응답이 없습니다.";
+    }
+        throw new IOException("최대 재시도 횟수를 초과했습니다.");
     }
 }

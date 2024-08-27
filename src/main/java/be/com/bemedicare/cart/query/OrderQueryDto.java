@@ -32,5 +32,7 @@ public class OrderQueryDto {
         this.cartStatus = cartStatus;
         this.address = address;
         this.cartItems = cartItems;
+
+
     }
 }
