@@ -43,7 +43,8 @@ public class ApiMemberController {
         if (loginResult != null) {
             session.setAttribute("member", loginResult);
             System.out.println("로그인 성공, 세션에 저장된 멤버: " + session.getAttribute("member"));
-            return ResponseEntity.status(HttpStatus.OK).body(new LoginResponse(request.getMemberEmail()));
+            return ResponseEntity.status(HttpStatus.OK).body(new LoginResponse(loginResult.getMemberName()));
+
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
