@@ -1,20 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import '../css/SupplementList.css';
 import axios from "axios";
-import {useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 
-const NewItem = () => {
+const Modify = () => {
     const navigate = useNavigate();
 
+    const { state } = useLocation();
+
+    // product가 정의되지 않았을 때 기본값 설정
+    const product = state ? state.item : {};
     const [board, setBoard] = useState({
-        title: '',
-        content: '',
+        title: product.title || '',
+        content: product.content || '',
         file: null,  // 파일은 null로 초기화합니다.
-        price: '',
-        name:JSON.parse(sessionStorage.getItem("member1")).email
+        price: product.price || '',
+        name: product.name || ''
     });
 
-    const { title, content, file, price, name } = board;
+    const {title, content, file, price, name } = board;
 
     const onChange = (event) => {
         const { name, value, type, files } = event.target;
@@ -34,21 +38,21 @@ const NewItem = () => {
 
     const saveBoard = async () => {
         const formData = new FormData();
+        formData.append('id',product.id);
         formData.append('title', title);
         formData.append('content', content);
         formData.append('price', price);
-        formData.append('name',name);
         if (file) {
             formData.append('file', file);
         }
 
         try {
-            await axios.post(`http://localhost:8090/api/write`, formData, {
+            await axios.post(`http://localhost:8090/api/modify`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
             });
-            alert("등록 완료");
+            alert("수정 완료");
             navigate("/");
         } catch (error) {
             console.error("저장 중 오류 발생:", error);
@@ -60,8 +64,9 @@ const NewItem = () => {
         navigate("/");
     };
 
+
     return (
-        <div className="NewItem">
+        <div className="Modify">
             <div>
                 <span>제목</span>
                 <input type="text" name="title" value={title} onChange={onChange}/>
@@ -71,6 +76,7 @@ const NewItem = () => {
                 <textarea name="content" cols="30" rows="10" value={content} onChange={onChange}/>
             </div>
             <div>
+                <p>기존 파일 : {product.filename.split("_")[1]}</p>
                 <input type="file" name="file" onChange={onChange}/>
             </div>
             <div>
@@ -85,4 +91,4 @@ const NewItem = () => {
     );
 };
 
-export default NewItem;
+export default Modify;

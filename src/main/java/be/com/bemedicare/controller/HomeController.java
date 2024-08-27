@@ -134,7 +134,7 @@ public class HomeController {
         boardTemp.setCategory(board.getCategory());
         //가격,재고
 
-        boardService.modify(boardTemp, file, (MemberDTO) session.getAttribute("member"));
+        boardService.modify(boardTemp, file);
 
         return "redirect:/board/list";
     }

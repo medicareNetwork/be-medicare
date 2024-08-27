@@ -10,6 +10,7 @@ import Footer from './Footer';
 import NewArrivals from './board/NewArrivals';
 import BestSellers from './board/BestSellers';
 import NewItem from "./board/NewItem";
+import Modify from "./board/Modify";
 import SaleItems from './board/SaleItems';
 import Cart from './order/Cart';
 import Community from './community/Community'; // 게시판 페이지 import
@@ -150,6 +151,8 @@ function App() {
                                 <Route path="/callback" element={<KakaoCallback />} />
                                 <Route path="/additional-info" element={<AdditionalInfoForm />} />
                                 <Route path="/cart" element={<Cart />} />
+                                <Route path="/NewItem" element={<NewItem/>}/>
+                                <Route path="/modify" element={<Modify/>}/>
 
 
                             </Routes>

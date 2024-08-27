@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import StarRating from './StarRating';
 import '../css/SupplementList.css';
 import axios from "axios";
+import {useNavigate} from "react-router-dom";
 
 const PAGE_SIZE = 20;
 
@@ -10,6 +11,7 @@ const SupplementList = ({ addToCart }) => {
     const [currentPage, setCurrentPage] = useState(0);
     const [totalPages, setTotalPages] = useState(0);
     const [quantities, setQuantities] = useState({}); // 수량을 저장할 상태
+    const navigate = useNavigate();
 
     const fetchProducts = async (page) => {
         try {
@@ -68,6 +70,11 @@ const SupplementList = ({ addToCart }) => {
         }
     };
 
+    const modifyItem = async (item) => {
+        alert("Item : " + item.title);
+        navigate("/Modify", {state:{item},})
+    };
+
     return (
         <div className="supplement-list">
             {products.map(item => (
@@ -90,6 +97,7 @@ const SupplementList = ({ addToCart }) => {
                         >
                             Add to Cart
                         </button>
+                        <button onClick={() => modifyItem(item)}>수정</button>
                     </div>
                 </div>
             ))}
