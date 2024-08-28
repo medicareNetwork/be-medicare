@@ -46,6 +46,7 @@ const Header = ({ onCartClick, onCommunityClick, cartCount, isLoginIn, onLogout 
                     <ul className="right-menu">
                         <li><a href="/community/Community" onClick={onCommunityClick}>고객센터</a></li>
                         <li><a href="/contact-us">Contact Us</a></li>
+                        <li><a href="/maps">주변 약국</a> </li>
                     </ul>
                 </nav>
                 <div className="auth">
