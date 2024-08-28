@@ -11,6 +11,7 @@ const SupplementList = ({ addToCart }) => {
     const [currentPage, setCurrentPage] = useState(0);
     const [totalPages, setTotalPages] = useState(0);
     const [quantities, setQuantities] = useState({}); // 수량을 저장할 상태
+    const [login, setLogin] = useState([]);
     const navigate = useNavigate();
 
     const fetchProducts = async (page) => {
@@ -26,6 +27,13 @@ const SupplementList = ({ addToCart }) => {
     useEffect(() => {
         fetchProducts(currentPage);
     }, [currentPage]);
+
+    useEffect(() => {
+        if(sessionStorage.getItem("member1")!=null){
+
+            setLogin(JSON.parse(sessionStorage.getItem("member1")));
+        }
+    }, []);
 
     const handlePageChange = (page) => {
         setCurrentPage(page);
@@ -97,7 +105,9 @@ const SupplementList = ({ addToCart }) => {
                         >
                             Add to Cart
                         </button>
-                        <button onClick={() => modifyItem(item)}>수정</button>
+                        {(login.email===item.name) && (
+                            <button onClick={() => modifyItem(item)}>수정</button>
+                        )}
                     </div>
                 </div>
             ))}
@@ -125,7 +135,9 @@ const SupplementList = ({ addToCart }) => {
                 </button>
             </div>
             <div className="NewItem-Button">
-                <button onClick={() => NewItem_Button()}>상품 등록</button>
+                {login.grade==="many" && (
+                    <button onClick={() => NewItem_Button()}>상품 등록</button>
+                )}
             </div>
         </div>
     );
