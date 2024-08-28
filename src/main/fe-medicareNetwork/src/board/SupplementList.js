@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import StarRating from './StarRating';
 import '../css/SupplementList.css';
 import axios from "axios";
+import {useNavigate} from "react-router-dom";
 
 const PAGE_SIZE = 20;
 
@@ -10,6 +11,7 @@ const SupplementList = ({ addToCart, member }) => { // member 정보를 props로
     const [currentPage, setCurrentPage] = useState(0);
     const [totalPages, setTotalPages] = useState(0);
     const [quantities, setQuantities] = useState({}); // 수량을 저장할 상태
+    const navigate = useNavigate();
 
     const fetchProducts = async (page) => {
         try {
@@ -27,6 +29,10 @@ const SupplementList = ({ addToCart, member }) => { // member 정보를 props로
 
     const handlePageChange = (page) => {
         setCurrentPage(page);
+    };
+
+    const NewItem_Button = () => {
+        window.location.href="/NewItem";
     };
 
     const handleQuantityChange = (itemId, value) => {
@@ -64,15 +70,20 @@ const SupplementList = ({ addToCart, member }) => { // member 정보를 props로
         }
     };
 
+    const modifyItem = async (item) => {
+        alert("Item : " + item.title);
+        navigate("/Modify", {state:{item},})
+    };
+
     return (
         <div className="supplement-list">
             {products.map(item => (
                 <div className="supplement-item" key={item.id}>
                     <img src={`${item.filepath}`} alt={`${item.filename}`} />
                     <div className="supplement-info">
+                        <h2 className="supplement-description">{item.title}</h2>
                         <p className="supplement-price">{item.price}</p>
-                        <p className="supplement-description">{item.content}</p>
-                        <StarRating rating={4} />
+                        <StarRating rating={4}/>
                         <input
                             type="number"
                             min="1"
@@ -86,11 +97,12 @@ const SupplementList = ({ addToCart, member }) => { // member 정보를 props로
                         >
                             Add to Cart
                         </button>
+                        <button onClick={() => modifyItem(item)}>수정</button>
                     </div>
                 </div>
             ))}
             <div className="pagination">
-                <button
+            <button
                     onClick={() => handlePageChange(currentPage - 1)}
                     disabled={currentPage === 0}
                 >
@@ -111,6 +123,9 @@ const SupplementList = ({ addToCart, member }) => { // member 정보를 props로
                 >
                     Next &raquo;
                 </button>
+            </div>
+            <div className="NewItem-Button">
+                <button onClick={() => NewItem_Button()}>상품 등록</button>
             </div>
         </div>
     );
