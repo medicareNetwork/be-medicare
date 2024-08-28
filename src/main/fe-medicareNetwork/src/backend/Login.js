@@ -67,7 +67,7 @@ return (
             <h2>로그인</h2>
             <div>
                 <input
-                    type='text'
+                    type='email'
                     name='memberEmail'
                     placeholder='이메일'
                     value={formData.memberEmail}

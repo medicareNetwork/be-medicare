@@ -47,11 +47,21 @@ public class MemberEntity {
     @Column
     private String memberAddress;
 
+
     @Column
     private String memberQnA;
 
     @Column
     private String memberQ;
+
+    @Column
+    private String memberPostcode;
+
+    @Column
+    private String memberDetailAddress;
+
+    @Column
+    private String memberExtraAddress;
 
     // 여기서 부터 카카오 로그인  관련
     @Column
@@ -86,6 +96,10 @@ public class MemberEntity {
         memberEntity.setMemberAddress(memberDTO.getMemberAddress());
         memberEntity.setMemberQnA(memberDTO.getMemberQnA());
         memberEntity.setMemberQ(memberDTO.getMemberQ());
+        // 주소 api검색 추가
+        memberEntity.setMemberPostcode(memberDTO.getMemberPostcode());
+        memberEntity.setMemberDetailAddress(memberDTO.getMemberDetailAddress());
+        memberEntity.setMemberExtraAddress(memberDTO.getMemberExtraAddress());
         return memberEntity;
     }
 

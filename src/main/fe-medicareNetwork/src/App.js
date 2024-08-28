@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Header from './Header';
 import VideoSection from './video/VideoSection';
 import './css/App.css';
-import videoSrc from './video/health.mp4'; // 비디오 파일 경로
+import videoSrc from './video/health2.mp4'; // 비디오 파일 경로
 import Login from './backend/Login';
 import SupplementList from './board/SupplementList';
 import Footer from './Footer';
@@ -93,6 +93,7 @@ function App() {
     // 로그인 성공시 true
     const handleLoginSuccess = () => {
         setIsLoginIn(true);
+        localStorage.setItem('isLoggedIn', 'true');
     }
 
     // 로그아웃시 false
@@ -102,6 +103,12 @@ function App() {
         window.location.href = '/';
     };
 
+    useEffect(() => {
+        const loggedIn = localStorage.getItem('isLoggedIn');
+        if (loggedIn === 'true') {
+            setIsLoginIn(true);
+        }
+    }, []);
 
     return (
         <Router>
@@ -137,6 +144,7 @@ function App() {
                                 <Route path='/find-password' element={<FindPassword/>}/>
                                 <Route path='/MyPage' element={<MyPage/>}/>
                                 <Route path='/loginAdd' element={<LoginForm onLoginSuccess={handleLoginSuccess}/>}/>
+                                <Route path="/callback" element={<KakaoCallback onLoginSuccess={handleLoginSuccess} />} />
                                 <Route path="/maps" element={<KakaoMap/>}/>
                                 <Route path='/mypage' element={<MyPage/>}/>
                                 <Route path="/update" element={<UpdateMember />} />
