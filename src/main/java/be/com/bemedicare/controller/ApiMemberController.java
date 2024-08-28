@@ -8,7 +8,9 @@ import be.com.bemedicare.member.entity.MemberEntity;
 import be.com.bemedicare.member.service.MemberService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.Contract;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,7 +36,7 @@ public class ApiMemberController {
 
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> login(@RequestBody @Valid LoginRequest request, HttpSession session) {
+    public ResponseEntity<LoginSession> login(@RequestBody @Valid LoginRequest request, HttpSession session) {
 
         MemberEntity member = new MemberEntity();
         member.setMemberEmail(request.getMemberEmail());
@@ -43,7 +45,8 @@ public class ApiMemberController {
         if (loginResult != null) {
             session.setAttribute("member", loginResult);
             System.out.println("로그인 성공, 세션에 저장된 멤버: " + session.getAttribute("member"));
-            return ResponseEntity.status(HttpStatus.OK).body(new LoginResponse(request.getMemberEmail()));
+            return ResponseEntity.status(HttpStatus.OK).body(new LoginSession(loginResult.getMemberName(),loginResult.getGrade(),loginResult.getMemberAddress()));
+
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
@@ -62,7 +65,6 @@ public class ApiMemberController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
     }
-
 
     @PostMapping("/check-email")
     public ResponseEntity<Boolean> checkEmail(@RequestBody CheckEmailRequest request) {

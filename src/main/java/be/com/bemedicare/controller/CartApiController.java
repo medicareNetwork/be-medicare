@@ -25,6 +25,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api")
+@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
 public class CartApiController {
 
 
@@ -83,17 +84,18 @@ public class CartApiController {
     @PostMapping("/cart/add")
     public ResponseEntity<AddCartResponse> addCart(@RequestBody @Valid AddCartRequest addCartRequest,
                                   HttpSession session) {
+        System.out.println("요청이 잘 왔당께요 ");
 
-        System.out.println(session.getAttribute("loggedin"));
-        MemberEntity member = (MemberEntity) session.getAttribute("loggedin");
+        System.out.println(session.getAttribute("member"));
+        MemberEntity member = (MemberEntity) session.getAttribute("member");
 
         if (member == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                    .body(new AddCartResponse("MemberId가 없습니다, 로그인해주세요"));
+                    .body(new AddCartResponse("MemberId가 없습니다, 로그인해주세요",false));
         } else {
             cartService.addItemToCart(addCartRequest.getBoardId(), addCartRequest.getAmount(), session);
             return ResponseEntity.status(HttpStatus.OK)
-                    .body(new AddCartResponse("장바구니에 담겼습니다"));
+                    .body(new AddCartResponse("장바구니에 담겼습니다",true));
         }
 
     }
@@ -104,23 +106,17 @@ public class CartApiController {
     }
     @Data
     static class AddCartResponse {
-        String message;
+        private String message;
+        private boolean success;
 
-        public AddCartResponse(String message) {
+        public AddCartResponse(String message, boolean success) {
             this.message = message;
+            this.success = success;
         }
     }
-
-    //장바구니 열어보기
+        //장바구니 열어보기
     @PostMapping("/cart/list")
     public ResponseEntity<ShowCartList> showCart(HttpSession session) {
-        // 세션에 저장된 속성들 확인
-        Enumeration<String> attributeNames = session.getAttributeNames();
-        while (attributeNames.hasMoreElements()) {
-            String attributeName = attributeNames.nextElement();
-            Object attributeValue = session.getAttribute(attributeName);
-            System.out.println("세션 속성 이름: " + attributeName + ", 값: " + attributeValue);
-        }
 
         //세션에서 카트 아이템 가져오고
         Map<Long, Integer> cartItems = cartService.getCartItems(session);
@@ -161,35 +157,62 @@ public class CartApiController {
 
     //주문완료 버튼
     @PostMapping("/order/complete")
-    public ResponseEntity<?> completeOrder(HttpSession session) {
-        try{
+    public ResponseEntity<AddCartResponse> completeOrder(HttpSession session) {
+        Boolean success = false;
+           try{
             cartService.completeOrder(session);
-            return ResponseEntity.status(HttpStatus.OK).body("주문완료");
+             success = true;
+            System.out.println("order 성공~");
+            return ResponseEntity.status(HttpStatus.OK).body(new AddCartResponse("주문이 성공적으로 처리되었습니다",success));
         } catch(IllegalStateException e){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+            System.out.println("오더실패 ~ 1번");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new AddCartResponse("주문실패",success));
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+            System.out.println("오더실패 ~ 2번");
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new AddCartResponse("주문실패",success));
         }
     }
 
     //장바구니에서 item 한개씩 지우기
     @PostMapping("/cart/remove")
-    public ResponseEntity<?> removeItemFromCart(@RequestBody RemoveItemRequest request, HttpSession session) {
+    public ResponseEntity<RemoveItemResponse> removeItemFromCart(@RequestBody RemoveItemRequest request, HttpSession session) {
         Map<Long, Integer> cartItems = (Map<Long, Integer>) session.getAttribute(CART_SESSION_KEY);
         Board board = new Board();
         board.setId(request.boardId);
         Board boardFind = boardRepository.findById(request.boardId).orElse(null);
+
         String itemName = boardFind.getTitle();
-        System.out.println(itemName);
+        boolean success = false;
+
+        System.out.println("서버에서 확인용로그(지우는 아이템은? : "+itemName);
+
         if (cartItems != null) {
             cartItems.remove(request.boardId);
             session.setAttribute(CART_SESSION_KEY, cartItems);
+            success = true;
+
         }
-        return ResponseEntity.status(HttpStatus.OK).body(itemName+" 상품이 장바구니에서 제거되었습니다.");
+        return ResponseEntity.status(HttpStatus.OK).
+                body(new RemoveItemResponse(
+                        success,itemName," 상품이 장바구니에서 제거되었습니다."
+                ));
     }
     @Data
     static class RemoveItemRequest {
         private Long boardId;
+    }
+    @Data
+    static class RemoveItemResponse {
+        private String message;
+        private boolean success;
+        private String itemName;
+
+        public RemoveItemResponse(boolean success, String itemName,String message) {
+            this.message = message;
+            this.success = success;
+            this.itemName = itemName;
+        }
     }
 
     //장바구니 전부 비우기
@@ -208,9 +231,12 @@ public class CartApiController {
 
     //이대로는 안쓸거임, 개인 주문내역 찾기할때 쓰는거 만드는중
     @PostMapping("/order/list2")
-    public List<OrderQueryDto> orderList(@RequestBody MemberEntity memberEntity) {
+    public ResponseEntity<List<OrderQueryDto>> orderList(HttpSession session) {
+        MemberEntity member = (MemberEntity) session.getAttribute("member");
 
-        return orderQueryRepository.findOneByDto(memberEntity.getId());
+        List<OrderQueryDto> orderList = orderQueryRepository.findOneByDto(member.getId());
+
+        return ResponseEntity.status(HttpStatus.OK).body(orderList);
 
     }
 

@@ -2,6 +2,7 @@ package be.com.bemedicare.xodlq.service;
 
 import be.com.bemedicare.member.dto.MemberDTO;
 import be.com.bemedicare.member.repository.MemberRepository;
+import be.com.bemedicare.xodlq.DTO.BoardDTO;
 import be.com.bemedicare.xodlq.entity.Board;
 import be.com.bemedicare.xodlq.repository.BoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,9 +36,9 @@ public class BoardService {
     }
 
     //글 수정
-    public void modify(Board board, MultipartFile file, MemberDTO member) throws IOException{
+    public void modify(Board board, MultipartFile file) throws IOException{
 
-        if(!file.isEmpty()){
+        if(file!=null){
             deleteExistingFile(board);
 
             handleFileUpload(board, file);

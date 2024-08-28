@@ -76,6 +76,9 @@ public class MemberEntity {
     @Column
     private String email;
 
+    @Column
+    private String grade;
+
 
     @JsonIgnore//member를 json으로 변환 시 얘는 빼고 변환해라~
 //    @OneToMany(mappedBy = "member") // 장바구니에서 member에있는 내용들을 꺼내쓸수있게

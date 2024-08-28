@@ -21,17 +21,20 @@ const Header = ({ onCartClick, onCommunityClick, cartCount, isLoginIn, onLogout 
     }
 
     const handleMyPageClick = () => {
-        navigate('/myPage')
+        navigate('/mypage')
     }
 
     const handleLoginAddclick = () => {
         navigate('/loginAdd')
     }
+    const handleCartClick = () => {
+        navigate('/cart');
+    };
 
     return (
         <header className="header">
             <div className="header-content">
-                <button  onClick={() => window.location.href = '/'}>
+                <button  onClick={() => navigate('/')}>
                     <img src="/logg.jpg" alt="Medicare Logo" style={{width: '130px', height: '60px', border: 'none', padding: '0', margin: '0'}} />
                 </button>
                 <nav className="nav">
@@ -43,6 +46,7 @@ const Header = ({ onCartClick, onCommunityClick, cartCount, isLoginIn, onLogout 
                     <ul className="right-menu">
                         <li><a href="/community/Community" onClick={onCommunityClick}>고객센터</a></li>
                         <li><a href="/contact-us">Contact Us</a></li>
+                        <li><a href="/maps">주변 약국</a> </li>
                     </ul>
                 </nav>
                 <div className="auth">
@@ -66,9 +70,8 @@ const Header = ({ onCartClick, onCommunityClick, cartCount, isLoginIn, onLogout 
                             <button className="login-btn" onClick={handleLoginAddclick}>로그인</button>
                         </>
                     )}
-                    <button className="cart-btn" onClick={onCartClick}>
-                        Cart {cartCount > 0 && `(${cartCount})`}
-                    </button>
+                    <button className="login-btn" onClick={handleCartClick}>장바구니</button>
+
                 </div>
             </div>
         </header>

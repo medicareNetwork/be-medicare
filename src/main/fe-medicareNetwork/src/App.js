@@ -9,6 +9,8 @@ import SupplementList from './board/SupplementList';
 import Footer from './Footer';
 import NewArrivals from './board/NewArrivals';
 import BestSellers from './board/BestSellers';
+import NewItem from "./board/NewItem";
+import Modify from "./board/Modify";
 import SaleItems from './board/SaleItems';
 import Cart from './order/Cart';
 import Community from './community/Community'; // 게시판 페이지 import
@@ -131,18 +133,23 @@ function App() {
                     ) : (
                         <>
                             <Routes>
-                                <Route path="/" element={<VideoSection videoSrc={videoSrc}/>}/>
+                                <Route path="/" element={
+                                    <>
+                                        <VideoSection videoSrc={videoSrc}/>
+                                        <SupplementList addToCart={addToCart}/>
+                                    </>
+                                }/>
+                                <Route path="/write" element={<NewItem/>}/>
                                 <Route path="/new-arrivals" element={<NewArrivals addToCart={addToCart}/>}/>
                                 <Route path="/best-sellers"
                                        element={<BestSellers addToCart={addToCart} bestList={bestList}/>}/>
                                 <Route path="/sale-items" element={<SaleItems addToCart={addToCart}/>}/>
-                                <Route path="/cart" element={<Cart cart={cartItems}/>}/>
+                                {/*<Route path="/cart" element={<Cart cart={cartItems}/>}/>*/}
                                 <Route path="/community" element={<Community/>}/> {/* Community 페이지 라우팅 추가 */}
                                 <Route path="/contact-us" element={<ContactUs/>}/> {/* Contact Us 페이지 추가 */}
                                 <Route path='/signAdd' element={<SignAddForm/>}/>
                                 <Route path='/find-Email' element={<FindEmail/>}/>
                                 <Route path='/find-password' element={<FindPassword/>}/>
-                                <Route path='/MyPage' element={<MyPage/>}/>
                                 <Route path='/loginAdd' element={<LoginForm onLoginSuccess={handleLoginSuccess}/>}/>
                                 <Route path="/callback" element={<KakaoCallback onLoginSuccess={handleLoginSuccess} />} />
                                 <Route path="/maps" element={<KakaoMap/>}/>
@@ -151,10 +158,12 @@ function App() {
                                 <Route path="/passwordChange" element={<PasswordChange/>} />
                                 <Route path="/callback" element={<KakaoCallback />} />
                                 <Route path="/additional-info" element={<AdditionalInfoForm />} />
+                                <Route path="/cart" element={<Cart />} />
+                                <Route path="/NewItem" element={<NewItem/>}/>
+                                <Route path="/modify" element={<Modify/>}/>
 
 
                             </Routes>
-                            <SupplementList addToCart={addToCart}/>
                             <Footer/>
                         </>
                     )}
@@ -163,5 +172,6 @@ function App() {
         </Router>
     );
 }
+
 
 export default App;
