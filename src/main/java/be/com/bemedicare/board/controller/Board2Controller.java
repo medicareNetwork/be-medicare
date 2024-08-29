@@ -7,109 +7,83 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-@Controller
+@RestController
+@RequestMapping("/api/board2")
+@CrossOrigin(origins = "http://localhost:3000")
 public class Board2Controller {
 
     @Autowired
     private Board2Service board2Service;
 
-    @GetMapping("/board2/write")
-    public String board2WriteForm() {
-        return "boardwrite1";
+    @PostMapping("/write")
+    public ResponseEntity<String> boardWritePro(@RequestParam("title") String title,
+                                                @RequestParam("content") String content,
+                                                @RequestParam(value = "file", required = false) MultipartFile file) {
+        try {
+            Board2 board = new Board2();
+            board.setTitle(title);
+            board.setContent(content);
+            board2Service.write(board, file);
+            return new ResponseEntity<>("글 작성이 완료되었습니다", HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>("글 작성 중 오류가 발생했습니다: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
-    @PostMapping("/board2/writepro")
-    public String board2WritePro(Board2 board2, Model model, @RequestParam("file") MultipartFile file) throws Exception {
-        board2Service.write(board2, file);
-        model.addAttribute("message", "글 작성이 완료되었습니다");
-        model.addAttribute("searchUrl", "/board2/list");
-        return "message";
-    }
-
-    @GetMapping("/board2/list")
-    public String board2List(Model model,
-                             @PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable,
-                             @RequestParam(name="searchKeyword", required = false) String searchKeyword) {
-
+    @GetMapping("/list")
+    public ResponseEntity<Page<Board2>> boardList(@PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable,
+                                                  @RequestParam(value = "searchKeyword", required = false) String searchKeyword) {
         Page<Board2> list;
-
         if (searchKeyword == null || searchKeyword.trim().isEmpty()) {
             list = board2Service.boardList(pageable);
         } else {
             list = board2Service.boardSearchList(searchKeyword, pageable);
         }
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
 
-        int nowPage = list.getPageable().getPageNumber() + 1;
-        int totalPages = list.getTotalPages();
-        int startPage;
-        int endPage;
-
-        if (totalPages <= 10) {
-            startPage = 1;
-            endPage = totalPages;
+    @GetMapping("/view/{id}")
+    public ResponseEntity<Board2> boardView(@PathVariable("id") Long id) {
+        Board2 board = board2Service.boardView(id);
+        if (board != null) {
+            return new ResponseEntity<>(board, HttpStatus.OK);
         } else {
-            if (nowPage <= 6) {
-                startPage = 1;
-                endPage = 10;
-            } else {
-                startPage = nowPage - 5;
-                endPage = nowPage + 4;
-                if (endPage > totalPages) {
-                    endPage = totalPages;
-                    startPage = totalPages - 9;
-                }
-            }
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-
-        model.addAttribute("list", list);
-        model.addAttribute("nowPage", nowPage);
-        model.addAttribute("startPage", startPage);
-        model.addAttribute("endPage", endPage);
-        model.addAttribute("searchKeyword", searchKeyword);
-
-        return "boardlist1";
     }
 
-    @GetMapping("/board2/view")
-    public String boardView(Model model, @RequestParam(name="id") Integer id) {
-        model.addAttribute("board", board2Service.boardView(id));
-        return "boardview1"; // board1view.html 템플릿 파일이 있어야 합니다.
-    }
-
-    @GetMapping("/board2/delete")
-    public String board2Delete(@RequestParam(name="id") Integer id) {
-        board2Service.boardDelete(id);
-        return "redirect:/board2/list";
-    }
-
-    @GetMapping("/board2/modify/{id}")
-    public String board2Modify(@PathVariable("id") Integer id, Model model) {
-        model.addAttribute("board", board2Service.boardView(id));
-        return "boardmodify1";
-    }
-
-    @PostMapping("/board2/update/{id}")
-    public String board2Update(@PathVariable("id") Integer id, Board2 board2, Model model, @RequestParam("file") MultipartFile file) throws Exception{
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> boardDelete(@PathVariable("id") Long id) {
         try {
-            Board2 board2Temp = board2Service.boardView(id);
-            board2Temp.setTitle(board2.getTitle());
-            board2Temp.setContent(board2.getContent());
-            board2Service.write(board2Temp, file);
-            model.addAttribute("message", "글 수정이 완료되었습니다");
-            model.addAttribute("searchUrl", "/board2/list");
+            board2Service.boardDelete(id);
+            return new ResponseEntity<>("글이 삭제되었습니다", HttpStatus.OK);
         } catch (Exception e) {
-            model.addAttribute("message", "글 수정 중 오류가 발생했습니다.");
-            model.addAttribute("searchUrl", "/board2/list");
-            return "message";
+            return new ResponseEntity<>("글 삭제 중 오류가 발생했습니다: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return "message";
+    }
+
+    @PutMapping("/modify/{id}")
+    public ResponseEntity<String> boardModify(@PathVariable("id") Long id,
+                                              @RequestParam("title") String title,
+                                              @RequestParam("content") String content,
+                                              @RequestParam(value = "file", required = false) MultipartFile file) {
+        try {
+            Board2 board = board2Service.boardView(id);
+            if (board != null) {
+                board.setTitle(title);
+                board.setContent(content);
+                board2Service.write(board, file);
+                return new ResponseEntity<>("글 수정이 완료되었습니다", HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>("해당 글을 찾을 수 없습니다", HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>("글 수정 중 오류가 발생했습니다: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }

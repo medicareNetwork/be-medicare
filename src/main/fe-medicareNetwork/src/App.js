@@ -30,6 +30,15 @@ import KakaoCallback from "./backend/KakaoCallback";
 import OrderList from "./order/OrderList";
 import OrderListAdmin from "./order/OrderListAdmin";
 
+import Gong from './community/Gong';
+import AddPost from './community/AddPost';
+import EditPost from './community/EditPost';
+import Gun from './community/Gun';
+import AddPost1 from './community/AddPost1';
+import EditPost1 from './community/EditPost1';
+import Mun from './community/Mun';
+import AddPost2 from './community/AddPost2';
+import EditPost2 from './community/EditPost2';
 
 
 function App() {
@@ -166,6 +175,17 @@ function App() {
                                 <Route path="/cart" element={<Cart />} />
                                 <Route path="/NewItem" element={<NewItem/>}/>
                                 <Route path="/modify" element={<Modify/>}/>
+                                <Route path="/Gong" element={<Gong/>} />
+                                <Route path="/gong/add" element={<AddPost />} />
+                                <Route path="/gong/edit/:id" element={<EditPost />} />
+
+                                <Route path="/Gun" element={<Gun/>} />
+                                <Route path="/Gun/add" element={<AddPost1 />} />
+                                <Route path="/Gun/edit/:id" element={<EditPost1 />} />
+
+                                <Route path="/Mun" element={<Mun/>} />
+                                <Route path="/Mun/add" element={<AddPost2 />} />
+                                <Route path="/Mun/edit/:id" element={<EditPost2 />} />
                                 <Route path="/views" element={<Views/>}/>
 
 
