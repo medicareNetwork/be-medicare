@@ -3,6 +3,7 @@ package be.com.bemedicare.cart.service;
 import be.com.bemedicare.cart.entity.*;
 import be.com.bemedicare.cart.repository.CartItemRepository;
 import be.com.bemedicare.cart.repository.CartRepository;
+import be.com.bemedicare.cart.repository.DeliveryRepositrory;
 import be.com.bemedicare.member.dto.MemberDTO;
 import be.com.bemedicare.member.entity.MemberEntity;
 import be.com.bemedicare.member.repository.MemberRepository;
@@ -12,7 +13,9 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -27,7 +30,7 @@ public class CartService {
     private final MemberRepository memberRepository;
     private final BoardRepository boardRepository;
     private static final String CART_SESSION_KEY = "cartItems";
-
+    private final DeliveryRepositrory deliveryRepositrory;
 
 
     @Transactional
@@ -127,6 +130,31 @@ public class CartService {
        }
        return totalAmount;
     }
+
+    @Transactional
+    public void shipDelivery(Long cartId) {
+        Cart cart = cartRepository.findById(cartId).orElseThrow();
+        Delivery delivery = cart.getDelivery();
+        if(delivery !=null){
+            delivery.setDeliveryStatus(DeliveryStatus.SHIP);
+            deliveryRepositrory.save(delivery);
+        } else {
+            throw new IllegalArgumentException("배달상태 변경실패");
+        }
+    }
+    @Transactional
+    public void cancelOrder(Long cartId) {
+        Cart cart = cartRepository.findById(cartId).orElseThrow();
+
+        if(cart != null) {
+            cart.setStatus(CartStatus.CANCEL);
+            cartRepository.save(cart);
+        } else {
+            throw new IllegalArgumentException("주문취소 실패");
+        }
+    }
+
+
 
 
 }

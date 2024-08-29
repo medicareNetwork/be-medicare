@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Header from './Header';
 import VideoSection from './video/VideoSection';
 import './css/App.css';
-import videoSrc from './video/health2.mp4'; // 비디오 파일 경로
+import videoSrc from './video/health.mp4'; // 비디오 파일 경로
 import Login from './backend/Login';
 import SupplementList from './board/SupplementList';
 import Footer from './Footer';
@@ -26,6 +26,8 @@ import UpdateMember from "./backend/UpdateMember";
 import PasswordChange from "./backend/PasswordChange";
 import AdditionalInfoForm from './backend/AdditionalInfoForm';
 import KakaoCallback from "./backend/KakaoCallback";
+import OrderList from "./order/OrderList";
+import OrderListAdmin from "./order/OrderListAdmin";
 
 
 
@@ -154,6 +156,8 @@ function App() {
                                 <Route path="/callback" element={<KakaoCallback onLoginSuccess={handleLoginSuccess} />} />
                                 <Route path="/maps" element={<KakaoMap/>}/>
                                 <Route path='/mypage' element={<MyPage/>}/>
+                                <Route path='/order/orderlist' element={<OrderList />} />
+                                <Route path='/order/orderlistadmin' element={<OrderListAdmin />} />
                                 <Route path="/update" element={<UpdateMember />} />
                                 <Route path="/passwordChange" element={<PasswordChange/>} />
                                 <Route path="/callback" element={<KakaoCallback />} />
@@ -161,6 +165,7 @@ function App() {
                                 <Route path="/cart" element={<Cart />} />
                                 <Route path="/NewItem" element={<NewItem/>}/>
                                 <Route path="/modify" element={<Modify/>}/>
+
 
 
                             </Routes>

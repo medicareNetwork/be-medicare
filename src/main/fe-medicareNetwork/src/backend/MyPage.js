@@ -7,6 +7,7 @@ const MyPage = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
+
     const navigate = useNavigate();
 
 
@@ -16,6 +17,10 @@ const MyPage = () => {
 
     const handlePasswordChange = () => {
         navigate('/passwordChange')
+    }
+
+    const handleOrderList = () => {
+        navigate('/order/OrderList');
     }
 
     useEffect(() => {
@@ -35,6 +40,15 @@ const MyPage = () => {
 
     return (
         <div style={{ padding: '20px', maxWidth: '600px', margin: '0 auto', fontFamily: 'Arial, sans-serif' }}>
+        <div>
+            <div style={{position: 'relative'}}>
+                <button
+                    style={{position: 'absolute', top: 0, right: 0}}
+                    onClick={handleOrderList}
+                >
+                    주문 내역 보기
+                </button>
+            </div>
             {member ? (
                 <div>
                     <h1 style={{ color: '#333', textAlign: 'center', marginBottom: '20px' }}>마이페이지</h1>
@@ -83,7 +97,7 @@ const MyPage = () => {
                     </button>
                 </div>
             )}
-        </div>
+        </div></div>
     );
 };
 
