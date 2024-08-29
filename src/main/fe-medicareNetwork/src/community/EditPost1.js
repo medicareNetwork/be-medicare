@@ -45,22 +45,38 @@ const EditPost1 = () => {
     };
 
     return (
-        <div>
-            <h1>Edit Post</h1>
-            <input
-                type="text"
-                name="title"
-                value={editPost.title}
-                onChange={handleInputChange}
-                placeholder="Post Title"
-            />
-            <textarea
-                name="content"
-                value={editPost.content}
-                onChange={handleInputChange}
-                placeholder="Post Content"
-            />
-            <button onClick={handleEditPost}>Save Changes</button>
+        <div className="container my-5" style={{ width: '50%', margin: '0 auto' }}>
+            <h2 className="text-dark mb-4">Edit Post</h2>
+
+            <div className="form-group mb-3">제목
+                <input
+                    type="text"
+                    name="title"
+                    value={editPost.title}
+                    onChange={handleInputChange}
+                    placeholder="Post Title"
+                    className="form-control"
+                />
+            </div>
+
+            내용
+            <div className="form-group mb-4">
+                <textarea
+                    name="content"
+                    value={editPost.content}
+                    onChange={handleInputChange}
+                    placeholder="Post Content"
+                    className="form-control"
+                    rows="5"
+                />
+            </div>
+
+            <button
+                onClick={handleEditPost}
+                className="btn btn-dark btn-block"
+            >
+                Save Changes
+            </button>
         </div>
     );
 };

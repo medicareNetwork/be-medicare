@@ -38,17 +38,33 @@ const Gong = () => {
     };
 
     return (
-        <div>
-            <h1>공지사항</h1>
-            <button onClick={handleAddPostClick}>글쓰기</button>
+        <div className="container my-5" style={{ width: 700, margin: '0 auto' }}>
+            <div className="d-flex justify-content-between align-items-center mb-4">
+                <h1 className="text-dark">공지사항</h1>
+                <button className="btn btn-dark" onClick={handleAddPostClick}>글쓰기</button>
+            </div>
 
             <div className="posts-list">
                 {posts.map(post => (
-                    <div key={post.id} className="post">
-                        <h2>{post.title}</h2>
-                        <p>{post.content}</p>
-                        <button onClick={() => handleDeletePost(post.id)}>Delete</button>
-                        <button onClick={() => handleEditPostClick(post.id)}>Edit</button>
+                    <div key={post.id} className="card mb-3 bg-dark text-light">
+                        <div className="card-body">
+                            <h2 className="card-title">{post.title}</h2>
+                            <p className="card-text">{post.content}</p>
+                            <div className="d-flex justify-content-end">
+                                <button
+                                    className="btn btn-outline-danger me-2"
+                                    onClick={() => handleDeletePost(post.id)}
+                                >
+                                    Delete
+                                </button>
+                                <button
+                                    className="btn btn-outline-light"
+                                    onClick={() => handleEditPostClick(post.id)}
+                                >
+                                    Edit
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 ))}
             </div>
