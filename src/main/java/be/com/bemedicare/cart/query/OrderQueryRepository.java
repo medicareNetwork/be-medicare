@@ -1,5 +1,9 @@
 package be.com.bemedicare.cart.query;
 
+import be.com.bemedicare.cart.entity.Cart;
+import be.com.bemedicare.cart.entity.Delivery;
+import be.com.bemedicare.cart.entity.DeliveryStatus;
+import be.com.bemedicare.cart.repository.CartRepository;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -13,25 +17,30 @@ import java.util.stream.Collectors;
 public class OrderQueryRepository {
 
     private final EntityManager em;
+    private final CartRepository cartRepository;
 
     private List<OrderQueryDto> findOrders() {
         return em.createQuery(
                 "select new be.com.bemedicare.cart.query.OrderQueryDto " +
-                        " (c.id, m.memberName, c.orderDate, c.status, d.address)" +
+                        " (c.id, m.memberName, c.orderDate, c.status, d.address, b.title, ci.count, ci.totalPrice,d.deliveryStatus )" +
                         " from Cart c" +
                         " join c.member m" +
-                        " join c.delivery d",OrderQueryDto.class)
+                        " join c.delivery d" +
+                        " join c.cartItems ci" +
+                        " join ci.board b " ,OrderQueryDto.class)
                 .getResultList();
     }
 
     private List<OrderQueryDto> findMemberCarts(Long memberId) {
         return em.createQuery(
                         "select new be.com.bemedicare.cart.query.OrderQueryDto " +
-                                " (c.id, m.memberName, c.orderDate, c.status, d.address)" +
+                                " (c.id, m.memberName, c.orderDate, c.status, d.address, b.title, ci.count, ci.totalPrice, d.deliveryStatus )" +
                                 " from Cart c" +
                                 " join c.member m" +
                                 " join c.delivery d" +
-                                " where m.id = :memberId",OrderQueryDto.class)
+                                " join c.cartItems ci " +
+                                " join ci.board b " +
+                                " where m.id = : memberId",OrderQueryDto.class)
                 .setParameter("memberId", memberId)
                 .getResultList();
     }
@@ -74,6 +83,7 @@ public class OrderQueryRepository {
         return result;
     }
 
+
     private List<Long> toCartIds(List<OrderQueryDto> result) {
         return result.stream()
                 .map(c-> c.getCartId())
@@ -94,19 +104,5 @@ public class OrderQueryRepository {
                 .collect(Collectors.groupingBy(OrderItemQueryDto::getCartId));
 
     }
-//    private Map<Long, List<OrderItemQueryDto>> findMemberMap(List<Long> memberId) {
-//        List<OrderItemQueryDto> cartItems = em.createQuery(
-//                        "select new be.com.bemedicare.cart.query.OrderItemQueryDto" +
-//                                " (ci.cart.id, b.name, ci.orderPrice, ci.count)" +
-//                                " from CartItem ci" +
-//                                " join ci.board b" +
-//                                " where ci.cart.id in : cartIds", OrderItemQueryDto.class)
-//                .setParameter("memberId", memberId)
-//                .getResultList();
-//
-//        return cartItems.stream()
-//                .collect(Collectors.groupingBy(OrderItemQueryDto::getCartId));
-//
-//    }
 
 }

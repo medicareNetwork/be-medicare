@@ -19,6 +19,10 @@ const MyPage = () => {
         navigate('/passwordChange')
     }
 
+    const handleOrderList = () => {
+        navigate('/order/OrderList');
+    }
+
     useEffect(() => {
         axios.get('http://localhost:8090/api/member/mypage', { withCredentials: true }) // 쿠키를 포함한 요청을 보낼 경우
             .then(response => {
@@ -36,6 +40,14 @@ const MyPage = () => {
 
     return (
         <div>
+            <div style={{position: 'relative'}}>
+                <button
+                    style={{position: 'absolute', top: 0, right: 0}}
+                    onClick={handleOrderList}
+                >
+                    주문 내역 보기
+                </button>
+            </div>
             {member ? (
                 <div>
                     <h1>안녕하세요</h1>

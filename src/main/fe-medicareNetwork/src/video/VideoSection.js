@@ -1,6 +1,6 @@
 import React from 'react';
 import '../css/VideoSection.css';
-import videoSrc from './health2.mp4'; // 비디오 파일 경로
+import videoSrc from './health.mp4'; // 비디오 파일 경로
 
 const VideoSection = () => {
 
