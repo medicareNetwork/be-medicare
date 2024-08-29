@@ -11,6 +11,7 @@ import NewArrivals from './board/NewArrivals';
 import BestSellers from './board/BestSellers';
 import NewItem from "./board/NewItem";
 import Modify from "./board/Modify";
+import Views from "./board/Views";
 import SaleItems from './board/SaleItems';
 import Cart from './order/Cart';
 import Community from './community/Community'; // 게시판 페이지 import
@@ -174,7 +175,6 @@ function App() {
                                 <Route path="/cart" element={<Cart />} />
                                 <Route path="/NewItem" element={<NewItem/>}/>
                                 <Route path="/modify" element={<Modify/>}/>
-                                <Route path="/community" element={<Community/>} />
                                 <Route path="/Gong" element={<Gong/>} />
                                 <Route path="/gong/add" element={<AddPost />} />
                                 <Route path="/gong/edit/:id" element={<EditPost />} />
@@ -186,6 +186,8 @@ function App() {
                                 <Route path="/Mun" element={<Mun/>} />
                                 <Route path="/Mun/add" element={<AddPost2 />} />
                                 <Route path="/Mun/edit/:id" element={<EditPost2 />} />
+                                <Route path="/views" element={<Views/>}/>
+
 
                             </Routes>
                             <Footer/>
