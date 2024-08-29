@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import axios from "axios";
-
+import {useNavigate} from "react-router-dom";
 
 function FindPassword () {
 
@@ -9,8 +9,13 @@ function FindPassword () {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
 
+    const navigate = useNavigate();
+
+
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+
 
         try {
             const response = await axios.post("http://localhost:8090/api/member/find-password", {
@@ -24,6 +29,10 @@ function FindPassword () {
             setPassword('');
         }
     };
+
+    const LoginAddClick = () => {
+        navigate("/loginAdd")
+    }
 
     return (
         <div className='find-password-container'>
@@ -40,10 +49,13 @@ function FindPassword () {
                     value={qna}
                     onChange={(e) => setQnA(e.target.value)}
                 />
+                <div style={{textAlign: 'center', marginTop: '20px'}}>
+                    {password && <div style={{fontSize: '20px', fontWeight: 'bold'}}>찾은 비밀번호 : {password}</div>}
+                    {error && <div style={{color: 'red', fontSize: '20px', fontWeight: 'bold'}}>{error}</div>}
+                </div>
                 <button type='submit'>비밀번호 찾기</button>
+                <button onClick={LoginAddClick} type={"submit"}>로그인</button>
             </form>
-            {password && <div>찾은 비밀번호 : {password}</div>}
-            {error && <div style={{ color : 'red'}}>{error}</div>}
         </div>
     );
 
