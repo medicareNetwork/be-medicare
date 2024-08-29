@@ -85,6 +85,10 @@ const SupplementList = ({ addToCart, member }) => { // member 정보를 props로
         navigate("/Modify", {state:{item},})
     };
 
+    const hrefViews = async (item) =>{
+        navigate("/Views", {state:{item},})
+    }
+
     return (
         <div className="container my-5">
             <div className="row">
@@ -137,6 +141,55 @@ const SupplementList = ({ addToCart, member }) => { // member 정보를 props로
                         </li>
                     </ul>
                 </nav>
+        <div className="supplement-list">
+            {products.map(item => (
+                <div className="supplement-item" key={item.id}>
+                    <img onClick={() => hrefViews(item)} src={`${item.filepath}`} alt={`${item.filename}`} />
+                    <div className="supplement-info">
+                        <h2 onClick={() => hrefViews(item)} className="supplement-description">{item.title}</h2>
+                        <p className="supplement-price">{item.price}</p>
+                        <StarRating rating={4}/>
+                        <input
+                            type="number"
+                            min="1"
+                            value={quantities[item.id] || 1}
+                            onChange={(e) => handleQuantityChange(item.id, parseInt(e.target.value))}
+                            className="quantity-input"
+                        />
+                        <button
+                            className="add-to-cart-button"
+                            onClick={() => handleAddToCart(item)} // Add to Cart function
+                        >
+                            Add to Cart
+                        </button>
+                        {(login.email===item.name) && (
+                            <button onClick={() => modifyItem(item)}>수정</button>
+                        )}
+                    </div>
+                </div>
+            ))}
+            <div className="pagination">
+            <button
+                    onClick={() => handlePageChange(currentPage - 1)}
+                    disabled={currentPage === 0}
+                >
+                    &laquo; Previous
+                </button>
+                {[...Array(totalPages).keys()].map((page) => (
+                    <button
+                        key={page}
+                        onClick={() => handlePageChange(page)}
+                        className={currentPage === page ? 'active' : ''}
+                    >
+                        {page + 1}
+                    </button>
+                ))}
+                <button
+                    onClick={() => handlePageChange(currentPage + 1)}
+                    disabled={currentPage === totalPages - 1}
+                >
+                    Next &raquo;
+                </button>
             </div>
             <div className="text-center mt-4">
                 {login.grade === "many" && (

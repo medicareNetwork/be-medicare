@@ -44,7 +44,7 @@ const Header = ({ onCartClick, onCommunityClick, cartCount, isLoginIn, onLogout 
                         <li><a href="/sale-items">기간 세일</a></li>
                     </ul>
                     <ul className="right-menu">
-                        <li><a href="/community/Community" onClick={onCommunityClick}>고객센터</a></li>
+                        <li><a href="/community" onClick={onCommunityClick}>고객센터</a></li>
                         <li><a href="/contact-us">Contact Us</a></li>
                         <li><a href="/maps">주변 약국</a> </li>
                     </ul>

@@ -1,57 +1,31 @@
-import React, { useState } from 'react';
-import '../css/Community.css'; // 게시판의 스타일을 위한 CSS 파일
+import React from 'react';
+import { useNavigate } from 'react-router-dom'; // useNavigate 사용
+import '../css/Community.css';
 
 const Community = () => {
-    const [posts, setPosts] = useState([
-        { id: 1, title: 'Welcome to the Community!', content: 'Feel free to share your thoughts and experiences.' },
-        { id: 2, title: 'How to Choose the Right Supplement', content: 'Tips and advice on selecting the best supplements for your needs.' }
-    ]);
-    const [newPost, setNewPost] = useState({ title: '', content: '' });
+    const navigate = useNavigate(); // useNavigate로 페이지 이동
 
-    const handleInputChange = (event) => {
-        const { name, value } = event.target;
-        setNewPost(prevPost => ({ ...prevPost, [name]: value }));
-    };
-
-    const handleAddPost = () => {
-        if (newPost.title && newPost.content) {
-            setPosts(prevPosts => [
-                ...prevPosts,
-                { id: prevPosts.length + 1, title: newPost.title, content: newPost.content }
-            ]);
-            setNewPost({ title: '', content: '' });
-        }
+    const handleNavigate = (path) => {
+        navigate(path); // 동적으로 경로 이동
     };
 
     return (
-        <div className="community">
-            <h1 className="title">Community Board</h1>
-            <div className="post-form">
-                <h2>Create a New Post</h2>
-                <input
-                    type="text"
-                    name="title"
-                    value={newPost.title}
-                    onChange={handleInputChange}
-                    placeholder="Post Title"
-                />
-                <textarea
-                    name="content"
-                    value={newPost.content}
-                    onChange={handleInputChange}
-                    placeholder="Post Content"
-                />
-                <button onClick={handleAddPost}>Add Post</button>
+
+        <div className="community-container">
+            <div className="community">
+                <button id="Gong" onClick={() => handleNavigate('/Gong')}>공지 바로가기</button>
+                {/* Gong 페이지로 이동 */}
             </div>
-            <div className="posts-list">
-                {posts.map(post => (
-                    <div key={post.id} className="post">
-                        <h2 className="post-title">{post.title}</h2>
-                        <p className="post-content">{post.content}</p>
-                    </div>
-                ))}
+            <div className="community">
+                <button id="Gun" onClick={() => handleNavigate('/Gun')}>건의 바로가기</button>
+                {/* Gun 페이지로 이동 */}
+            </div>
+            <div  className="community">
+                <button id="Mun" onClick={() => handleNavigate('/Mun')}>문의 바로가기</button>
+                {/* Mun 페이지로 이동 */}
             </div>
         </div>
+
     );
 };
 
