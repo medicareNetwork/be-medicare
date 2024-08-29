@@ -31,22 +31,37 @@ const AddPost2 = () => {
     };
 
     return (
-        <div>
-            <h1>문의사항 작성중입니다</h1>
-            <input
-                type="text"
-                name="title"
-                value={newPost.title}
-                onChange={handleInputChange}
-                placeholder="Post Title"
-            />
-            <textarea
-                name="content"
-                value={newPost.content}
-                onChange={handleInputChange}
-                placeholder="Post Content"
-            />
-            <button id="t" onClick={handleAddPost}>작성완료</button>
+        <div className="container my-5" style={{ width: '50%', margin: '0 auto' }}>
+            <h2 className="text-dark mb-4">문의하실 내용이 있다면 작성해주세요 :)</h2>
+            제목
+            <div className="form-group mb-3">
+                <input
+                    type="text"
+                    name="title"
+                    value={newPost.title}
+                    onChange={handleInputChange}
+                    placeholder="Post Title"
+                    className="form-control"
+                />
+            </div>
+            내용
+            <div className="form-group mb-4">
+                <textarea
+                    name="content"
+                    value={newPost.content}
+                    onChange={handleInputChange}
+                    placeholder="Post Content"
+                    className="form-control"
+                    rows="5"
+                />
+            </div>
+
+            <button
+                onClick={handleAddPost}
+                className="btn btn-dark btn-block"
+            >
+                작성완료
+            </button>
         </div>
     );
 };

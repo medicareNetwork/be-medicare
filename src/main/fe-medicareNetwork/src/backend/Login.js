@@ -86,10 +86,11 @@ return (
                 />
             </div>
             {errorMessage && <div style={{ color: 'red' }}>{errorMessage}</div>}
-            <button type='submit'>로그인</button>
-            <button onClick={handleButtonClick}>이메일 찾기</button>
-            <button onClick={handlePasswordClick}>비밀번호 찾기</button>
-            <KakaoLogin />
+            <button type='submit' className="btn btn-primary btn-block mb-4">로그인</button> {/* 하단 간격을 추가 */}
+            <button type="button" onClick={handleButtonClick} className="btn btn-outline-dark btn-block">이메일 찾기</button>
+            <button type="button" onClick={handlePasswordClick} className="btn btn-outline-dark btn-block">비밀번호 찾기
+            </button>
+            <KakaoLogin/>
         </form>
     </div>
 );

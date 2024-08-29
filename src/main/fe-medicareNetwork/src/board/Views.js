@@ -58,28 +58,50 @@ const Views = () => {
     };
 
     return (
-        <div className="Views">
-            <div className="ImageField">
-                <img src={product.filepath} alt={product.filename}/>
-            </div>
-            <div className="productField">
-                <h2>{product.title}</h2>
-                <p>{product.content}</p>
-                <p>{product.name}</p>
-            </div>
-            <div className="buttonField">
-                <input
-                    type="number"
-                    min="1"
-                    value={quantities[product.id] || 1}
-                    onChange={(e) => handleQuantityChange(product.id, parseInt(e.target.value))}
-                    className="quantity-input"
-                />
-                <button onClick={() => backCart(product)}>장바구니 담기</button>
-                <button onClick={() => onCart(product)}>바로구매</button>
+        <div className="container my-5">
+            <div className="row">
+                <div className="col-md-6 text-center mb-4">
+                    <img src={product.filepath} alt={product.filename} className="img-fluid rounded shadow-sm" />
+                </div>
+                <div className="col-md-6">
+                    <div className="bg-dark text-light p-4 rounded shadow-sm">
+                        <h2>{product.title}</h2>
+                        <p>{product.content}</p>
+                        <p><strong>판매자:</strong> {product.name}</p>
+                        <div className="mt-4">
+                            <div className="d-flex align-items-center mb-3">
+                                <input
+                                    type="number"
+                                    min="1"
+                                    value={quantities[product.id] || 1}
+                                    onChange={(e) => handleQuantityChange(product.id, parseInt(e.target.value))}
+                                    className="form-control"
+                                    style={{maxWidth: '70px'}}  // 가로 사이즈를 줄이기 위해 maxWidth 적용
+                                />
+                            </div>
+                            <div className="d-flex justify-content-between">
+                                <button
+                                    onClick={() => backCart(product)}
+                                    className="btn btn-outline-light mr-2"
+                                    style={{flex: '0 0 45%'}}
+                                >
+                                    장바구니 담기
+                                </button>
+                                <button
+                                    onClick={() => onCart(product)}
+                                    className="btn btn-light ml-2"
+                                    style={{flex: '0 0 45%'}}
+                                >
+                                    바로구매
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     );
 };
+
 
 export default Views;

@@ -251,7 +251,7 @@ public class CartApiController {
         return ResponseEntity.status(HttpStatus.OK).body(orderList);
     }
 
-    @PostMapping("/order/ship")
+    @PostMapping("/delivery/ship")
     public String shipOrder(@RequestBody Map<String, Long> request) {
 
         Long cartId = request.get("cartId");
@@ -259,8 +259,18 @@ public class CartApiController {
             cartService.shipDelivery(cartId);
         }
         return "배달이 시작됐씀당 CartId : " +cartId;
-
     }
+    @PostMapping("/delivery/comp")
+    public String compDelivery(@RequestBody Map<String, Long> request) {
+
+        Long cartId = request.get("cartId");
+        if(cartId != null) {
+            cartService.completeDelivery(cartId);
+        }
+        return "배달이 완료되었습니다 ~ CartId : " + cartId;
+    }
+
+
     @PostMapping("/order/cancel")
     public String cancelOrder(@RequestBody Map<String, Long> request) {
 

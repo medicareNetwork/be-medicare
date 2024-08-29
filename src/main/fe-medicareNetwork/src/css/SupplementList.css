@@ -65,23 +65,6 @@
   margin-bottom: 15px;
 }
 
-.add-to-cart-button {
-  margin-top: 10px;
-  padding: 12px 25px;
-  font-size: 16px;
-  background-color: #ff4500;
-  color: white;
-  border: none;
-  cursor: pointer;
-  border-radius: 5px;
-  transition: background-color 0.3s, transform 0.3s;
-}
-
-.add-to-cart-button:hover {
-  background-color: #e03e00;
-  transform: scale(1.05);
-}
-
 .pagination {
   display: flex;
   justify-content: center;
@@ -106,4 +89,21 @@
 .pagination button:disabled {
   cursor: not-allowed;
   opacity: 0.5;
+}
+
+.quantity-input {
+  width: 30%; /* 수량 입력 필드의 너비를 더 작게 설정 */
+  min-width: 50px; /* 최소 너비를 설정하여 너무 작아지지 않도록 함 */
+  padding: 0.2rem 0.5rem; /* 수량 입력 필드의 내부 패딩 조정 */
+  font-size: 1rem; /* 글자 크기를 줄여서 필드를 작게 만듦 */
+}
+
+.add-to-cart-button {
+  font-size: 1.5rem; /* 버튼의 글꼴 크기를 적절히 키움 */
+  padding: 0.75rem 1.5rem; /* 버튼의 패딩을 늘려 크기를 키움 */
+  width: auto; /* 버튼의 너비를 자동으로 설정 */
+  flex-grow: 1; /* 버튼이 남은 공간을 차지하도록 설정 */
+  display: flex; /* 버튼 내 텍스트와 아이콘을 정렬하기 위해 flexbox 사용 */
+  justify-content: center; /* 텍스트와 아이콘을 가운데 정렬 */
+  align-items: center; /* 텍스트와 아이콘을 세로로 가운데 정렬 */
 }
