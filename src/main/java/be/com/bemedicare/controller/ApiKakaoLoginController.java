@@ -65,7 +65,10 @@ public class ApiKakaoLoginController {
             member.setMemberWeight(Integer.parseInt((String) additionalInfo.get("weight")));
             member.setMemberHeight(Integer.parseInt((String) additionalInfo.get("height")));
             member.setMemberNumber((String) additionalInfo.get("number"));
-            member.setMemberAddress((String) additionalInfo.get("address"));
+            member.setMemberAddress((String) additionalInfo.get("memberAddress"));
+            member.setMemberPostcode((String) additionalInfo.get("memberPostcode"));
+            member.setMemberDetailAddress((String) additionalInfo.get("memberDetailAddress"));
+            member.setMemberExtraAddress((String) additionalInfo.get("memberExtraAddress"));
             session.setAttribute("member", member);
             System.out.println("member = " + member.getEmail());
             System.out.println("member.getMemberAge() = " + member.getMemberAge());

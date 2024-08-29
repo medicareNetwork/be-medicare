@@ -12,7 +12,18 @@ const KakaoLogin = () => {
 
     return (
         <div>
-            <button onClick={handleLogin}>카카오 로그인</button>
+            <img
+                src={`kakao.png`}
+                alt="Kakao Login"
+                style={{
+                    cursor: 'pointer',
+                    width: '100%',
+                    maxWidth: '300px',
+                    display: 'block',
+                    margin: '20px auto'
+                }}
+                onClick={handleLogin}
+            />
         </div>
     );
 };

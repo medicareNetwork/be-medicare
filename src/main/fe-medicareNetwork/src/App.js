@@ -27,6 +27,8 @@ import UpdateMember from "./backend/UpdateMember";
 import PasswordChange from "./backend/PasswordChange";
 import AdditionalInfoForm from './backend/AdditionalInfoForm';
 import KakaoCallback from "./backend/KakaoCallback";
+import OrderList from "./order/OrderList";
+import OrderListAdmin from "./order/OrderListAdmin";
 
 
 
@@ -96,6 +98,7 @@ function App() {
     // 로그인 성공시 true
     const handleLoginSuccess = () => {
         setIsLoginIn(true);
+        localStorage.setItem('isLoggedIn', 'true');
     }
 
     // 로그아웃시 false
@@ -105,6 +108,12 @@ function App() {
         window.location.href = '/';
     };
 
+    useEffect(() => {
+        const loggedIn = localStorage.getItem('isLoggedIn');
+        if (loggedIn === 'true') {
+            setIsLoginIn(true);
+        }
+    }, []);
 
     return (
         <Router>
@@ -145,8 +154,11 @@ function App() {
                                 <Route path='/find-Email' element={<FindEmail/>}/>
                                 <Route path='/find-password' element={<FindPassword/>}/>
                                 <Route path='/loginAdd' element={<LoginForm onLoginSuccess={handleLoginSuccess}/>}/>
+                                <Route path="/callback" element={<KakaoCallback onLoginSuccess={handleLoginSuccess} />} />
                                 <Route path="/maps" element={<KakaoMap/>}/>
                                 <Route path='/mypage' element={<MyPage/>}/>
+                                <Route path='/order/orderlist' element={<OrderList />} />
+                                <Route path='/order/orderlistadmin' element={<OrderListAdmin />} />
                                 <Route path="/update" element={<UpdateMember />} />
                                 <Route path="/passwordChange" element={<PasswordChange/>} />
                                 <Route path="/callback" element={<KakaoCallback />} />
@@ -155,6 +167,7 @@ function App() {
                                 <Route path="/NewItem" element={<NewItem/>}/>
                                 <Route path="/modify" element={<Modify/>}/>
                                 <Route path="/views" element={<Views/>}/>
+
 
                             </Routes>
                             <Footer/>

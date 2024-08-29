@@ -224,12 +224,14 @@ public class CartApiController {
 
     //db에있는 모든 주문내역 출력 ( admin 전용 )
     @PostMapping("/order/list")
-    public List<OrderQueryDto> orderList() {
-        return orderQueryRepository.findAllByDto();
+    public ResponseEntity<List<OrderQueryDto>> orderList() {
+
+        List<OrderQueryDto> allOrderList = orderQueryRepository.findAllByDto();
+        return ResponseEntity.status(HttpStatus.OK).body(allOrderList);
 
     }
 
-    //이대로는 안쓸거임, 개인 주문내역 찾기할때 쓰는거 만드는중
+    //개인 주문내역 확인
     @PostMapping("/order/list2")
     public ResponseEntity<List<OrderQueryDto>> orderList(HttpSession session) {
         MemberEntity member = (MemberEntity) session.getAttribute("member");
@@ -238,6 +240,35 @@ public class CartApiController {
 
         return ResponseEntity.status(HttpStatus.OK).body(orderList);
 
+    }
+
+    //postman전송할때 편하게 하려고 만든 테스트용
+    @PostMapping("/order/list3")
+    public ResponseEntity<List<OrderQueryDto>> orderList2(@RequestBody MemberEntity member) {
+
+        List<OrderQueryDto> orderList = orderQueryRepository.findOneByDto(member.getId());
+
+        return ResponseEntity.status(HttpStatus.OK).body(orderList);
+    }
+
+    @PostMapping("/order/ship")
+    public String shipOrder(@RequestBody Map<String, Long> request) {
+
+        Long cartId = request.get("cartId");
+        if(cartId != null) {
+            cartService.shipDelivery(cartId);
+        }
+        return "배달이 시작됐씀당 CartId : " +cartId;
+
+    }
+    @PostMapping("/order/cancel")
+    public String cancelOrder(@RequestBody Map<String, Long> request) {
+
+        Long cartId = request.get("cartId");
+        if(cartId != null) {
+            cartService.cancelOrder(cartId);
+        }
+        return "주문이 취소되었습니다. CartId : " +cartId;
     }
 
 }

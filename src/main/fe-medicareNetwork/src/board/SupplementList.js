@@ -6,7 +6,7 @@ import {useNavigate} from "react-router-dom";
 
 const PAGE_SIZE = 20;
 
-const SupplementList = ({ addToCart }) => {
+const SupplementList = ({ addToCart, member }) => { // member 정보를 props로 받아옴
     const [products, setProducts] = useState([]);
     const [currentPage, setCurrentPage] = useState(0);
     const [totalPages, setTotalPages] = useState(0);

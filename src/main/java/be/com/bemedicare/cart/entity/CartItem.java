@@ -34,6 +34,7 @@ public class CartItem {
 
     private int orderPrice; // 주문 가격
     private int count; // 주문 수량
+    private int totalPrice;
 
     //장바구니 생성하기 (board-제품 가져오고, 가격 가져오고, 갯수가져오고)
     public static CartItem createCartItem(Board board, int orderPrice, int count) {
@@ -41,6 +42,7 @@ public class CartItem {
         cartItem.setBoard(board);
         cartItem.setOrderPrice(orderPrice);
         cartItem.setCount(count);
+        cartItem.setTotalPrice(orderPrice * count);
 
         board.removeStock(count);
         return cartItem;
