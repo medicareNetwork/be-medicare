@@ -139,9 +139,23 @@ public class CartService {
             delivery.setDeliveryStatus(DeliveryStatus.SHIP);
             deliveryRepositrory.save(delivery);
         } else {
-            throw new IllegalArgumentException("배달상태 변경실패");
+            throw new IllegalArgumentException("배달상태로 상태변경 실패");
         }
     }
+
+    @Transactional
+    public void completeDelivery(Long cartId) {
+        Cart cart = cartRepository.findById(cartId).orElseThrow();
+        Delivery delivery = cart.getDelivery();
+
+        if (delivery != null) {
+            delivery.setDeliveryStatus(DeliveryStatus.COMP);
+            deliveryRepositrory.save(delivery);
+        } else {
+            throw new IllegalArgumentException("배달완료로 상태변경 실패");
+        }
+    }
+
     @Transactional
     public void cancelOrder(Long cartId) {
         Cart cart = cartRepository.findById(cartId).orElseThrow();
@@ -150,10 +164,9 @@ public class CartService {
             cart.setStatus(CartStatus.CANCEL);
             cartRepository.save(cart);
         } else {
-            throw new IllegalArgumentException("주문취소 실패");
+            throw new IllegalArgumentException("주문취소로 상태변경 실패");
         }
     }
-
 
 
 

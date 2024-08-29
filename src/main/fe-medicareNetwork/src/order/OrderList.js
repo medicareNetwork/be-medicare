@@ -84,7 +84,7 @@ const OrderHistory = () => {
                                 )}
                             </td>
                             <td className="text-end">
-                                {item.cartStatus === 'ORDER' && item.deliveryStatus !== 'SHIP' && (
+                                {item.cartStatus === 'ORDER' && item.deliveryStatus !== 'SHIP' && item.deliveryStatus !== 'COMP' && (
                                     <button
                                         className="btn btn-danger"
                                         onClick={() => handleCancelOrder(item)}

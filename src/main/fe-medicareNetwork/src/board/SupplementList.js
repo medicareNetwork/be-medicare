@@ -96,7 +96,7 @@ const SupplementList = ({ addToCart, member }) => { // member 정보를 props로
                                 <h5 className="card-title text-dark">{item.title}</h5>
                                 <p className="card-text text-muted">{item.price}원</p>
                                 <StarRating rating={4}/>
-                                <div className="d-flex justify-content-between align-items-center mt-3">
+                                <div className="d-flex justify-content-between align-items-center mt-1">
                                     <input
                                         type="number"
                                         min="1"
@@ -105,10 +105,10 @@ const SupplementList = ({ addToCart, member }) => { // member 정보를 props로
                                         className="form-control quantity-input"
                                     />
                                     <button
-                                        className="btn btn-dark add-to-cart-button ml-2"
+                                        className="btn btn-dark add-to-cart-button ml-5"
                                         onClick={() => handleAddToCart(item)}
                                     >
-                                        장바구니 담기 <CartPlusFill size={20} />
+                                        장바구니 담기<CartPlusFill size={20} />
                                     </button>
                                 </div>
                                 {(login.email === item.name) && (

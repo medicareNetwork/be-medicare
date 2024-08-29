@@ -10,7 +10,7 @@ const OrderHistory = () => {
         alert('배달 시작');
 
         // 백엔드로 데이터 전송
-        axios.post('http://localhost:8090/api/order/ship', {
+        axios.post('http://localhost:8090/api/delivery/ship', {
             cartId: item.cartId
 
         }, { withCredentials: true })
@@ -27,7 +27,7 @@ const OrderHistory = () => {
         alert('배달 완료');
 
         // 백엔드로 데이터 전송
-        axios.post('http://localhost:8090/api/order/comp', {
+        axios.post('http://localhost:8090/api/delivery/comp', {
             cartId: item.cartId
 
         }, { withCredentials: true })
