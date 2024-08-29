@@ -31,7 +31,7 @@ const OrderHistory = () => {
         const member = JSON.parse(window.sessionStorage.getItem("member1"));
 
         if (!member) {
-            setError(new Error('로그인이 필요합니다.'));
+            setError(new Error('주문내역이 없습니다.'));
             setLoading(false);
             return;
         }
@@ -61,11 +61,12 @@ const OrderHistory = () => {
                             <p>주문 ID: {item.cartId}</p>
                             <p>주문 날짜: {new Date(item.orderDate).toLocaleDateString()}</p> {/* 날짜 포맷팅 */}
                             <p>주문 상태: {item.cartStatus}</p>
+                            {item.cartStatus !== 'CANCEL' && (<>
                             <p>배송 상태: {item.deliveryStatus}</p>
                             <p>배송 주소: {item.address || "정보 없음"}</p>
                             <p>수 취 인 : {item.name || "정보 없음"}</p>
                             <p>구매 수량: {item.count || "정보 없음"}</p>
-                            <p>총합 가격: {item.totalPrice || "정보 없음"}</p>
+                            <p>총합 가격: {item.totalPrice || "정보 없음"}</p></>)}
                             {item.cartStatus == 'ORDER' && item.deliveryStatus != 'SHIP' && (
                                 <button onClick={() => handleCancelOrder(item)}>주문 취소</button>)}
                         </li>
