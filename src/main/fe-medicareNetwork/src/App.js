@@ -97,6 +97,7 @@ function App() {
     // 로그인 성공시 true
     const handleLoginSuccess = () => {
         setIsLoginIn(true);
+        localStorage.setItem('isLoggedIn', 'true');
     }
 
     // 로그아웃시 false
@@ -106,6 +107,12 @@ function App() {
         window.location.href = '/';
     };
 
+    useEffect(() => {
+        const loggedIn = localStorage.getItem('isLoggedIn');
+        if (loggedIn === 'true') {
+            setIsLoginIn(true);
+        }
+    }, []);
 
     return (
         <Router>
@@ -146,6 +153,7 @@ function App() {
                                 <Route path='/find-Email' element={<FindEmail/>}/>
                                 <Route path='/find-password' element={<FindPassword/>}/>
                                 <Route path='/loginAdd' element={<LoginForm onLoginSuccess={handleLoginSuccess}/>}/>
+                                <Route path="/callback" element={<KakaoCallback onLoginSuccess={handleLoginSuccess} />} />
                                 <Route path="/maps" element={<KakaoMap/>}/>
                                 <Route path='/mypage' element={<MyPage/>}/>
                                 <Route path='/order/orderlist' element={<OrderList />} />

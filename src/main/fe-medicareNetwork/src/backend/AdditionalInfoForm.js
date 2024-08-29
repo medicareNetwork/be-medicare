@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const AdditionalInfo = () => {
@@ -7,8 +7,9 @@ const AdditionalInfo = () => {
         weight: '',
         height: '',
         number: '',
-        address: ''
+        address: '',
     });
+
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -31,29 +32,31 @@ const AdditionalInfo = () => {
             });
     };
 
+
+
     return (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} style={{ maxWidth: '400px', margin: '0 auto' }}>
             <label>
-                Age:
+                나이
                 <input type="text" name="age" value={formData.age} onChange={handleChange} required />
             </label>
             <label>
-                Weight:
+                몸무게
                 <input type="text" name="weight" value={formData.weight} onChange={handleChange} required />
             </label>
             <label>
-                Height:
+                신장
                 <input type="text" name="height" value={formData.height} onChange={handleChange} required />
             </label>
             <label>
-                Phone Number:
+                전화번호
                 <input type="text" name="number" value={formData.number} onChange={handleChange} required />
             </label>
             <label>
-                Address:
+                주소
                 <input type="text" name="address" value={formData.address} onChange={handleChange} required />
             </label>
-            <button type="submit">Save</button>
+            <button type="submit">입력완료</button>
         </form>
     );
 };

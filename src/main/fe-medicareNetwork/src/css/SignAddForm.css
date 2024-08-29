@@ -8,6 +8,7 @@ h2 {
 
 /* 입력 필드 스타일링 */
 input[type="text"],
+input[type="email"],
 input[type="password"] {
     width: 100%;
     padding: 12px 20px;
@@ -25,12 +26,12 @@ input[type="password"]:focus {
 }
 
 /* 버튼 스타일링 */
-.emailsign {
+emailsign {
     width: 100%;
     background-color: #007bff;
     color: white;
     padding: 12px 20px;
-    margin-top: 20px;
+    margin-top: 30px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
