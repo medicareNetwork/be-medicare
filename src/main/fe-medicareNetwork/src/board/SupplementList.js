@@ -83,13 +83,17 @@ const SupplementList = ({ addToCart, member }) => { // member 정보를 props로
         navigate("/Modify", {state:{item},})
     };
 
+    const hrefViews = async (item) =>{
+        navigate("/Views", {state:{item},})
+    }
+
     return (
         <div className="supplement-list">
             {products.map(item => (
                 <div className="supplement-item" key={item.id}>
-                    <img src={`${item.filepath}`} alt={`${item.filename}`} />
+                    <img onClick={() => hrefViews(item)} src={`${item.filepath}`} alt={`${item.filename}`} />
                     <div className="supplement-info">
-                        <h2 className="supplement-description">{item.title}</h2>
+                        <h2 onClick={() => hrefViews(item)} className="supplement-description">{item.title}</h2>
                         <p className="supplement-price">{item.price}</p>
                         <StarRating rating={4}/>
                         <input
