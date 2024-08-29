@@ -29,6 +29,7 @@ out/
 !**/src/main/**/out/
 !**/src/test/**/out/
 
+
 ### NetBeans ###
 /nbproject/private/
 /nbbuild/
@@ -38,4 +39,13 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### MAC 자동생성 파일 ###
 .DS_Store
+
+### React ###
+node_modules/
+
+### 환경변수 및 빌드파일 ###
+.env
+/target/
