@@ -225,7 +225,7 @@ function SignAddForm() {
                         required
                     />
                 </div>
-                <div>
+                <div style={{display: 'flex', alignItems: 'center'}}>
                     <input
                         type="text"
                         id="sample6_postcode"
@@ -234,8 +234,9 @@ function SignAddForm() {
                         value={formData.memberPostcode}
                         onChange={handleChange}
                         readOnly
+                        style={{flexGrow: 1, marginRight: '10px'}}
                     />
-                    <button type="button" onClick={handlePostcodeSearch}>
+                    <button type="button" onClick={handlePostcodeSearch} style={{flexShrink: 0}}>
                         우편번호 찾기
                     </button>
                 </div>
