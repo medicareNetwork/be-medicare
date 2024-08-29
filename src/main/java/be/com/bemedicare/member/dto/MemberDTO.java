@@ -31,6 +31,11 @@ public class MemberDTO {
     private String memberQ;
     private String memberQnA;
 
+    private String memberPostcode;
+    private String memberDetailAddress;
+    private String memberExtraAddress;
+
+
 
     private String authId;
 

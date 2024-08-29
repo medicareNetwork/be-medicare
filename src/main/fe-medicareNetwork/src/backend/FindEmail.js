@@ -12,7 +12,11 @@ function FindEmail() {
     const navigate = useNavigate();
 
     const findPasswordClick = () => {
-        navigate("")
+        navigate("/find-password")
+    }
+
+    const LoginClick = () => {
+        navigate("/loginAdd")
     }
 
     const handleSubmit = async (e) => {
@@ -50,8 +54,8 @@ function FindEmail() {
             </form>
             {email && <div>찾은 이메일: {email}</div>}
             {error && <div style={{ color: 'red' }}>{error}</div>}
-            <button type="submit">로그인</button>
-            <button type="submit">비밀번호 찾기</button>
+            <button  onClick={LoginClick} type={"submit"}>로그인</button>
+            <button onClick={findPasswordClick} type={"submit"}>비밀번호 찾기</button>
         </div>
     );
 
