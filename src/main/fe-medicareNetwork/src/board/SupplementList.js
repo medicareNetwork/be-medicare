@@ -3,6 +3,8 @@ import StarRating from './StarRating';
 import '../css/SupplementList.css';
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
+import { CartPlusFill } from "react-bootstrap-icons";
+
 
 const PAGE_SIZE = 20;
 
@@ -84,63 +86,65 @@ const SupplementList = ({ addToCart, member }) => { // member 정보를 props로
     };
 
     return (
-        <div className="supplement-list">
-            {products.map(item => (
-                <div className="supplement-item" key={item.id}>
-                    <img src={`${item.filepath}`} alt={`${item.filename}`} />
-                    <div className="supplement-info">
-                        <h2 className="supplement-description">{item.title}</h2>
-                        <p className="supplement-price">{item.price}</p>
-                        <StarRating rating={4}/>
-                        <input
-                            type="number"
-                            min="1"
-                            value={quantities[item.id] || 1}
-                            onChange={(e) => handleQuantityChange(item.id, parseInt(e.target.value))}
-                            className="quantity-input"
-                        />
-                        <button
-                            className="add-to-cart-button"
-                            onClick={() => handleAddToCart(item)} // Add to Cart function
-                        >
-                            Add to Cart
-                        </button>
-                        {(login.email===item.name) && (
-                            <button onClick={() => modifyItem(item)}>수정</button>
-                        )}
+        <div className="container my-5">
+            <div className="row">
+                {products.map(item => (
+                    <div className="col-md-4" key={item.id}>
+                        <div className="card mb-4 shadow-sm">
+                            <img src={`${item.filepath}`} alt={`${item.filename}`} className="card-img-top" />
+                            <div className="card-body">
+                                <h5 className="card-title text-dark">{item.title}</h5>
+                                <p className="card-text text-muted">{item.price}원</p>
+                                <StarRating rating={4}/>
+                                <div className="d-flex justify-content-between align-items-center mt-3">
+                                    <input
+                                        type="number"
+                                        min="1"
+                                        value={quantities[item.id] || 1}
+                                        onChange={(e) => handleQuantityChange(item.id, parseInt(e.target.value))}
+                                        className="form-control quantity-input"
+                                    />
+                                    <button
+                                        className="btn btn-dark add-to-cart-button ml-2"
+                                        onClick={() => handleAddToCart(item)}
+                                    >
+                                        장바구니 담기 <CartPlusFill size={20} />
+                                    </button>
+                                </div>
+                                {(login.email === item.name) && (
+                                    <button className="btn btn-secondary btn-sm mt-2" onClick={() => modifyItem(item)}>수정</button>
+                                )}
+                            </div>
+                        </div>
                     </div>
-                </div>
-            ))}
-            <div className="pagination">
-            <button
-                    onClick={() => handlePageChange(currentPage - 1)}
-                    disabled={currentPage === 0}
-                >
-                    &laquo; Previous
-                </button>
-                {[...Array(totalPages).keys()].map((page) => (
-                    <button
-                        key={page}
-                        onClick={() => handlePageChange(page)}
-                        className={currentPage === page ? 'active' : ''}
-                    >
-                        {page + 1}
-                    </button>
                 ))}
-                <button
-                    onClick={() => handlePageChange(currentPage + 1)}
-                    disabled={currentPage === totalPages - 1}
-                >
-                    Next &raquo;
-                </button>
             </div>
-            <div className="NewItem-Button">
-                {login.grade==="many" && (
-                    <button onClick={() => NewItem_Button()}>상품 등록</button>
+            <div className="d-flex justify-content-center">
+                <nav>
+                    <ul className="pagination">
+                        <li className={`page-item ${currentPage === 0 ? 'disabled' : ''}`}>
+                            <button className="page-link" onClick={() => handlePageChange(currentPage - 1)}>&laquo; Previous</button>
+                        </li>
+                        {[...Array(totalPages).keys()].map((page) => (
+                            <li key={page} className={`page-item ${currentPage === page ? 'active' : ''}`}>
+                                <button className="page-link" onClick={() => handlePageChange(page)}>
+                                    {page + 1}
+                                </button>
+                            </li>
+                        ))}
+                        <li className={`page-item ${currentPage === totalPages - 1 ? 'disabled' : ''}`}>
+                            <button className="page-link" onClick={() => handlePageChange(currentPage + 1)}>Next &raquo;</button>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <div className="text-center mt-4">
+                {login.grade === "many" && (
+                    <button className="btn btn-outline-dark" onClick={() => NewItem_Button()}>상품 등록</button>
                 )}
             </div>
         </div>
     );
-};
+}
 
 export default SupplementList;

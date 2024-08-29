@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {useNavigate} from "react-router-dom";
 import axios from 'axios';
+import { CartPlusFill } from "react-bootstrap-icons";
 
 function Cart() {
     const [cartItems, setCartItems] = useState([]); // 빈 배열로 초기화
@@ -118,11 +119,11 @@ function Cart() {
 
 
     return (
-        <div>
-            <h1>장바구니</h1>
+        <div className="container mt-5">
+            <div className="text-bg-dark p-3"><CartPlusFill size={25} />  장바구니  </div>
             {message && <div>{message}</div>}
-            <table>
-                <thead>
+            <table className="table table-striped table-hover">
+                <thead className="thead-dark">
                 <tr>
                     <th>상품이미지</th>
                     <th>상품명</th>
@@ -138,11 +139,11 @@ function Cart() {
                         <td>
                             <img src={item.filepath ? item.filepath : '/files/img_ready.png'} alt={item.filename}/>
                         </td>
-                        <td>{item.title || '상품 정보 없음'}</td>
-                        <td>{item.quantity}</td>
-                        <td>{item.price}</td>
-                        <td>{item.price * item.quantity}</td>
-                        <td>
+                        <td className="align-middle">{item.title || '상품 정보 없음'}</td>
+                        <td className="align-middle">{item.quantity}</td>
+                        <td className="align-middle">{item.price}</td>
+                        <td className="align-middle">{item.price * item.quantity}</td>
+                        <td className="align-middle">
                             <button onClick={() => removeItem(item.boardId)}>삭제</button>
                         </td>
                     </tr>
@@ -151,9 +152,9 @@ function Cart() {
             </table>
             <h2>총액: {totalAmount}원</h2>
             <button onClick={() => navigate('/')}>쇼핑 계속하기</button>
-                <button onClick={completeOrder}>주문완료하기</button>
+            <button onClick={completeOrder}>주문완료하기</button>
         </div>
-);
+    );
 }
 
 export default Cart;
