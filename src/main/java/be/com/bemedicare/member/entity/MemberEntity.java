@@ -76,6 +76,7 @@ public class MemberEntity {
     @Column
     private String email;
 
+    //관리자 권한용
     @Column
     private String grade;
 

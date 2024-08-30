@@ -63,6 +63,8 @@ const OrderHistory = () => {
     if (loading) return <div>Loading...</div>;
     if (error) return <div>Error: {error.message}</div>;
 
+
+
     return (
         <div className="container my-5">
             <div className="text-bg-dark p-3" style={{ width: '65%', margin: '0 auto' }}>
@@ -74,6 +76,7 @@ const OrderHistory = () => {
                 <table className="table table-dark table-striped" style={{ width: '65%', margin: '0 auto' }}>
                     <thead>
                     <tr>
+                        <th scope="col" className="align-middle">상품 이미지</th>
                         <th scope="col" className="align-middle">상품 이름</th>
                         <th scope="col" className="text-start">주문 정보</th>
                         <th scope="col" className="text-end">액션</th>
@@ -82,6 +85,14 @@ const OrderHistory = () => {
                     <tbody>
                     {cartItems.map((item, index) => (
                         <tr key={index}>
+                            <td className="align-middle">
+                                <img
+                                    src={item.filepath ? item.filepath : '/files/img_ready.png'}
+                                    alt={item.filename}
+                                    style={{width: '100px', height: '100px', objectFit: 'cover'}}
+                                    className="rounded"
+                                />
+                            </td>
                             <td className="align-middle">{item.title || "정보 없음"}</td>
                             <td className="text-start">
                                 <p>주문 ID: {item.cartId}</p>
@@ -94,7 +105,7 @@ const OrderHistory = () => {
                                 <p>총합 가격: {item.totalPrice || "정보 없음"}</p>
                             </td>
                             <td className="text-end">
-                                {item.deliveryStatus === 'READY' && (
+                                {item.deliveryStatus === 'READY' && item.cartStatus !== 'CANCEL' && (
                                     <button
                                         className="btn btn-primary"
                                         onClick={() => handleDeliveryStart(item)}

@@ -94,11 +94,18 @@ const SupplementList = ({ addToCart, member }) => { // member 정보를 props로
             <div className="supplement-list">
                 {products.map(item => (
                     <div className="supplement-item" key={item.id}>
-                        <img onClick={() => hrefViews(item)} src={`${item.filepath}`} alt={`${item.filename}`} />
+                        <img
+                            onClick={() => hrefViews(item)}
+                            src={`${item.filepath}`}
+                            alt={`${item.filename}`}
+                            className="img-fluid"  // 이미지가 부모 요소에 맞게 크기 조정
+                            style={{ maxWidth: '150px', maxHeight: '150px', objectFit: 'cover' }}  // 고정된 크기로 지정
+                        />
                         <div className="supplement-info">
                             <h2 onClick={() => hrefViews(item)} className="supplement-description">{item.title}</h2>
-                            <p className="supplement-price">{item.price}</p>
-                            <StarRating rating={4} />
+                            <p className="supplement-price">
+                                {item.price.toLocaleString('ko-KR')}원
+                            </p>                            <StarRating rating={4} />
                             <div className="d-flex justify-content-between align-items-center mt-1">
                                 <input
                                     type="number"

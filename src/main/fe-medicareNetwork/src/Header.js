@@ -1,9 +1,21 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import './css/Header.css';
 import { useNavigate } from "react-router-dom";
 
-const Header = ({ onCartClick, onCommunityClick, cartCount, isLoginIn, onLogout }) => {
+
+const Header = ({ onCartClick, onCommunityClick, cartCount, isLoginIn, onLogout,member }) => {
     const [searchTerm, setSearchTerm] = useState('');
+    const [login, setLogin] = useState([]);
+
+
+    useEffect(() => {
+        const storedMember = sessionStorage.getItem("member1");
+        if (storedMember) {
+            const parsedMember = JSON.parse(storedMember);
+            console.log('Parsed Member:', parsedMember); // 추가된 로그
+            setLogin(parsedMember);
+        }
+    }, []);
 
     const handleSearchChange = (event) => {
         setSearchTerm(event.target.value);
@@ -30,6 +42,9 @@ const Header = ({ onCartClick, onCommunityClick, cartCount, isLoginIn, onLogout 
     const handleCartClick = () => {
         navigate('/cart');
     };
+    const handleAdminClick = () => {
+        navigate('/order/orderlistadmin');
+    }
 
     return (
         <header className="header">
@@ -71,7 +86,9 @@ const Header = ({ onCartClick, onCommunityClick, cartCount, isLoginIn, onLogout 
                         </>
                     )}
                     <button className="login-btn" onClick={handleCartClick}>장바구니</button>
-
+                    {login && login.grade === 'many' && (
+                        <button className="login-btn" onClick={handleAdminClick}>관리자</button>
+                    )}
                 </div>
             </div>
         </header>

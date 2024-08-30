@@ -34,7 +34,7 @@ public class OrderQueryRepository {
     private List<OrderQueryDto> findMemberCarts(Long memberId) {
         return em.createQuery(
                         "select new be.com.bemedicare.cart.query.OrderQueryDto " +
-                                " (c.id, m.memberName, c.orderDate, c.status, d.address, b.title, ci.count, ci.totalPrice, d.deliveryStatus )" +
+                                " (c.id, m.memberName, c.orderDate, c.status, d.address, b.title, ci.count, ci.totalPrice, d.deliveryStatus, b.filepath, b.filename )" +
                                 " from Cart c" +
                                 " join c.member m" +
                                 " join c.delivery d" +
