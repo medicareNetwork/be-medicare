@@ -28,13 +28,9 @@ import java.util.stream.Collectors;
 @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
 public class CartApiController {
 
-
     private final CartService cartService;
     private final BoardRepository boardRepository;
-
     private static final String CART_SESSION_KEY = "cartItems";
-
-
     private final MemberService memberService;
     private final OrderQueryRepository orderQueryRepository;
 
@@ -130,9 +126,6 @@ public class CartApiController {
         //카트에 담긴 아이템 조회
         List<Board> boards = boardRepository.findAllById(cartItems.keySet());
         Map<Long, Board> boardMap = boards.stream().collect(Collectors.toMap(Board::getId, board -> board));
-        System.out.println("cartItems = " + cartItems);
-        System.out.println("boardMap = " + boardMap);
-        System.out.println("totalAmount = " + totalAmount);
 
         ShowCartList showCartList = new ShowCartList(cartItems,boardMap,totalAmount);
         showCartList.setCartItems(cartItems);
@@ -225,6 +218,7 @@ public class CartApiController {
     //db에있는 모든 주문내역 출력 ( admin 전용 )
     @PostMapping("/order/list")
     public ResponseEntity<List<OrderQueryDto>> orderList() {
+
 
         List<OrderQueryDto> allOrderList = orderQueryRepository.findAllByDto();
         return ResponseEntity.status(HttpStatus.OK).body(allOrderList);

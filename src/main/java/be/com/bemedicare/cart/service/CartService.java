@@ -4,6 +4,7 @@ import be.com.bemedicare.cart.entity.*;
 import be.com.bemedicare.cart.repository.CartItemRepository;
 import be.com.bemedicare.cart.repository.CartRepository;
 import be.com.bemedicare.cart.repository.DeliveryRepositrory;
+import be.com.bemedicare.email.service.EmailService;
 import be.com.bemedicare.member.dto.MemberDTO;
 import be.com.bemedicare.member.entity.MemberEntity;
 import be.com.bemedicare.member.repository.MemberRepository;
@@ -31,6 +32,8 @@ public class CartService {
     private final BoardRepository boardRepository;
     private static final String CART_SESSION_KEY = "cartItems";
     private final DeliveryRepositrory deliveryRepositrory;
+    private final CartItemRepository cartItemRepository;
+    private final EmailService emailService;
 
 
     @Transactional
@@ -48,6 +51,15 @@ public class CartService {
         //이미 장바구니에 있는 boardId면 수량을 더하게함
         cartItems.put(boardId, cartItems.getOrDefault(boardId, 0) + amount);
     }
+//    @Transactional
+//    public Map<Long, Integer> getOrderItems(Long id) {
+//
+//        Cart cart = cartRepository.findById(id).orElseThrow();
+//
+//        CartItem cartItem = cartItemRepository.findById(cart.getId()).orElseThrow();
+//
+//        return cartItem;
+//    }
     @Transactional
     public Map<Long, Integer> getCartItems(HttpSession session) {
         Map<Long, Integer> cartItems = (Map<Long, Integer>) session.getAttribute(CART_SESSION_KEY);
@@ -97,10 +109,11 @@ public class CartService {
         if(cart == null) {
             throw new IllegalArgumentException("카트가 텅 비어있습니다.");
         }else {
+            cartRepository.save(cart);
+            emailService.sendOrderEmail(cart);
 
-            cartRepository.saveAndFlush(cart);
         }
-        cartRepository.saveAndFlush(cart);
+//        cartRepository.saveAndFlush(cart);
         session.removeAttribute(CART_SESSION_KEY);
 
 

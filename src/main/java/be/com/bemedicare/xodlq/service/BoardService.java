@@ -26,11 +26,14 @@ public class BoardService {
     //글 작성
     public void write(Board board, MultipartFile file, MemberDTO member) throws IOException {
 
-        if(!file.isEmpty()){
+        System.out.println("board.getPrice() = " + board.getPrice());
+        if(file!=null){
             handleFileUpload(board,file);
         }
+        System.out.println("board.getContent() = " + board.getContent());
 
         board.setName(member.getMemberName());
+        System.out.println("board.getTitle() = " + board.getTitle());
 
         boardRepository.save(board);
     }
@@ -48,12 +51,18 @@ public class BoardService {
     }
 
     private void handleFileUpload(Board board, MultipartFile file) throws IOException {
+
         String projectPath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\files";
         UUID uuid = UUID.randomUUID();
+
         String fileName = uuid + "_" + file.getOriginalFilename();
+
         File saveFile = new File(projectPath, fileName);
+
         file.transferTo(saveFile);
+
         board.setFilename(fileName);
+
         board.setFilepath("/files/" + fileName);
     }
 

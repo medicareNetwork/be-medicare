@@ -76,7 +76,8 @@ const Modify = () => {
                 <textarea name="content" cols="30" rows="10" value={content} onChange={onChange}/>
             </div>
             <div>
-                <p>기존 파일 : {product.filename.split("_")[1]}</p>
+                <p>기존 파일
+                    : {product.filename && product.filename.includes("_") ? product.filename.split("_")[1] : '파일 없음'}</p>
                 <input type="file" name="file" onChange={onChange}/>
             </div>
             <div>

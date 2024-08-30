@@ -51,15 +51,16 @@ const OrderHistory = () => {
 
     return (
         <div className="container my-5">
-            <div className="text-bg-dark p-3" style={{width: '65%', margin: '0 auto'}}>
-
-                <h1 className="text-center mb-2">{cartItems.length > 0 ? "주문 내역" : "주문 내역이 없습니다."}</h1></div>
+            <div className="text-bg-dark p-3" style={{width: '70%', margin: '0 auto'}}>
+                <h1 className="text-center mb-2">{cartItems.length > 0 ? "주문 내역" : "주문 내역이 없습니다."}</h1>
+            </div>
             <div className="text-bg-light p-1"></div>
 
             {cartItems.length > 0 && (
-                <table className="table table-dark table-striped" style={{width: '65%', margin: '0 auto'}}>
+                <table className="table table-dark table-striped" style={{width: '70%', margin: '0 auto'}}>
                     <thead>
                     <tr>
+                        <th scope="col" className="align-middle">상품 이미지</th>
                         <th scope="col" className="align-middle">상품 이름</th>
                         <th scope="col" className="text-start">주문 정보</th>
                         <th scope="col" className="text-end">주문 취소</th>
@@ -68,6 +69,14 @@ const OrderHistory = () => {
                     <tbody>
                     {cartItems.map((item, index) => (
                         <tr key={index}>
+                            <td className="align-middle">
+                                <img
+                                    src={item.filepath ? item.filepath : '/files/img_ready.png'}
+                                    alt={item.filename}
+                                    style={{ width: '100px', height: '100px', objectFit: 'cover' }}
+                                    className="rounded"
+                                />
+                            </td>
                             <td className="align-middle">{item.title || "정보 없음"}</td>
                             <td className="text-start">
                                 <p>주문 ID: {item.cartId}</p>
@@ -77,7 +86,7 @@ const OrderHistory = () => {
                                     <>
                                         <p>배송 상태: {item.deliveryStatus}</p>
                                         <p>배송 주소: {item.address || "정보 없음"}</p>
-                                        <p>수 취 인: {item.name || "정보 없음"}</p>
+                                        <p>수취인: {item.name || "정보 없음"}</p>
                                         <p>구매 수량: {item.count || "정보 없음"}</p>
                                         <p>총합 가격: {item.totalPrice || "정보 없음"}</p>
                                     </>
@@ -100,7 +109,6 @@ const OrderHistory = () => {
             )}
         </div>
     );
-
 }
 
 export default OrderHistory;

@@ -18,7 +18,7 @@ const BestSellers = ({ addToCart , bestList}) => {
                         <img src={`${item.filepath}`} alt={item.filename} className="product-image"/>
                         <div className="supplement-info">
                             <h2 className="supplement-description">{item.title}</h2>
-                            <p className="supplement-price">{item.price}</p>
+                            <p className="supplement-price">{item.price.toLocaleString('ko-KR')}원</p>
                             <div className="d-flex justify-content-between align-items-center mt-3">
                                 <button
                                     className="btn btn-dark add-to-cart-button ml-2"

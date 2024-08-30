@@ -45,6 +45,7 @@ public class ReactController {
                                              @RequestParam("content") String content,
                                              @RequestParam("price") String price,
                                              @RequestParam("name") String name,
+                                             @RequestParam("stockAmount") int stockAmount,
                                              @RequestParam(value = "file", required = false) MultipartFile file){
         Board board = new Board();
         MemberDTO memberDTO = new MemberDTO();
@@ -52,14 +53,18 @@ public class ReactController {
         board.setTitle(title);
         board.setContent(content);
         board.setPrice(Integer.parseInt(price));
+        board.setStockAmount(stockAmount);
 
         memberDTO.setMemberName(name);
 
         try{
             boardService.write(board,file,memberDTO);
+            System.out.println("등록성공");
             return new ResponseEntity<>("등록완료", HttpStatus.CREATED);
         }catch(Exception e){
+            System.out.println("등록실패");
             return new ResponseEntity<>("등록실패" + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+
         }
 
     }

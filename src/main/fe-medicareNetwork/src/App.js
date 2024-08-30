@@ -47,6 +47,7 @@ function App() {
     const [cartMessage, setCartMessage] = useState('');
     const [bestList, setBestList] = useState([]);
 
+
     // 로컬 스토리지에서 카트 아이템을 불러옵니다.
     useEffect(() => {
         const storedCartItems = localStorage.getItem('cartItems');
@@ -54,6 +55,7 @@ function App() {
             setCartItems(JSON.parse(storedCartItems));
         }
     }, []);
+
 
     useEffect(() => {
         axios.get('http://localhost:8090/api/bestList')
@@ -112,7 +114,8 @@ function App() {
 
     // 로그아웃시 false
     const handleLogout = () => {
-        localStorage.removeItem('isLoggedIn'); // 로컬 스토리지에서 로그인 상태 제거
+        localStorage.removeItem('isLoggedIn');
+        sessionStorage.removeItem("member1");// 로컬 스토리지에서 로그인 상태 제거
         setIsLoginIn(false);
         window.location.href = '/';
     };
@@ -167,12 +170,12 @@ function App() {
                                 <Route path="/maps" element={<KakaoMap/>}/>
                                 <Route path='/mypage' element={<MyPage/>}/>
                                 <Route path='/order/orderlist' element={<OrderList />} />
-                                <Route path='/order/orderlistadmin' element={<OrderListAdmin />} />
                                 <Route path="/update" element={<UpdateMember />} />
                                 <Route path="/passwordChange" element={<PasswordChange/>} />
                                 <Route path="/callback" element={<KakaoCallback />} />
                                 <Route path="/additional-info" element={<AdditionalInfoForm />} />
                                 <Route path="/cart" element={<Cart />} />
+                                <Route path='/order/orderlistadmin' element={<OrderListAdmin />} />
                                 <Route path="/NewItem" element={<NewItem/>}/>
                                 <Route path="/modify" element={<Modify/>}/>
                                 <Route path="/Gong" element={<Gong/>} />
