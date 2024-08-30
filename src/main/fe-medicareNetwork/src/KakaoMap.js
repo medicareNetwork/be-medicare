@@ -15,7 +15,9 @@ const MapComponent = () => {
     const map = useRef(null);
 
     useEffect(() => {
-        setKeyword(member.address + " 약국");
+        if(member!=null){
+            setKeyword(member.address + " 약국");
+        }
         const initializeMap = () => {
             const mapContainer = mapRef.current;
             const mapOption = {
