@@ -91,7 +91,7 @@ const SupplementList = ({ addToCart, member }) => { // member 정보를 props로
 
     return (
         <div>
-            <div className="supplement-list">
+            <div className="supplement-list" style={{padding: '0 250px'}}>
                 {products.map(item => (
                     <div className="supplement-item" key={item.id}>
                         <img

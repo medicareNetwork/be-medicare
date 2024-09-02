@@ -66,27 +66,60 @@ const Modify = () => {
 
 
     return (
-        <div className="Modify">
-            <div>
-                <span>제목</span>
-                <input type="text" name="title" value={title} onChange={onChange}/>
-            </div>
-            <div>
-                <span>내용</span>
-                <textarea name="content" cols="30" rows="10" value={content} onChange={onChange}/>
-            </div>
-            <div>
-                <p>기존 파일
-                    : {product.filename && product.filename.includes("_") ? product.filename.split("_")[1] : '파일 없음'}</p>
-                <input type="file" name="file" onChange={onChange}/>
-            </div>
-            <div>
-                <span>가격</span>
-                <input type="text" name="price" value={price} onChange={onChange}/>
-            </div>
-            <div>
-                <button onClick={saveBoard}>저장</button>
-                <button onClick={backToList}>취소</button>
+        <div className="container mt-5 d-flex justify-content-center">
+            <div className="card bg-dark text-white" style={{ width: '50%' }}>
+                <div className="card-header text-center">
+                    <h2>상품 수정</h2>
+                </div>
+                <div className="card-body">
+                    <div className="mb-3">
+                        <label htmlFor="title" className="form-label">제목</label>
+                        <input
+                            type="text"
+                            name="title"
+                            value={title}
+                            onChange={onChange}
+                            className="form-control bg-dark text-white border-light"
+                        />
+                    </div>
+                    <div className="mb-3">
+                        <label htmlFor="content" className="form-label">내용</label>
+                        <textarea
+                            name="content"
+                            cols="30"
+                            rows="5"
+                            value={content}
+                            onChange={onChange}
+                            className="form-control bg-dark text-white border-light"
+                        />
+                    </div>
+                    <div className="mb-3">
+                        <label htmlFor="file" className="form-label">이미지 업로드</label>
+                        <input
+                            type="file"
+                            name="file"
+                            onChange={onChange}
+                            className="form-control bg-dark text-white border-light"
+                        />
+                    </div>
+                    <div className="mb-3">
+                        <label htmlFor="price" className="form-label">가격</label>
+                        <input
+                            type="text"
+                            name="price"
+                            value={price}
+                            onChange={onChange}
+                            className="form-control bg-dark text-white border-light"
+                        />
+                    </div>
+                    <div className="mb-3">
+                        <p>기존 파일: {product.filename && product.filename.includes("_") ? product.filename.split("_")[1] : '파일 없음'}</p>
+                    </div>
+                    <div className="d-flex justify-content-between">
+                        <button onClick={saveBoard} className="btn btn-success">저장</button>
+                        <button onClick={backToList} className="btn btn-secondary">취소</button>
+                    </div>
+                </div>
             </div>
         </div>
     );
