@@ -6,16 +6,13 @@ import be.com.bemedicare.cart.entity.Delivery;
 import be.com.bemedicare.cart.repository.CartRepository;
 import be.com.bemedicare.member.entity.MemberEntity;
 import be.com.bemedicare.member.repository.MemberRepository;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Member;
 import java.util.List;
-import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -52,7 +49,7 @@ public class EmailService {
 
             try{
                 SimpleMailMessage message = new SimpleMailMessage();
-                message.setFrom("메일주소");
+                message.setFrom("goottflix@gmail.com");
                 message.setTo("yoohwanjoo@nate.com");
                 message.setSubject("감사합니다. Medicare 상품 주문이 완료되었습니다.");
                 message.setText(emailContent.toString());
